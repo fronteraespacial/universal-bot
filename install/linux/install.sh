@@ -22,20 +22,21 @@ DEST="${PREFIX}/instances/${INSTANCE}"
 CFG_DIR="${HOME}/.config/universal-bot"
 ENV_FILE="${CFG_DIR}/${INSTANCE}.env"
 
-mkdir -p "$DEST" "$CFG_DIR" "${PREFIX}/logs" "${PREFIX}/jobs"
+mkdir -p "$DEST" "$CFG_DIR" "${DEST}/state/logs" "${DEST}/state/jobs" "${DEST}/state/locks" "${DEST}/workspaces"
 chmod 700 "$CFG_DIR"
 
 if [[ ! -f "${DEST}/instance.toml" ]]; then
   sed "s/example-site/${INSTANCE}/g" "${SRC}/config/instance.example.toml" > "${DEST}/instance.toml"
+  sed -i "s|\./secrets\.env|${ENV_FILE}|g" "${DEST}/instance.toml"
 fi
 
 if [[ ! -f "$ENV_FILE" ]]; then
   umask 077
-  cat > "$ENV_FILE" <<EOF
+  cat > "$ENV_FILE" << 'INNER_EOF'
 # chmod 600. Never commit. Never paste in Discord.
 DISCORD_BOT_TOKEN=
 CONTEXT7_API_KEY=
-EOF
+INNER_EOF
   chmod 600 "$ENV_FILE"
 fi
 

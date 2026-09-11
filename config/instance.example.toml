@@ -1,9 +1,11 @@
-# Copy to config/instance.toml (gitignored) or
-# instances/<name>/instance.toml on the host only.
+# Universal Bot Instance Configuration
+# Copy to config/instance.toml (gitignored) or instances/<name>/instance.toml on the host.
+
+schema_version = 1
 
 [meta]
 instance_name = "example-site"
-host_os = "linux"          # linux | windows
+host_os = "auto"          # auto | linux | windows
 host_role = "vps"          # vm | vps | pc-server
 timezone = "America/Buenos_Aires"
 
@@ -11,29 +13,39 @@ timezone = "America/Buenos_Aires"
 # Create a NEW Discord application per installation. Never reuse Frontera tokens.
 guild_id = "REPLACE_GUILD_ID"
 bot_id = "REPLACE_BOT_ID"
-# Allowlist of user IDs that may invoke CLIs
+# Allowlist of user IDs that may invoke CLIs. Empty list = DENY ALL (safe deny-by-default).
 allowlist_ids = ["REPLACE_ADMIN_USER_ID"]
+allowed_channel_ids = []
+auto_channels = []
+allow_dm = false
 # Privileged intent Message Content must be ON in the Developer Portal
 message_content_intent = true
 
 [paths]
-# Listener + MCP + CLIs on ONE machine
-install_dir = "/opt/universal-bot"          # Windows: C:\\universal-bot
-token_env = "~/.config/universal-bot/example-site.env"
-jobs_dir = "/var/lib/universal-bot/jobs"
-logs_dir = "/var/lib/universal-bot/logs"
+# Paths: relative paths resolve cleanly against this instance's directory.
+state_dir = "./state"
+jobs_dir = "./state/jobs"
+logs_dir = "./state/logs"
+workspace_dir = "./workspaces"
+secrets_file = "./secrets.env"
+lock_root = "./state/locks"
 
 [runtime]
-python = "python3"         # Windows: py -3
+python_cmd = ["python3"]   # Windows: ["py", "-3"]
 timeout_long_s = 1800
-inflight_wait_s = 1860     # >= timeout_long_s + 60
+shutdown_grace_s = 60
+max_concurrent_jobs = 2
+max_pending_jobs = 20
+progress_interval_s = 240
 watch_interval_s = 60
-default_brain = "agy"      # agy | opencode | codex | cursor
+default_brain = ""         # Empty = diagnostic mode until an adapter is enabled
 
 [cli]
-# Leave empty until that CLI is installed on this host
-agy = false
-opencode = false
-codex = false
-cursor = false
+# Configure available CLIs on this host. Unconfigured/disabled CLIs are never run.
+# agy = { enabled = true, command = ["agy"] }
+# codex = { enabled = false, command = ["codex"] }
+# opencode = { enabled = false, command = ["opencode"] }
+# cursor = { enabled = false, command = ["cursor"] }
+
+[features]
 context7_native = false

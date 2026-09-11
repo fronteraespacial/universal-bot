@@ -13,24 +13,28 @@ $Dest = Join-Path $Prefix "instances\$Instance"
 $CfgDir = Join-Path $env:USERPROFILE ".config\universal-bot"
 $EnvFile = Join-Path $CfgDir "$Instance.env"
 
-New-Item -ItemType Directory -Force -Path $Dest, $CfgDir, (Join-Path $Prefix "logs"), (Join-Path $Prefix "jobs") | Out-Null
+New-Item -ItemType Directory -Force -Path $Dest, $CfgDir, (Join-Path $Dest "state\logs"), (Join-Path $Dest "state\jobs"), (Join-Path $Dest "state\locks"), (Join-Path $Dest "workspaces") | Out-Null
 
 $toml = Join-Path $Dest "instance.toml"
 if (-not (Test-Path $toml)) {
   $example = Get-Content -Raw (Join-Path $Src "config\instance.example.toml")
   $example = $example -replace "example-site", $Instance
-  $example = $example -replace 'host_os = "linux"', 'host_os = "windows"'
-  $example = $example -replace 'install_dir = "/opt/universal-bot"', 'install_dir = "C:\\\\universal-bot"'
-  $example = $example -replace 'python = "python3"', 'python = "py -3"'
-  Set-Content -Path $toml -Value $example -Encoding UTF8
+  $example = $example -replace 'host_os = "auto"', 'host_os = "windows"'
+  $example = $example -replace 'python_cmd = \["python3"\]', 'python_cmd = ["py", "-3"]'
+  $escapedEnv = $EnvFile -replace '\\', '\\'
+  $example = $example -replace '\./secrets\.env', $escapedEnv
+  $utf8NoBom = New-Object System.Text.UTF8Encoding $False
+  [System.IO.File]::WriteAllText($toml, $example, $utf8NoBom)
 }
 
 if (-not (Test-Path $EnvFile)) {
-  @"
+  $envContent = @"
 # icacls owner-only. Never commit. Never paste in Discord.
 DISCORD_BOT_TOKEN=
 CONTEXT7_API_KEY=
-"@ | Set-Content -Path $EnvFile -Encoding UTF8
+"@
+  $utf8NoBom = New-Object System.Text.UTF8Encoding $False
+  [System.IO.File]::WriteAllText($EnvFile, $envContent, $utf8NoBom)
   icacls $EnvFile /inheritance:r /grant:r "${env:USERNAME}:(R,W)" | Out-Null
 }
 
