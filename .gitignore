@@ -1,0 +1,29 @@
+# Secrets and local installs
+.env
+.env.*
+*.env
+*.pem
+*.key
+id_ed25519
+id_rsa
+auth.json
+**/secrets/
+instances/*/
+!instances/README.md
+config/instance.toml
+config/instance.local.toml
+
+# Runtime
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+node_modules/
+logs/
+*.log
+.pytest_cache/
+.coverage
+
+# OS
+.DS_Store
+Thumbs.db
