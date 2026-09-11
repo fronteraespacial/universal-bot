@@ -27,3 +27,11 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+# State and DBs
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+state/
+jobs/
+workspaces/
+locks/
