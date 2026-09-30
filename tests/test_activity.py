@@ -19,7 +19,7 @@ class TestRealActivityMonitor(unittest.TestCase):
         self.now = 100000.0
         self.monitor = RealActivityMonitor(
             stall_threshold_s=180.0,
-            progress_freshness_s=360.0,
+            progress_freshness_s=180.0,
             workspace_freshness_s=360.0,
             initial_activity_ts=self.now,
         )
@@ -49,7 +49,7 @@ class TestRealActivityMonitor(unittest.TestCase):
         self.monitor.snapshot.last_stdout_size = 10
         t = self.now + 200.0  # 200s without stream I/O (> 180s stall threshold)
 
-        # Discord progress occurred at t - 60s (age = 60s < 360s progress_freshness_s)
+        # Discord real progress occurred at t - 60s (age = 60s < 180s progress_freshness_s)
         report = self.monitor.evaluate(
             now=t,
             stderr_size=79,
@@ -156,7 +156,7 @@ class TestRealActivityMonitor(unittest.TestCase):
             stderr_size=20,
             last_stderr_size=20,
             progress_ts=now - 120.0,
-            progress_fresh_s=360.0,
+            progress_fresh_s=180.0,
         )
         self.assertTrue(active)
         self.assertEqual(meta["signal"], "external_progress")

@@ -53,7 +53,8 @@ class RuntimeConfig:
     shutdown_grace_s: int = 60
     max_concurrent_jobs: int = 2
     max_pending_jobs: int = 20
-    progress_interval_s: int = 240
+    progress_interval_s: int = 120
+    progress_freshness_s: int = 180
     watch_interval_s: int = 60
 
 
@@ -220,7 +221,8 @@ def load_instance_config(config_path: Path | str) -> InstanceConfig:
         shutdown_grace_s=max(1, int(rt_raw.get("shutdown_grace_s", 60))),
         max_concurrent_jobs=max(1, int(rt_raw.get("max_concurrent_jobs", 2))),
         max_pending_jobs=max(1, int(rt_raw.get("max_pending_jobs", 20))),
-        progress_interval_s=max(1, int(rt_raw.get("progress_interval_s", 240))),
+        progress_interval_s=max(1, int(rt_raw.get("progress_interval_s", 120))),
+        progress_freshness_s=max(1, int(rt_raw.get("progress_freshness_s", 180))),
         watch_interval_s=max(1, int(rt_raw.get("watch_interval_s", 60))),
     )
 

@@ -36,7 +36,8 @@ timeout_long_s = 1800
 shutdown_grace_s = 60
 max_concurrent_jobs = 2
 max_pending_jobs = 20
-progress_interval_s = 240
+progress_interval_s = 120
+progress_freshness_s = 180
 watch_interval_s = 60
 default_brain = ""         # Empty = diagnostic mode until an adapter is enabled
 

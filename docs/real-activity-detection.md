@@ -16,7 +16,7 @@ Only when **all** applicable signals are idle past the threshold (`stall_thresho
 
 ## Freshness & Timing Windows
 - `STALL_THRESHOLD_S = 180` (3 min idle limit before abort).
-- `PROGRESS_FRESHNESS_S = 360` (6 min): Discord progress remains a live signal across the ~4 min digest throttle.
+- `PROGRESS_FRESHNESS_S = 180` (3 min): Discord **real** progress (`last_real_activity_at`, not `last_sent_at`) stays a live signal across the 120s digest cadence + 60s margin. Retransmitting an old digest does not refresh this watermark. Wall `WARN_S=360` is renewal, not freshness.
 - `WORKSPACE_FRESHNESS_S = 360` (6 min): File updates in the working directory indicate ongoing processing.
 
 ## Implementation in Universal Bot

@@ -114,7 +114,7 @@ class RealActivityMonitor:
         self,
         *,
         stall_threshold_s: float = 180.0,
-        progress_freshness_s: float = 360.0,
+        progress_freshness_s: float = 180.0,
         workspace_freshness_s: float = 360.0,
         initial_activity_ts: float | None = None,
     ) -> None:
@@ -185,7 +185,7 @@ class RealActivityMonitor:
                 detail=f"stdout growth to {stdout_size} bytes",
             )
 
-        # 3. External progress (e.g. Discord progress digest within fresh window)
+        # 3. External REAL progress (last_real_activity_at, not last_sent_at)
         fresh_win = max(self.stall_threshold_s, self.progress_freshness_s)
         if external_progress_ts > 0.0 and (t_now - external_progress_ts) < fresh_win:
             self.snapshot.last_progress_ts = max(self.snapshot.last_progress_ts, external_progress_ts)
@@ -281,7 +281,7 @@ def real_activity_seen(
     workspace_dir: str | Path | None = None,
     last_workspace_mtime: float = 0.0,
     sibling_alive: bool = False,
-    progress_fresh_s: float = 360.0,
+    progress_fresh_s: float = 180.0,
 ) -> tuple[bool, dict[str, Any]]:
     """Functional helper compatible with FE-BOT / pack interface.
 
