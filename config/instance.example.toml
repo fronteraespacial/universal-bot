@@ -50,3 +50,25 @@ default_brain = ""         # Empty = diagnostic mode until an adapter is enabled
 
 [features]
 context7_native = false
+
+[unified_progress]
+# One editable progress message per job. off | scoped | on.
+# UB_TRAIL_UNIFIED overrides mode when set (off | scoped | on).
+mode = "off"
+scoped_channel_ids = []
+cli_logs_channel_id = ""
+# Pinned quota board. Leave false until this instance wants it.
+quota_pin_enabled = false
+quota_pin_channel_id = ""
+timezone = "UTC"
+rate_limit_retries = 8
+display_name = "Bot"
+
+[unified_progress.colors]
+cursor = "5865F2"
+agy = "4285F4"
+claude = "9B59B6"
+codex = "10A37F"
+opencode = "E67E22"
+free = "95A5A6"
+grok = "23272A"
