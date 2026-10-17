@@ -63,6 +63,8 @@ quota_pin_channel_id = ""
 timezone = "UTC"
 rate_limit_retries = 8
 display_name = "Bot"
+# Red "Detener pedido" inside the live card while the job runs. UB_STOP_BUTTON=off to disable.
+stop_button_enabled = true
 
 [unified_progress.colors]
 cursor = "5865F2"

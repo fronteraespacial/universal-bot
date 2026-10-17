@@ -23,6 +23,8 @@ class FakeTransport:
         *,
         content: str = "",
         embeds: list[dict[str, Any]] | None = None,
+        components: list[dict[str, Any]] | None = None,
+        flags: int | None = None,
         reply_to: str | None = None,
         files: list[dict[str, Any]] | None = None,
     ) -> str:
@@ -37,6 +39,8 @@ class FakeTransport:
                 "channel_id": str(channel_id),
                 "content": content,
                 "embeds": embeds,
+                "components": components,
+                "flags": flags,
                 "reply_to": reply_to,
                 "files": files,
             }
@@ -50,6 +54,8 @@ class FakeTransport:
         *,
         content: str | None = None,
         embeds: list[dict[str, Any]] | None = None,
+        components: list[dict[str, Any]] | None = None,
+        flags: int | None = None,
     ) -> None:
         if message_id in self.missing:
             raise MessageMissing(f"404 unknown message {message_id}")
@@ -59,6 +65,8 @@ class FakeTransport:
                 "message_id": str(message_id),
                 "content": content,
                 "embeds": embeds,
+                "components": components,
+                "flags": flags,
             }
         )
 

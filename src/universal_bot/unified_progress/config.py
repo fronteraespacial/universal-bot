@@ -22,6 +22,7 @@ else:  # pragma: no cover
 ENV_MODE = "UB_TRAIL_UNIFIED"
 ENV_QUOTA_PIN = "UB_QUOTA_PIN"
 ENV_QUOTA_PIN_CHANNEL = "UB_QUOTA_PIN_CHANNEL"
+ENV_STOP_BUTTON = "UB_STOP_BUTTON"
 
 FAIL_COLOR = 0xF0B232
 _ON = frozenset({"1", "on", "true", "yes"})
@@ -65,6 +66,7 @@ class UnifiedProgressConfig:
     timezone: str = "UTC"
     rate_limit_retries: int = 8
     display_name: str = "Bot"
+    stop_button_enabled: bool = False
     state_dir: Path = field(default_factory=lambda: Path("state"))
     min_edit_s: float = 2.0
 
@@ -165,9 +167,25 @@ def config_from_mapping(
         timezone=str(raw.get("timezone") or "UTC").strip() or "UTC",
         rate_limit_retries=retries_i,
         display_name=str(raw.get("display_name") or "Bot").strip() or "Bot",
+        stop_button_enabled=bool(raw.get("stop_button_enabled", False)),
         state_dir=Path(state_dir),
         min_edit_s=max(0.0, min_edit),
     )
+
+
+def stop_button_enabled(
+    cfg: UnifiedProgressConfig,
+    env: Mapping[str, str] | None = None,
+) -> bool:
+    """Live toggle: ``UB_STOP_BUTTON=off`` disables even when the file says on."""
+    override = env_get(env, ENV_STOP_BUTTON)
+    if override is not None:
+        text = str(override).strip().lower()
+        if text in frozenset({"0", "off", "false", "no"}):
+            return False
+        if text in _ON:
+            return True
+    return bool(cfg.stop_button_enabled)
 
 
 def load_unified_progress(config_path: Path | str) -> UnifiedProgressConfig:

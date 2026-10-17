@@ -17,7 +17,16 @@ from pathlib import Path
 from typing import Any, Callable, Mapping
 
 from universal_bot.unified_progress.cli_logs import dur_text, message_link, post_job_log
-from universal_bot.unified_progress.config import FAIL_COLOR, UnifiedProgressConfig
+from universal_bot.unified_progress.config import FAIL_COLOR, UnifiedProgressConfig, stop_button_enabled
+from universal_bot.unified_progress.stop_control import (
+    CANCEL_COLOR,
+    INACTIVE_COLOR,
+    IS_COMPONENTS_V2,
+    embed_markdown,
+    is_manual_cancel,
+    progress_card,
+    running_stop_components,
+)
 from universal_bot.unified_progress.transport import DiscordTransport, retry_on_rate_limit
 
 log = logging.getLogger("universal_bot.unified_progress.trail")
@@ -131,8 +140,13 @@ def read_marker(
     *,
     now: float | None = None,
     ttl_s: float = MARK_TTL_S,
+    require_alive: bool = True,
 ) -> dict[str, Any] | None:
-    """Live marker for this job, or ``None`` when missing, stale, or ownerless."""
+    """Live marker for this job, or ``None`` when missing, stale, or ownerless.
+
+    ``require_alive`` drops the file when the owner pid is gone. The stop
+    button handler turns this off so admins can still read ``author_id``.
+    """
     path = marker_path(state_dir, channel_id, job_id)
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
@@ -143,7 +157,7 @@ def read_marker(
     stamp = float(data.get("ts") or 0)
     if (now if now is not None else time.time()) - stamp > ttl_s:
         return None
-    if not _pid_alive(int(data.get("pid") or 0)):
+    if require_alive and not _pid_alive(int(data.get("pid") or 0)):
         return None
     return data
 
@@ -155,6 +169,8 @@ def write_marker(
     message_id: str,
     *,
     ingest: bool = True,
+    author_id: str | None = None,
+    components_v2: bool = False,
     now: float | None = None,
 ) -> None:
     payload = {
@@ -164,6 +180,8 @@ def write_marker(
         "ingest": bool(ingest),
         "channel_id": str(channel_id),
         "job_id": str(job_id),
+        "author_id": str(author_id or "").strip(),
+        "components_v2": bool(components_v2),
     }
     _atomic_write(marker_path(state_dir, channel_id, job_id), json.dumps(payload))
 
@@ -280,6 +298,8 @@ def render_collapsed_embed(
     step_word = "step" if n == 1 else "steps"
     if ok:
         parts = [f"✅ Done in {elapsed}", f"{n} {step_word}"]
+    elif is_manual_cancel(trail.note):
+        parts = [f"🛑 {trail.note or 'Cancelado manualmente.'} · {elapsed}", f"{n} {step_word}"]
     else:
         parts = [f"⚠️ {trail.note or 'ended with error'} · {elapsed}", f"{n} {step_word}"]
     if log_link:
@@ -292,10 +312,13 @@ def render_collapsed_embed(
             lines = lines[1:]
             body = "\n".join(["· …"] + lines)
         description = f"{description}\n{body}"[:EMBED_FALLBACK_MAX]
+    finish_color = color if ok else fail_color
+    if not ok and is_manual_cancel(trail.note):
+        finish_color = CANCEL_COLOR
     return {
         "description": description,
         "footer": {"text": trail.label},
-        "color": color if ok else fail_color,
+        "color": finish_color,
     }
 
 
@@ -351,9 +374,61 @@ class LiveTrail:
         self._dirty = False
         self._ev_off = 0
         self.edits = 0
+        self._components_v2 = False
 
     def _call(self, fn: Callable[[], Any]) -> Any:
         return retry_on_rate_limit(fn, retries=self.cfg.rate_limit_retries, sleep=self._sleep)
+
+    def _stop_on(self) -> bool:
+        return stop_button_enabled(self.cfg)
+
+    def _live_action_row(self) -> dict[str, Any] | None:
+        if not self._stop_on() or self.trail.state != "running":
+            return None
+        rows = running_stop_components(self.channel_id, self.job_id)
+        return rows[0] if rows else None
+
+    def _v2_components(self, embed: dict[str, Any], *, include_button: bool) -> list[dict[str, Any]]:
+        row = self._live_action_row() if include_button else None
+        accent = int(embed.get("color") or self.color)
+        return progress_card(embed_markdown(embed), accent=accent, action_row=row)
+
+    def _post_body(self, embed: dict[str, Any], *, include_button: bool) -> dict[str, Any]:
+        if self._stop_on() and self.trail.state == "running":
+            row = self._live_action_row()
+            if row is not None:
+                self._components_v2 = True
+                return {
+                    "content": "",
+                    "embeds": None,
+                    "components": self._v2_components(embed, include_button=True),
+                    "flags": IS_COMPONENTS_V2,
+                }
+        return {"content": "", "embeds": [embed], "components": None, "flags": None}
+
+    def _edit_body(self, embed: dict[str, Any], *, include_button: bool) -> dict[str, Any]:
+        if self._components_v2:
+            if not include_button and self._stop_on():
+                accent = INACTIVE_COLOR
+                if is_manual_cancel(self.trail.note):
+                    accent = CANCEL_COLOR
+                elif self.trail.state == "done":
+                    accent = int(embed.get("color") or self.color)
+                elif self.trail.state == "failed" and not is_manual_cancel(self.trail.note):
+                    accent = FAIL_COLOR
+                return {
+                    "content": "",
+                    "embeds": None,
+                    "components": progress_card(embed_markdown(embed), accent=accent, action_row=None),
+                    "flags": IS_COMPONENTS_V2,
+                }
+            return {
+                "content": "",
+                "embeds": None,
+                "components": self._v2_components(embed, include_button=include_button),
+                "flags": IS_COMPONENTS_V2,
+            }
+        return {"content": None, "embeds": [embed], "components": None, "flags": None}
 
     def render(self) -> dict[str, Any]:
         if self.trail.state == "running":
@@ -364,13 +439,16 @@ class LiveTrail:
 
     def start(self) -> LiveTrail:
         embed = self.render()
+        body = self._post_body(embed, include_button=True)
 
         def _send() -> str:
             return str(
                 self.transport.send(
                     self.channel_id,
-                    content="",
-                    embeds=[embed],
+                    content=body.get("content") or "",
+                    embeds=body.get("embeds"),
+                    components=body.get("components"),
+                    flags=body.get("flags"),
                     reply_to=self.reply_to,
                 )
                 or ""
@@ -392,6 +470,8 @@ class LiveTrail:
                     self.job_id,
                     message_id,
                     ingest=True,
+                    author_id=str(self.meta.get("author_id") or ""),
+                    components_v2=self._components_v2,
                 )
         return self
 
@@ -432,11 +512,19 @@ class LiveTrail:
             return
         embed = self.render()
         self._dirty = False
-        if embed == self._last_sent:
+        if embed == self._last_sent and self.trail.state == "running":
             return
+        body = self._edit_body(embed, include_button=self.trail.state == "running")
 
         def _edit() -> None:
-            self.transport.edit(self.channel_id, self.message_id or "", embeds=[embed])
+            self.transport.edit(
+                self.channel_id,
+                self.message_id or "",
+                content=body.get("content"),
+                embeds=body.get("embeds"),
+                components=body.get("components"),
+                flags=body.get("flags"),
+            )
 
         try:
             self._call(_edit)
@@ -475,8 +563,17 @@ class LiveTrail:
                 log_link = message_link(guild, self.cfg.cli_logs_channel_id, self.log_message_id)
         collapsed = render_collapsed_embed(self.trail, log_link, color=self.color)
         if self.message_id:
+            body = self._edit_body(collapsed, include_button=False)
+
             def _edit() -> None:
-                self.transport.edit(self.channel_id, self.message_id or "", embeds=[collapsed])
+                self.transport.edit(
+                    self.channel_id,
+                    self.message_id or "",
+                    content=body.get("content"),
+                    embeds=body.get("embeds"),
+                    components=body.get("components"),
+                    flags=body.get("flags"),
+                )
 
             try:
                 self._call(_edit)

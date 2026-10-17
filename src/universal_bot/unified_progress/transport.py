@@ -27,6 +27,8 @@ class DiscordTransport(Protocol):
         *,
         content: str = "",
         embeds: list[dict[str, Any]] | None = None,
+        components: list[dict[str, Any]] | None = None,
+        flags: int | None = None,
         reply_to: str | None = None,
         files: list[dict[str, Any]] | None = None,
     ) -> str:
@@ -40,6 +42,8 @@ class DiscordTransport(Protocol):
         *,
         content: str | None = None,
         embeds: list[dict[str, Any]] | None = None,
+        components: list[dict[str, Any]] | None = None,
+        flags: int | None = None,
     ) -> None:
         """Replace the message body. Raise ``MessageMissing`` when it is gone."""
         ...
