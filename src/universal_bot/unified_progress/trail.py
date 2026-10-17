@@ -430,6 +430,17 @@ class LiveTrail:
             }
         return {"content": None, "embeds": [embed], "components": None, "flags": None}
 
+    def _edit_card(self, embed: dict[str, Any], *, include_button: bool) -> None:
+        body = self._edit_body(embed, include_button=include_button)
+        self.transport.edit(
+            self.channel_id,
+            self.message_id or "",
+            content=body.get("content"),
+            embeds=body.get("embeds"),
+            components=body.get("components"),
+            flags=body.get("flags"),
+        )
+
     def render(self) -> dict[str, Any]:
         if self.trail.state == "running":
             return render_live_embed(
