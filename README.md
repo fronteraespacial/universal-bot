@@ -13,6 +13,7 @@ No es el pack de operación de Frontera Espacial. Cada instalación usa **su pro
 - Installer Windows: `install/windows/install.ps1`
 - Docs de adaptado por host
 - Reglas de secretos (`SECURITY.md`)
+- Progreso unificado (`unified_progress`): un mensaje editable por job, log opcional y pin de cuota apagado por defecto. Ver `docs/unified-progress.md`.
 
 El listener portable (gateway, MCP, watchdog) se suma por PR. Este repo arranca vacío de tokens a propósito.
 

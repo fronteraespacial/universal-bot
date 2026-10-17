@@ -25,6 +25,10 @@ from universal_bot.contracts import (
 )
 from universal_bot.dispatcher import Dispatcher
 from universal_bot.locks import SingletonLock
+from universal_bot.unified_progress import (
+    UnifiedProgressConfig,
+    load_unified_progress,
+)
 from universal_bot.redact import (
     ChunkStreamRedactor,
     RedactingFilter,
@@ -56,6 +60,8 @@ __all__ = [
     "JobStore",
     "Dispatcher",
     "SingletonLock",
+    "UnifiedProgressConfig",
+    "load_unified_progress",
     "SecretRedactor",
     "RedactingFilter",
     "RedactingFormatter",
