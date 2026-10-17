@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from pathlib import Path
 from typing import Any
 
@@ -214,7 +215,7 @@ def parse_event(ev: dict[str, Any]) -> tuple[dict[str, Any] | None, str, str]:
 
 
 class AgyStream:
-    """Accumulate the final answer and push one trail line per tool step."""
+    """Accumulate the final answer and push one trail line per tool/thought step."""
 
     def __init__(self, *, state_dir: str | Path | None = None) -> None:
         self.response = ""
@@ -225,7 +226,24 @@ class AgyStream:
         self._drafted = False
         self._saw_tool = False
         self.deltas: list[str] = []
+        self.segment_deltas: list[str] = []
+        self.intermediate_segments: list[str] = []
         self.state_dir = state_dir
+
+    def _flush_intermediate_segment(self, *, channel: str | None = None, job: str | None = None) -> None:
+        if not self.segment_deltas:
+            return
+        seg = "".join(self.segment_deltas)
+        self.segment_deltas.clear()
+        clean = seg.strip()
+        if clean:
+            self.intermediate_segments.append(seg)
+            push_line(
+                f"{ICON['think']} {sanitize(clean, limit=140)}",
+                channel=channel,
+                job=job,
+                state_dir=self.state_dir,
+            )
 
     def consume(self, raw: str, *, channel: str | None = None, job: str | None = None) -> None:
         raw = (raw or "").strip()
@@ -246,10 +264,17 @@ class AgyStream:
                 self.status = status
         if not step:
             return
-        if str(step.get("step_type") or "").lower() == "agent_response":
+        kind = str(step.get("step_type") or "").lower()
+        if kind == "agent_response":
             delta = str(step.get("text_delta") or "")
             if delta:
                 self.deltas.append(delta)
+                self.segment_deltas.append(delta)
+        elif kind == "tool" or isinstance(step.get("subagent_info"), dict):
+            tname = str(step.get("tool_name") or "").strip().lower()
+            if tname not in _SKIP_TOOLS:
+                self._flush_intermediate_segment(channel=channel, job=job)
+                self._drafted = False
         line, self._thought, self._drafted, self._saw_tool = line_for_step(
             step,
             seen_idx=self._seen,
@@ -272,17 +297,76 @@ _KEPT_PREFIXES = (
 )
 
 
+def _strip_intermediate_prefixes(text: str, segments: list[str]) -> str:
+    cleaned = str(text or "")
+    for seg in segments:
+        s = seg.strip()
+        if not s:
+            continue
+        if cleaned.startswith(seg):
+            cleaned = cleaned[len(seg) :].lstrip()
+        elif cleaned.lstrip().startswith(s):
+            idx = cleaned.find(s)
+            if idx != -1:
+                cleaned = cleaned[idx + len(s) :].lstrip()
+    return cleaned.strip()
+
+
+_LIVE_PROGRESS_PREAMBLE_RE = re.compile(
+    r"^(?:waiting(?: for| on)?\b|i am waiting\b|i have launched\b|"
+    r"i will pause\b|i will now wait\b|i will wait\b|i will let\b|i'm waiting\b|"
+    r"wait cancelled\b|no further action needed\b|i have initiated\b|awaiting\b|"
+    r"the status check\b|i will pause and let\b|"
+    r"esperando\b|continuando\b|ejecutando\b|probando\b|comparando\b|"
+    r"reproduciendo\b|corriendo\b|verificando\b|voy a buscar\b|"
+    r"ahora voy a\b|primero voy a\b|ahora estoy\b|estoy verificando\b|"
+    r"consultando\b|buscando\b|revisando\b|comprobando\b)",
+    re.IGNORECASE,
+)
+
+
+def strip_live_progress_preamble(text: str) -> str:
+    """Remove leading live wait/status lines, preserving the first answer line."""
+    original = str(text or "")
+    stripped = original.strip()
+    lines = stripped.splitlines()
+    first_content = None
+    for index, line in enumerate(lines):
+        candidate = line.strip()
+        if not candidate:
+            continue
+        if (
+            candidate.startswith("#")
+            or candidate.startswith("**")
+            or re.match(r"^\d+[.)]\s", candidate)
+            or not _LIVE_PROGRESS_PREAMBLE_RE.match(candidate)
+        ):
+            first_content = index
+            break
+    if first_content is None or first_content == 0:
+        return stripped
+    return "\n".join(lines[first_content:]).strip()
+
+
 def public_text(stream: AgyStream, raw: str) -> str:
-    """Discord reply body. Keeps wrapper errors. Prefers ``result.response``."""
+    """Discord reply body. Keeps wrapper errors. Strips pre-tool intermediate segments."""
     blob = str(raw or "").strip()
     if blob.startswith(_KEPT_PREFIXES):
         return blob
     if not stream.saw_event and blob.startswith("{"):
         for line in blob.splitlines():
             stream.consume(line)
+    post_tool = "".join(stream.segment_deltas).strip()
+    if stream.intermediate_segments and post_tool:
+        return strip_live_progress_preamble(post_tool)
     text = (stream.response or "").strip() or "".join(stream.deltas).strip()
+    if stream.intermediate_segments and text:
+        stripped = _strip_intermediate_prefixes(text, stream.intermediate_segments)
+        if stripped:
+            return strip_live_progress_preamble(stripped)
     if text:
-        return text
+        return strip_live_progress_preamble(text)
     if stream.saw_event:
         return "AGY no devolvió texto."
     return blob
+

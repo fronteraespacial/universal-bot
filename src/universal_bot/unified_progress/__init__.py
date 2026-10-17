@@ -5,6 +5,12 @@ Nothing in this package opens a network connection.
 """
 
 from universal_bot.unified_progress.cli_logs import job_log_embed, post_job_log
+from universal_bot.unified_progress.cli_streams import (
+    CodexStream,
+    CursorStream,
+    GrokCliStream,
+    OpenCodeStream,
+)
 from universal_bot.unified_progress.config import (
     CliStyle,
     UnifiedProgressConfig,
@@ -43,9 +49,13 @@ from universal_bot.unified_progress.transport import (
 
 __all__ = [
     "CliStyle",
+    "CodexStream",
+    "CursorStream",
     "DiscordTransport",
+    "GrokCliStream",
     "LiveTrail",
     "MessageMissing",
+    "OpenCodeStream",
     "RateLimited",
     "Trail",
     "UnifiedProgressConfig",
