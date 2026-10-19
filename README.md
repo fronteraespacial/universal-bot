@@ -13,6 +13,7 @@ No es el pack de operación de Frontera Espacial. Cada instalación usa **su pro
 - Installer Windows: `install/windows/install.ps1`
 - Docs de adaptado por host
 - Reglas de secretos (`SECURITY.md`)
+- OpenCode V2: serve compartido + PTY + MCP/skills por bot (`docs/opencode-v2.md`, `src/universal_bot/opencode/`)
 
 El listener portable (gateway, MCP, watchdog) se suma por PR. Este repo arranca vacío de tokens a propósito.
 
