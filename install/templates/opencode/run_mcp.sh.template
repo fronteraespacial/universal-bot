@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Per-bot MCP wrapper. Replace placeholders at install time.
+set -euo pipefail
+cd "{{BOT_ROOT}}"
+exec "{{PYTHON_BIN}}" "{{MCP_SERVER}}"

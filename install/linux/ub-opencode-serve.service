@@ -1,0 +1,37 @@
+# systemd --user unit template for shared `opencode serve`.
+# Install:
+#   mkdir -p ~/.config/systemd/user
+#   sed -e "s|@PORT@|${UB_OPENCODE_PORT:-49374}|g" \
+#       -e "s|@HOST@|127.0.0.1|g" \
+#       -e "s|@BIN@|$(command -v opencode)|g" \
+#       -e "s|@CONFIG@|${UB_OPENCODE_CONFIG}|g" \
+#       ub-opencode-serve.service > ~/.config/systemd/user/ub-opencode-serve.service
+#   systemctl --user daemon-reload
+#   systemctl --user enable --now ub-opencode-serve.service
+#
+# Bind 127.0.0.1 only. Do not put passwords or API keys in this unit.
+# Serve password: `opencode service set password <value>` (stored by OpenCode
+# under the user config dir — never commit it). Clients may use
+# OPENCODE_PASSWORD / OPENCODE_SERVER_PASSWORD from the host env.
+
+[Unit]
+Description=Universal Bot OpenCode shared serve (loopback)
+After=default.target
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+# Replace @BIN@ @HOST@ @PORT@ at install time.
+ExecStart=@BIN@ serve --hostname @HOST@ --port @PORT@
+Restart=on-failure
+RestartSec=3
+# Optional per-bot config file (UB_OPENCODE_CONFIG). Leave empty to omit.
+Environment=OPENCODE_CONFIG=@CONFIG@
+# Never set OPENCODE_SERVER_PASSWORD here in a committed template.
+WorkingDirectory=%h
+# Hardening (user unit)
+NoNewPrivileges=true
+
+[Install]
+WantedBy=default.target
