@@ -240,6 +240,18 @@ class WarmBrain:
             out, self._out = self._out, []
         return out
 
+    def release(self, key: str) -> None:
+        """Cierra el cerebro de un job (con --serve es un proceso por job) al salir del modo código."""
+        with self._lock:
+            session = self._sessions.pop(key, None)
+            self._queued.pop(key, None)
+            self._threads.pop(key, None)
+        if session is not None:
+            try:
+                session.close()
+            except Exception:  # cerrar no tumba el runtime
+                log.warning("MAIN %s: close falló", key)
+
     def close(self) -> None:
         for session in self._sessions.values():
             session.close()
@@ -364,11 +376,15 @@ class Orchestrator:
     def stop_location(self, channel_id: int, thread_id: int | None) -> None:
         with connect(self.db_path) as conn:
             rows = conn.execute(
-                "SELECT job_id FROM main_jobs WHERE status = 'running' AND channel_id = ? AND COALESCE(thread_id, 0) = ?",
+                "SELECT job_id, status FROM main_jobs WHERE channel_id = ? AND COALESCE(thread_id, 0) = ?",
                 (channel_id, thread_id or 0),
             ).fetchall()
+        release = getattr(self.brain, "release", None)
         for row in rows:
-            self.stop(row["job_id"])
+            if row["status"] == "running":
+                self.stop(row["job_id"])
+            if release is not None:
+                release(row["job_id"])
 
     def tick(self) -> None:
         if not self._recovered:

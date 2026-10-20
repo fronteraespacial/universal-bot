@@ -1,0 +1,3 @@
+# AGY MAIN por TUI: steer real (corrida 3, 2026-10-20 20:32 ART)
+prompt: contar de 1 a 20 con echo+sleep 2; steer a los 10 s: 'pará y respondé solo STEERED' (alt+m con turno vivo)
+{"start_s": 4.49, "notice_left": false, "busy_at_steer": true, "steer": "live", "result": {"ok": true, "status": "completed", "text": "… Ran 3 commands … > Cambio: pará … STEERED", "ms": 14673}, "after_steer_s": 4.66, "n_lines": 3}
