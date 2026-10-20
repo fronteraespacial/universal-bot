@@ -9,7 +9,7 @@ import re
 import sys
 
 from universal_bot.code_mode.clock import Clock
-from universal_bot.code_mode.config import CodeModeConfig
+from universal_bot.code_mode.config import CodeModeConfig, role_allowed
 from universal_bot.code_mode.discord_port import DiscordPort
 from universal_bot.code_mode.inbox_flow import INSIDE, OUTSIDE, USER_OK, author_roles, confidence_for, should_propose
 from universal_bot.code_mode.job_runner import JobRunner
@@ -79,12 +79,61 @@ class CodeModeApp:
             self._say(job, OUTSIDE)
             self.close_job(job, job_dir, status="done", active_step="charla", summary=OUTSIDE)
             return
-        if not opt.startswith("here_"):
+        if opt.startswith("here_"):
+            opened = self.sessions.activate(job.location, user_id, roles, opt[len("here_") :], "proposal_here")
+            if not opened.ok:
+                return
+            self._route_active(job, job_dir)
             return
-        opened = self.sessions.activate(job.location, user_id, roles, opt[len("here_") :], "proposal_here")
+        if opt == "create_channel":
+            self._open_channel(job, job_dir, user_id, roles)
+            return
+        if opt == "create_thread":
+            self._open_project_thread(job, job_dir, user_id, roles)
+
+    def _open_channel(self, job, job_dir, user_id: int, roles: tuple[str, ...]) -> None:
+        if not role_allowed(self.config.roles.can_start_project, roles):
+            return
+        name = f"{self.config.channel_prefix}{_slug(job.prompt)}"
+        channel_id = self.discord.create_channel(
+            job.guild_id,
+            name,
+            category_name=self.config.projects_category,
+            parent_id=self.config.admin_category_id,
+        )
+        if not channel_id:
+            return
+        opened = self.sessions.activate(
+            Location(job.guild_id, channel_id),
+            user_id,
+            roles,
+            "until_exit",
+            "project_channel",
+            bypass_role_check=True,
+        )
         if not opened.ok:
             return
-        self._route_active(job, job_dir)
+        self._route_active(replace(job, channel_id=channel_id, thread_id=None), job_dir)
+
+    def _open_project_thread(self, job, job_dir, user_id: int, roles: tuple[str, ...]) -> None:
+        if not role_allowed(self.config.roles.can_start_thread, roles):
+            return
+        channel_id = self.config.projects_channel_id or job.channel_id
+        name = f"{self.config.channel_prefix}{_slug(job.prompt)}"
+        thread_id = self.discord.create_thread(channel_id, name)
+        if not thread_id:
+            return
+        opened = self.sessions.activate(
+            Location(job.guild_id, channel_id, thread_id),
+            user_id,
+            roles,
+            "until_exit",
+            "project_thread",
+            bypass_role_check=True,
+        )
+        if not opened.ok:
+            return
+        self._route_active(replace(job, channel_id=channel_id, thread_id=thread_id), job_dir)
 
     def finish_untested(self, job_dir):
         path = Path(job_dir) / "state.json"
