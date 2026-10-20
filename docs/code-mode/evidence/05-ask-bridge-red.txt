@@ -1,0 +1,605 @@
+FFFFFFFFFFFFFFF                                                          [100%]
+=================================== FAILURES ===================================
+________________________ test_ask_releases_the_job_slot ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_ask_releases_the_job_slot0')
+
+    def test_ask_releases_the_job_slot(tmp_path):
+        env = make(tmp_path)
+        first = admit(env.store, "m1", "c1")
+        second = admit(env.store, "m2", "c2")
+        claimed = env.store.claim_next_job("worker", max_concurrent=1)
+        assert claimed.job_id == first.job_id
+        assert env.store.start_job(claimed.job_id) is True
+        assert env.store.claim_next_job("worker", max_concurrent=1) is None
+>       question = env.bridge.ask(
+            project_id="P-missing",
+            stage_key="02-lab",
+            kind="advisor_card",
+            prompt_plain="¿Seguimos?",
+            options=("seguir", "frenar"),
+            allowed_approvers=(APPROVER,),
+            job_id=claimed.job_id,
+            resume_token="resume-abc",
+            channel_id=100,
+            thread_id=None,
+        )
+
+tests/test_ask_bridge.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c54d97f0>
+kwargs = {'project_id': 'P-missing', 'stage_key': '02-lab', 'kind': 'advisor_card', 'prompt_plain': '¿Seguimos?', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+________________ test_answer_enqueues_resume_and_is_idempotent _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_answer_enqueues_resume_an0')
+
+    def test_answer_enqueues_resume_and_is_idempotent(tmp_path):
+        env = make(tmp_path)
+        job = admit(env.store, "m1", "c1")
+        claimed = env.store.claim_next_job("worker", max_concurrent=1)
+        env.store.start_job(claimed.job_id)
+>       question = env.bridge.ask(
+            project_id="P-1",
+            stage_key="04-impl",
+            kind="advisor_card",
+            prompt_plain="¿Seguimos?",
+            options=("seguir", "frenar"),
+            allowed_approvers=(APPROVER,),
+            job_id=job.job_id,
+            resume_token="resume-abc",
+            channel_id=100,
+            thread_id=5,
+        )
+
+tests/test_ask_bridge.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c56fbc50>
+kwargs = {'project_id': 'P-1', 'stage_key': '04-impl', 'kind': 'advisor_card', 'prompt_plain': '¿Seguimos?', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+________________ test_unauthorized_answer_does_not_change_state ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_unauthorized_answer_does_0')
+
+    def test_unauthorized_answer_does_not_change_state(tmp_path):
+        env = make(tmp_path)
+        job = admit(env.store, "m1", "c1")
+>       question = env.bridge.ask(
+            project_id="P-1",
+            stage_key="04-impl",
+            kind="advisor_card",
+            prompt_plain="¿Seguimos?",
+            options=("seguir",),
+            allowed_approvers=(APPROVER,),
+            job_id=job.job_id,
+            resume_token="resume-abc",
+            channel_id=100,
+            thread_id=None,
+        )
+
+tests/test_ask_bridge.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c52e0a50>
+kwargs = {'project_id': 'P-1', 'stage_key': '04-impl', 'kind': 'advisor_card', 'prompt_plain': '¿Seguimos?', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+___________________ test_reminder_then_pause_with_fake_clock ___________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_reminder_then_pause_with_0')
+
+    def test_reminder_then_pause_with_fake_clock(tmp_path):
+        env = make(tmp_path)
+        project = env.ledger.create_project(
+            guild_id=42, requester_id=APPROVER, state=ProjectState.RUNNING, title_plain="Turnos"
+        )
+        job = admit(env.store, "m1", "c1")
+>       env.bridge.ask(
+            project_id=project.id,
+            stage_key="03-plan",
+            kind="sandbox_check_failed",
+            prompt_plain="¿Seguimos?",
+            options=("reintentar",),
+            allowed_approvers=(APPROVER,),
+            job_id=job.job_id,
+            resume_token="resume-abc",
+            channel_id=100,
+            thread_id=None,
+        )
+
+tests/test_ask_bridge.py:148: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c53148a0>
+kwargs = {'project_id': 'P-60e575e82c6e', 'stage_key': '03-plan', 'kind': 'sandbox_check_failed', 'prompt_plain': '¿Seguimos?', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+________________________ test_question_survives_restart ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_question_survives_restart0')
+
+    def test_question_survives_restart(tmp_path):
+        env = make(tmp_path)
+        job = admit(env.store, "m1", "c1")
+>       question = env.bridge.ask(
+            project_id="P-1",
+            stage_key="02-lab",
+            kind="advisor_card",
+            prompt_plain="¿Seguimos?",
+            options=("seguir",),
+            allowed_approvers=(APPROVER,),
+            job_id=job.job_id,
+            resume_token="resume-restart",
+            channel_id=100,
+            thread_id=None,
+        )
+
+tests/test_ask_bridge.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c5314d60>
+kwargs = {'project_id': 'P-1', 'stage_key': '02-lab', 'kind': 'advisor_card', 'prompt_plain': '¿Seguimos?', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+_______________ test_blocking_defaults[advisor_card-None-False] ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_blocking_defaults_advisor0')
+kind = 'advisor_card', blocking = None, expected = False
+
+    @pytest.mark.parametrize(
+        ("kind", "blocking", "expected"),
+        [
+            ("advisor_card", None, False),
+            ("human_brake", None, False),
+            ("brief_confirm", None, False),
+            ("code_mode_proposal", None, False),
+            ("lab_inconclusive", False, False),
+            ("prod_approval", None, True),
+            ("sandbox_check_failed", None, True),
+            ("admin_provision", None, True),
+        ],
+    )
+    def test_blocking_defaults(tmp_path, kind, blocking, expected):
+        env = make(tmp_path)
+>       question = env.bridge.ask(
+            project_id=f"P-{kind}",
+            stage_key=kind,
+            kind=kind,
+            prompt_plain="pregunta",
+            options=("ok",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token=f"resume-{kind}",
+            channel_id=100,
+            thread_id=None,
+            blocking=blocking,
+        )
+
+tests/test_ask_bridge.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c56ce0f0>
+kwargs = {'project_id': 'P-advisor_card', 'stage_key': 'advisor_card', 'kind': 'advisor_card', 'prompt_plain': 'pregunta', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+________________ test_blocking_defaults[human_brake-None-False] ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_blocking_defaults_human_b0')
+kind = 'human_brake', blocking = None, expected = False
+
+    @pytest.mark.parametrize(
+        ("kind", "blocking", "expected"),
+        [
+            ("advisor_card", None, False),
+            ("human_brake", None, False),
+            ("brief_confirm", None, False),
+            ("code_mode_proposal", None, False),
+            ("lab_inconclusive", False, False),
+            ("prod_approval", None, True),
+            ("sandbox_check_failed", None, True),
+            ("admin_provision", None, True),
+        ],
+    )
+    def test_blocking_defaults(tmp_path, kind, blocking, expected):
+        env = make(tmp_path)
+>       question = env.bridge.ask(
+            project_id=f"P-{kind}",
+            stage_key=kind,
+            kind=kind,
+            prompt_plain="pregunta",
+            options=("ok",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token=f"resume-{kind}",
+            channel_id=100,
+            thread_id=None,
+            blocking=blocking,
+        )
+
+tests/test_ask_bridge.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c53e7790>
+kwargs = {'project_id': 'P-human_brake', 'stage_key': 'human_brake', 'kind': 'human_brake', 'prompt_plain': 'pregunta', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+_______________ test_blocking_defaults[brief_confirm-None-False] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_blocking_defaults_brief_c0')
+kind = 'brief_confirm', blocking = None, expected = False
+
+    @pytest.mark.parametrize(
+        ("kind", "blocking", "expected"),
+        [
+            ("advisor_card", None, False),
+            ("human_brake", None, False),
+            ("brief_confirm", None, False),
+            ("code_mode_proposal", None, False),
+            ("lab_inconclusive", False, False),
+            ("prod_approval", None, True),
+            ("sandbox_check_failed", None, True),
+            ("admin_provision", None, True),
+        ],
+    )
+    def test_blocking_defaults(tmp_path, kind, blocking, expected):
+        env = make(tmp_path)
+>       question = env.bridge.ask(
+            project_id=f"P-{kind}",
+            stage_key=kind,
+            kind=kind,
+            prompt_plain="pregunta",
+            options=("ok",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token=f"resume-{kind}",
+            channel_id=100,
+            thread_id=None,
+            blocking=blocking,
+        )
+
+tests/test_ask_bridge.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c5360160>
+kwargs = {'project_id': 'P-brief_confirm', 'stage_key': 'brief_confirm', 'kind': 'brief_confirm', 'prompt_plain': 'pregunta', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+____________ test_blocking_defaults[code_mode_proposal-None-False] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_blocking_defaults_code_mo0')
+kind = 'code_mode_proposal', blocking = None, expected = False
+
+    @pytest.mark.parametrize(
+        ("kind", "blocking", "expected"),
+        [
+            ("advisor_card", None, False),
+            ("human_brake", None, False),
+            ("brief_confirm", None, False),
+            ("code_mode_proposal", None, False),
+            ("lab_inconclusive", False, False),
+            ("prod_approval", None, True),
+            ("sandbox_check_failed", None, True),
+            ("admin_provision", None, True),
+        ],
+    )
+    def test_blocking_defaults(tmp_path, kind, blocking, expected):
+        env = make(tmp_path)
+>       question = env.bridge.ask(
+            project_id=f"P-{kind}",
+            stage_key=kind,
+            kind=kind,
+            prompt_plain="pregunta",
+            options=("ok",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token=f"resume-{kind}",
+            channel_id=100,
+            thread_id=None,
+            blocking=blocking,
+        )
+
+tests/test_ask_bridge.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c53eb450>
+kwargs = {'project_id': 'P-code_mode_proposal', 'stage_key': 'code_mode_proposal', 'kind': 'code_mode_proposal', 'prompt_plain': 'pregunta', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+_____________ test_blocking_defaults[lab_inconclusive-False-False] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_blocking_defaults_lab_inc0')
+kind = 'lab_inconclusive', blocking = False, expected = False
+
+    @pytest.mark.parametrize(
+        ("kind", "blocking", "expected"),
+        [
+            ("advisor_card", None, False),
+            ("human_brake", None, False),
+            ("brief_confirm", None, False),
+            ("code_mode_proposal", None, False),
+            ("lab_inconclusive", False, False),
+            ("prod_approval", None, True),
+            ("sandbox_check_failed", None, True),
+            ("admin_provision", None, True),
+        ],
+    )
+    def test_blocking_defaults(tmp_path, kind, blocking, expected):
+        env = make(tmp_path)
+>       question = env.bridge.ask(
+            project_id=f"P-{kind}",
+            stage_key=kind,
+            kind=kind,
+            prompt_plain="pregunta",
+            options=("ok",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token=f"resume-{kind}",
+            channel_id=100,
+            thread_id=None,
+            blocking=blocking,
+        )
+
+tests/test_ask_bridge.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c53ebe50>
+kwargs = {'project_id': 'P-lab_inconclusive', 'stage_key': 'lab_inconclusive', 'kind': 'lab_inconclusive', 'prompt_plain': 'pregunta', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+_______________ test_blocking_defaults[prod_approval-None-True] ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_blocking_defaults_prod_ap0')
+kind = 'prod_approval', blocking = None, expected = True
+
+    @pytest.mark.parametrize(
+        ("kind", "blocking", "expected"),
+        [
+            ("advisor_card", None, False),
+            ("human_brake", None, False),
+            ("brief_confirm", None, False),
+            ("code_mode_proposal", None, False),
+            ("lab_inconclusive", False, False),
+            ("prod_approval", None, True),
+            ("sandbox_check_failed", None, True),
+            ("admin_provision", None, True),
+        ],
+    )
+    def test_blocking_defaults(tmp_path, kind, blocking, expected):
+        env = make(tmp_path)
+>       question = env.bridge.ask(
+            project_id=f"P-{kind}",
+            stage_key=kind,
+            kind=kind,
+            prompt_plain="pregunta",
+            options=("ok",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token=f"resume-{kind}",
+            channel_id=100,
+            thread_id=None,
+            blocking=blocking,
+        )
+
+tests/test_ask_bridge.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c53b0f50>
+kwargs = {'project_id': 'P-prod_approval', 'stage_key': 'prod_approval', 'kind': 'prod_approval', 'prompt_plain': 'pregunta', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+____________ test_blocking_defaults[sandbox_check_failed-None-True] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_blocking_defaults_sandbox0')
+kind = 'sandbox_check_failed', blocking = None, expected = True
+
+    @pytest.mark.parametrize(
+        ("kind", "blocking", "expected"),
+        [
+            ("advisor_card", None, False),
+            ("human_brake", None, False),
+            ("brief_confirm", None, False),
+            ("code_mode_proposal", None, False),
+            ("lab_inconclusive", False, False),
+            ("prod_approval", None, True),
+            ("sandbox_check_failed", None, True),
+            ("admin_provision", None, True),
+        ],
+    )
+    def test_blocking_defaults(tmp_path, kind, blocking, expected):
+        env = make(tmp_path)
+>       question = env.bridge.ask(
+            project_id=f"P-{kind}",
+            stage_key=kind,
+            kind=kind,
+            prompt_plain="pregunta",
+            options=("ok",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token=f"resume-{kind}",
+            channel_id=100,
+            thread_id=None,
+            blocking=blocking,
+        )
+
+tests/test_ask_bridge.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c53b1d60>
+kwargs = {'project_id': 'P-sandbox_check_failed', 'stage_key': 'sandbox_check_failed', 'kind': 'sandbox_check_failed', 'prompt_plain': 'pregunta', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+______________ test_blocking_defaults[admin_provision-None-True] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_blocking_defaults_admin_p0')
+kind = 'admin_provision', blocking = None, expected = True
+
+    @pytest.mark.parametrize(
+        ("kind", "blocking", "expected"),
+        [
+            ("advisor_card", None, False),
+            ("human_brake", None, False),
+            ("brief_confirm", None, False),
+            ("code_mode_proposal", None, False),
+            ("lab_inconclusive", False, False),
+            ("prod_approval", None, True),
+            ("sandbox_check_failed", None, True),
+            ("admin_provision", None, True),
+        ],
+    )
+    def test_blocking_defaults(tmp_path, kind, blocking, expected):
+        env = make(tmp_path)
+>       question = env.bridge.ask(
+            project_id=f"P-{kind}",
+            stage_key=kind,
+            kind=kind,
+            prompt_plain="pregunta",
+            options=("ok",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token=f"resume-{kind}",
+            channel_id=100,
+            thread_id=None,
+            blocking=blocking,
+        )
+
+tests/test_ask_bridge.py:206: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c536de10>
+kwargs = {'project_id': 'P-admin_provision', 'stage_key': 'admin_provision', 'kind': 'admin_provision', 'prompt_plain': 'pregunta', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+______________________ test_plan_approval_does_not_exist _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_plan_approval_does_not_ex0')
+
+    def test_plan_approval_does_not_exist(tmp_path):
+        env = make(tmp_path)
+        with pytest.raises(ValueError, match="plan_approval"):
+>           env.bridge.ask(
+                project_id="P-1",
+                stage_key="03-plan",
+                kind="plan_approval",
+                prompt_plain="¿Apruebo el plan?",
+                options=("sí",),
+                allowed_approvers=(APPROVER,),
+                job_id=None,
+                resume_token="resume-plan",
+                channel_id=100,
+                thread_id=None,
+            )
+
+tests/test_ask_bridge.py:225: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c536edd0>
+kwargs = {'project_id': 'P-1', 'stage_key': '03-plan', 'kind': 'plan_approval', 'prompt_plain': '¿Apruebo el plan?', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+_______________________ test_one_open_question_per_stage _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-48/test_one_open_question_per_sta0')
+
+    def test_one_open_question_per_stage(tmp_path):
+        env = make(tmp_path)
+>       first = env.bridge.ask(
+            project_id="P-1",
+            stage_key="02-lab",
+            kind="advisor_card",
+            prompt_plain="primera",
+            options=("a",),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token="resume-1",
+            channel_id=100,
+            thread_id=None,
+        )
+
+tests/test_ask_bridge.py:241: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f97c531f380>
+kwargs = {'project_id': 'P-1', 'stage_key': '02-lab', 'kind': 'advisor_card', 'prompt_plain': 'primera', ...}
+
+    def ask(self, **kwargs):
+>       raise NotImplementedError("ask")
+E       NotImplementedError: ask
+
+src/universal_bot/code_mode/ask_bridge.py:30: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_ask_bridge.py::test_ask_releases_the_job_slot - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_answer_enqueues_resume_and_is_idempotent - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_unauthorized_answer_does_not_change_state - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_reminder_then_pause_with_fake_clock - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_question_survives_restart - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_blocking_defaults[advisor_card-None-False] - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_blocking_defaults[human_brake-None-False] - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_blocking_defaults[brief_confirm-None-False] - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_blocking_defaults[code_mode_proposal-None-False] - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_blocking_defaults[lab_inconclusive-False-False] - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_blocking_defaults[prod_approval-None-True] - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_blocking_defaults[sandbox_check_failed-None-True] - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_blocking_defaults[admin_provision-None-True] - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_plan_approval_does_not_exist - NotImplementedError: ask
+FAILED tests/test_ask_bridge.py::test_one_open_question_per_stage - NotImplementedError: ask
+15 failed in 0.20s
