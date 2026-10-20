@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "job_id": "lc_1562300000000000001",
+  "instance": "fe-labcode",
+  "source": "discord",
+  "guild_id": "779800770337177652",
+  "channel_id": "1562169649574051942",
+  "thread_id": null,
+  "parent_channel_id": null,
+  "message_id": "1562300000000000001",
+  "author": {
+    "id": "329811958603972609",
+    "display_name": "Julian"
+  },
+  "author_context": "rol: @dev, @admin",
+  "content_raw": "<@1400000000000000000> pasemos a modo código: ¿se puede transcribir rápido videos en inglés de SpaceX?",
+  "prompt": "pasemos a modo código: ¿se puede transcribir rápido videos en inglés de SpaceX?",
+  "attachments": [],
+  "audio_transcripts": [],
+  "previous_messages": [],
+  "location_key": "discord:779800770337177652:1562169649574051942",
+  "session_key": "discord:779800770337177652:1562169649574051942",
+  "created_ts": 1792524693.861835,
+  "deadline_ts": 1792526493.861835,
+  "button_prefix": "ublab:",
+  "reply_to_message_id": "1562300000000000001",
+  "outbox_dir": "/tmp/tmp.TAT1gQGaaP/outbox",
+  "answers_dir": "/tmp/tmp.TAT1gQGaaP/answers"
+}
