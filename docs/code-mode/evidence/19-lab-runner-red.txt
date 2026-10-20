@@ -35,7 +35,7 @@ E   NotImplementedError
 E   NotImplementedError
 <repo>/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
 E   AssertionError: assert 2 == 1
-     +  where 2 = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<workspace>/codemode-base/catalog/routing-policy.yaml', env_extra=()).lab_max_t2
+     +  where 2 = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()).lab_max_t2
 <repo>/tests/test_lab_runner.py:197: AssertionError: assert 2 == 1
 E   NotImplementedError
 <repo>/src/universal_bot/code_mode/lab_runner.py:41: NotImplementedError
@@ -100,7 +100,7 @@ FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitel
 FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[aws_secret] - NotImplementedError
 FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[MONKEY] - NotImplementedError
 FAILED tests/test_lab_runner.py::test_yaml_lab_budget_overrides_the_defaults - AssertionError: assert 2 == 1
- +  where 2 = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<workspace>/codemode-base/catalog/routing-policy.yaml', env_extra=()).lab_max_t2
+ +  where 2 = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()).lab_max_t2
 FAILED tests/test_lab_runner.py::test_parse_marked_block[LAB_RESULT: {"hypothesis": "el audio entra en menos de un minuto", "commands": ["python probe.py"], "result": "40 segundos", "artifacts": ["probe.txt"], "verdict": "APPROVE", "evidence_class": "running"}-LAB_RESULT:-expected0] - NotImplementedError
 FAILED tests/test_lab_runner.py::test_parse_marked_block[ruido\nLAB_RESULT: {"hypothesis": "el audio entra en menos de un minuto", "commands": ["python probe.py"], "result": "40 segundos", "artifacts": ["probe.txt"], "verdict": "APPROVE", "evidence_class": "running"}\n-LAB_RESULT:-expected1] - NotImplementedError
 FAILED tests/test_lab_runner.py::test_parse_marked_block[sin bloque-LAB_RESULT:-None] - NotImplementedError

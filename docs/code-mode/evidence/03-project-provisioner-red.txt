@@ -2,7 +2,7 @@ FFFFFF                                                                   [100%]
 =================================== FAILURES ===================================
 _____ test_role_without_permission_asks_admin_and_does_not_create_channel ______
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-44/test_role_without_permission_a0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_role_without_permission_a0')
 
     def test_role_without_permission_asks_admin_and_does_not_create_channel(tmp_path):
         env = make(tmp_path)
@@ -25,7 +25,7 @@ E       NotImplementedError: provision
 src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
 ________________ test_thread_without_permission_also_asks_admin ________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-44/test_thread_without_permission0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_thread_without_permission0')
 
     def test_thread_without_permission_also_asks_admin(tmp_path):
         env = make(tmp_path, CodeModeConfig(roles=RolePolicy(can_start_thread=("@dev",))))
@@ -48,7 +48,7 @@ E       NotImplementedError: provision
 src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
 ____________________ test_full_channel_cap_offers_a_thread _____________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-44/test_full_channel_cap_offers_a0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_full_channel_cap_offers_a0')
 
     def test_full_channel_cap_offers_a_thread(tmp_path):
         env = make(tmp_path, CodeModeConfig(max_open_projects=1))
@@ -79,7 +79,7 @@ E       NotImplementedError: provision
 src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
 _______________ test_missing_manage_channels_degrades_to_thread ________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-44/test_missing_manage_channels_d0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_missing_manage_channels_d0')
 
     def test_missing_manage_channels_degrades_to_thread(tmp_path):
         env = make(tmp_path, manage_channels=False)
@@ -102,7 +102,7 @@ E       NotImplementedError: provision
 src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
 ____________ test_channel_is_unique_and_opens_an_unbounded_session _____________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-44/test_channel_is_unique_and_ope0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_channel_is_unique_and_ope0')
 
     def test_channel_is_unique_and_opens_an_unbounded_session(tmp_path):
         env = make(tmp_path)
@@ -125,7 +125,7 @@ E       NotImplementedError: provision
 src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
 __________________ test_thread_mode_uses_the_projects_channel __________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-44/test_thread_mode_uses_the_proj0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_thread_mode_uses_the_proj0')
 
     def test_thread_mode_uses_the_projects_channel(tmp_path):
         env = make(tmp_path)

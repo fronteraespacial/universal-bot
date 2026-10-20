@@ -1,6 +1,6 @@
 # Puente CodeMode de `#labcode` — 2026-10-20
 
-El puente une exclusivamente `#labcode` (`910001`) con el runtime local de CodeMode-BOT mediante un spool en disco. Solo Julian y Emanuel, sin prefijo de cerebro ni sticky de hilo, entran al puente. Prefijos o sticky siguen el routing normal.
+El puente une exclusivamente `#labcode` (`<LABCODE_CHANNEL_ID>`) con el runtime local de CodeMode-BOT mediante un spool en disco. Solo Julian y Emanuel, sin prefijo de cerebro ni sticky de hilo, entran al puente. Prefijos o sticky siguen el routing normal.
 
 El toggle es `data/labcode.txt`: la primera línea no vacía ni comentario acepta `on`, `1`, `true` o `yes`; todo lo demás falla cerrado en `off`. `FE_LABCODE=on|off` tiene prioridad. Rollback rápido: escribir `off`, sin bounce. Rollback completo: restaurar `backups/labcode-20261020/` y recién entonces hacer el bounce normal con `listener_health restart`.
 
@@ -37,7 +37,7 @@ El scope de entrega es `#labcode`, p- channels registrados, y sus hilos. `create
 
 ## Notas operativas (verificación Grok Bot, 2026-10-20)
 
-**Archivos:** `labcode_bridge.py` (nuevo), `listener.py` (hooks), `lab_channels.py` (`LABCODE_CHANNEL_ID`), `data/labcode.txt` (toggle, `off`), `data/channel_auto_activate.json` (fila `910001`, auto ON, parent ADMINISTRACIÓN), `test_labcode_bridge.py`. Backup: `backups/labcode-20261020/`.
+**Archivos:** `labcode_bridge.py` (nuevo), `listener.py` (hooks), `lab_channels.py` (`LABCODE_CHANNEL_ID`), `data/labcode.txt` (toggle, `off`), `data/channel_auto_activate.json` (fila `<LABCODE_CHANNEL_ID>`, auto ON, parent ADMINISTRACIÓN), `test_labcode_bridge.py`. Backup: `backups/labcode-20261020/`.
 
 **Hooks en `listener.py`:**
 - `on_message`: gate `_lc_ctx = lcb.enabled() and lcb.in_context(...)` justo después del bloque LAB3 y antes de `in_main`. Con toggle `off` no se ejecuta nada nuevo.
@@ -59,4 +59,4 @@ El scope de entrega es `#labcode`, p- channels registrados, y sus hilos. `create
 - Ops sin `.result.json` → toggle `off` o loop no iniciado (bounce pendiente).
 - Resultado `out_of_scope` → canal fuera de `#labcode`/p- registrados/sus hilos. `toggle_off` → se apagó con ops pendientes.
 
-**Tests:** `<workspace>/discord-venv/bin/python -m unittest test_labcode_bridge -v` (offline, temp dirs, nunca toca el toggle real).
+**Tests:** `<repo>/discord-venv/bin/python -m unittest test_labcode_bridge -v` (offline, temp dirs, nunca toca el toggle real).

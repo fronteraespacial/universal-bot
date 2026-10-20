@@ -15,11 +15,6 @@ USER_OK = (
     "No hace falta una aprobación para seguir con la prueba."
 )
 
-_DEFAULT_ROLES = (
-    ("910004", ("@dev", "@admin")),
-    ("910006", ("@dev", "@admin")),
-)
-
 _CONFIDENCE = {
     ("refactor",): 0.91,
     ("multi-workstream",): 0.90,
@@ -47,7 +42,7 @@ def should_propose(tier, confidence, threshold, tiers) -> bool:
 
 
 def author_roles(author_id, config) -> tuple[str, ...]:
-    table = _DEFAULT_ROLES if config.role_map is None else config.role_map
+    table = config.role_map or ()
     key = str(author_id)
     for snowflake, roles in table:
         if snowflake == key:

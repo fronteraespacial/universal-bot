@@ -63,6 +63,9 @@ class CodeModeApp:
 
     def handle_job(self, job, job_dir):
         self.begin_ops()
+        if job.channel_id not in self.config.allowed_channels:
+            self.close_job(job, job_dir, status="skipped", active_step="cerrado", summary="")
+            return
         roles = author_roles(job.author.id, self.config)
         if self._session_active(job) or self._activate_manual(job, roles):
             self._route_active(job, job_dir)

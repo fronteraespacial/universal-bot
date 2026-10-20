@@ -2,7 +2,7 @@ FFFFFFFFFF                                                               [100%]
 =================================== FAILURES ===================================
 ________________________ test_tiers_and_confidence_gate ________________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_tiers_and_confidence_gate0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_tiers_and_confidence_gate0')
 
     def test_tiers_and_confidence_gate(tmp_path):
         cases = (
@@ -33,7 +33,7 @@ E       NotImplementedError: propose
 src/universal_bot/code_mode/proposer.py:26: NotImplementedError
 ________ test_t2_proposal_lists_four_options_and_the_duration_selector _________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_t2_proposal_lists_four_op0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_t2_proposal_lists_four_op0')
 
     def test_t2_proposal_lists_four_options_and_the_duration_selector(tmp_path):
         env = make(tmp_path)
@@ -54,7 +54,7 @@ E       NotImplementedError: propose
 src/universal_bot/code_mode/proposer.py:26: NotImplementedError
 ________________ test_allow_channels_false_hides_create_channel ________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_allow_channels_false_hide0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_allow_channels_false_hide0')
 
     def test_allow_channels_false_hides_create_channel(tmp_path):
         env = make(tmp_path, CodeModeConfig(allow_channels=False))
@@ -75,7 +75,7 @@ E       NotImplementedError: propose
 src/universal_bot/code_mode/proposer.py:26: NotImplementedError
 ________________________ test_propose_once_per_request _________________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_propose_once_per_request0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_propose_once_per_request0')
 
     def test_propose_once_per_request(tmp_path):
         env = make(tmp_path)
@@ -96,7 +96,7 @@ E       NotImplementedError: propose
 src/universal_bot/code_mode/proposer.py:26: NotImplementedError
 ________________ test_here_opens_session_with_default_duration _________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_here_opens_session_with_d0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_here_opens_session_with_d0')
 
     def test_here_opens_session_with_default_duration(tmp_path):
         env = make(tmp_path)
@@ -116,7 +116,7 @@ E       NotImplementedError: propose
 src/universal_bot/code_mode/proposer.py:26: NotImplementedError
 ______________ test_here_without_permission_does_not_open_session ______________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_here_without_permission_d0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_here_without_permission_d0')
 
     def test_here_without_permission_does_not_open_session(tmp_path):
         env = make(tmp_path)
@@ -136,7 +136,7 @@ E       NotImplementedError: propose
 src/universal_bot/code_mode/proposer.py:26: NotImplementedError
 _____________ test_decline_routes_to_basic_cli_with_override_tier ______________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_decline_routes_to_basic_c0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_decline_routes_to_basic_c0')
 
     def test_decline_routes_to_basic_cli_with_override_tier(tmp_path):
         env = make(tmp_path)
@@ -156,7 +156,7 @@ E       NotImplementedError: propose
 src/universal_bot/code_mode/proposer.py:26: NotImplementedError
 _____________________ test_configured_tiers_can_exclude_t2 _____________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_configured_tiers_can_excl0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_configured_tiers_can_excl0')
 
     def test_configured_tiers_can_exclude_t2(tmp_path):
         env = make(tmp_path, CodeModeConfig(propose_tiers=("T3",)))
@@ -177,7 +177,7 @@ E       NotImplementedError: propose
 src/universal_bot/code_mode/proposer.py:26: NotImplementedError
 ______________ test_manual_command_activates_through_the_proposer ______________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_manual_command_activates_0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_manual_command_activates_0')
 
     def test_manual_command_activates_through_the_proposer(tmp_path):
         env = make(tmp_path)
@@ -198,7 +198,7 @@ E       NotImplementedError: activate_manual
 src/universal_bot/code_mode/proposer.py:32: NotImplementedError
 ______________________ test_custom_threshold_is_inclusive ______________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_custom_threshold_is_inclu0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-41/test_custom_threshold_is_inclu0')
 
     def test_custom_threshold_is_inclusive(tmp_path):
         env = make(tmp_path, CodeModeConfig(proposal_threshold=0.95))

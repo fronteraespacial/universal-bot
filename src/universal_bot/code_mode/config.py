@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from datetime import timedelta
+import os
 from pathlib import Path
 import re
 
@@ -73,7 +74,10 @@ class CodeModeConfig:
     sandbox: SandboxPolicy = SandboxPolicy()
     security_check: str = "on"
     host_role: str = "vps"
-    allowed_channels: tuple[int, ...] = (910001,)
+    allowed_channels: tuple[int, ...] = ()
+    admin_category_id: int | None = None
+    guild_id: int | None = None
+    projects_channel_id: int | None = None
     reminders_first_after: str = "4h"
     reminders_pause_after: str = "24h"
     reminders_cancel_paused_after: str = "7d"
@@ -85,9 +89,9 @@ class CodeModeConfig:
     lab_timeout_s: float = 900.0
     maverick_timeout_s: float = 300.0
     lab_root: str = ""
-    routing_policy: str = "<workspace>/codemode-base/catalog/routing-policy.yaml"
+    routing_policy: str = ""
     env_extra: tuple[str, ...] = ()
-    role_map: tuple[tuple[str, tuple[str, ...]], ...] | None = None
+    role_map: tuple[tuple[str, tuple[str, ...]], ...] = ()
 
 
 def parse_duration(spec: str) -> timedelta | None:
@@ -178,6 +182,12 @@ def load_code_mode_config(path) -> CodeModeConfig:
         security_check=security_check,
         host_role=host_role,
         allowed_channels=_channels(block.get("allowed_channels", base.allowed_channels)),
+        admin_category_id=_optional_int(block.get("admin_category_id", base.admin_category_id), "admin_category_id"),
+        guild_id=_optional_int(block.get("guild_id", base.guild_id), "guild_id"),
+        projects_channel_id=_optional_int(
+            block.get("projects_channel_id", base.projects_channel_id),
+            "projects_channel_id",
+        ),
         reminders_first_after=str(reminders.get("first_after", base.reminders_first_after)),
         reminders_pause_after=str(reminders.get("pause_after", base.reminders_pause_after)),
         reminders_cancel_paused_after=str(
@@ -235,6 +245,14 @@ def _strings(value: object, field: str) -> tuple[str, ...]:
     if not isinstance(value, list):
         raise ConfigError(f"{field} tiene que ser una lista")
     return tuple(str(item) for item in value)
+
+
+def _optional_int(value: object, field: str) -> int | None:
+    if value is None:
+        return None
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise ConfigError(f"{field} tiene que ser numérico")
+    return value
 
 
 def _channels(value: object) -> tuple[int, ...]:
@@ -322,6 +340,75 @@ def _role_map(value: object) -> tuple[tuple[str, tuple[str, ...]], ...]:
     rows = []
     for key, roles in value.items():
         rows.append((str(key), _strings(roles, "role_map")))
+    return tuple(rows)
+
+
+def load_runtime_config(root: Path | None = None) -> CodeModeConfig:
+    """Defaults vacíos, después config/local.yaml si existe, después UBLAB_*."""
+    base = Path(root) if root is not None else Path.cwd()
+    override = os.environ.get("UBLAB_CONFIG")
+    if override is not None:
+        path = Path(override) if override else None
+    else:
+        path = base / "config" / "local.yaml"
+    config = load_code_mode_config(path) if path is not None and path.is_file() else CodeModeConfig()
+    return apply_env(config)
+
+
+def apply_env(config: CodeModeConfig) -> CodeModeConfig:
+    updates: dict = {}
+    channels = os.environ.get("UBLAB_ALLOWED_CHANNELS")
+    if channels is not None:
+        updates["allowed_channels"] = _env_channels(channels)
+    for field, name in (
+        ("admin_category_id", "UBLAB_ADMIN_CATEGORY_ID"),
+        ("guild_id", "UBLAB_GUILD_ID"),
+        ("projects_channel_id", "UBLAB_PROJECTS_CHANNEL_ID"),
+    ):
+        raw = os.environ.get(name)
+        if raw is not None:
+            updates[field] = _optional_int(int(raw), name) if raw.strip() else None
+    policy = os.environ.get("UBLAB_ROUTING_POLICY")
+    if policy is not None:
+        updates["routing_policy"] = policy
+    lab_root = os.environ.get("UBLAB_LAB_ROOT")
+    if lab_root is not None:
+        updates["lab_root"] = lab_root
+    role_map = os.environ.get("UBLAB_ROLE_MAP")
+    if role_map is not None:
+        updates["role_map"] = _env_role_map(role_map)
+    if not updates:
+        return config
+    return replace(config, **updates)
+
+
+def _env_channels(raw: str) -> tuple[int, ...]:
+    if not raw.strip():
+        return ()
+    channels = []
+    for part in raw.split(","):
+        text = part.strip()
+        if not text.isdigit():
+            raise ConfigError("UBLAB_ALLOWED_CHANNELS tiene que ser numérico")
+        channels.append(int(text))
+    return tuple(channels)
+
+
+def _env_role_map(raw: str) -> tuple[tuple[str, tuple[str, ...]], ...]:
+    if not raw.strip():
+        return ()
+    rows = []
+    for item in raw.split(";"):
+        text = item.strip()
+        if not text:
+            continue
+        if ":" not in text:
+            raise ConfigError("UBLAB_ROLE_MAP tiene que ser id:rol|rol")
+        user_id, roles = text.split(":", 1)
+        if not user_id.strip().isdigit():
+            raise ConfigError("UBLAB_ROLE_MAP tiene que ser numérico")
+        parsed = tuple(role for role in roles.split("|") if role)
+        rows.append((user_id.strip(), parsed))
     return tuple(rows)
 
 

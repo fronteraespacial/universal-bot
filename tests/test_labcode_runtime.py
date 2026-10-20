@@ -1,19 +1,21 @@
 """run_once consume el inbox una sola vez y no abre Discord."""
 
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 from universal_bot.code_mode.clock import FakeClock
+from universal_bot.code_mode.config import CodeModeConfig
 from universal_bot.code_mode.models import ProjectState
 from universal_bot.code_mode.projects import ProjectLedger
 from universal_bot.labcode_runtime import run_once
 
 T0 = datetime(2026, 10, 20, 18, 35, 1, tzinfo=timezone.utc)
 ROOT = Path(__file__).resolve().parents[1]
-CHANNEL = 910001
+CHANNEL = 100
 
 
 def make_spool(path: Path) -> Path:
@@ -63,7 +65,13 @@ def test_inbox_is_processed_once_and_survives_restart(tmp_path):
     clock = FakeClock(T0)
     seen = []
     db = tmp_path / "mode.sqlite"
-    first = run_once(spool, db_path=db, clock=clock, on_job=seen.append)
+    first = run_once(
+        spool,
+        db_path=db,
+        clock=clock,
+        on_job=seen.append,
+        config=CodeModeConfig(allowed_channels=(CHANNEL,)),
+    )
     assert first["processed"] == 1
     assert first["skipped"] == 0
     assert len(seen) == 1
@@ -74,12 +82,24 @@ def test_inbox_is_processed_once_and_survives_restart(tmp_path):
     assert state["status"] == "done"
     assert state["location_key"] == f"10:{CHANNEL}"
     assert (spool / "runtime.heartbeat").read_text(encoding="utf-8") == T0.isoformat()
-    second = run_once(spool, db_path=db, clock=clock, on_job=seen.append)
+    second = run_once(
+        spool,
+        db_path=db,
+        clock=clock,
+        on_job=seen.append,
+        config=CodeModeConfig(allowed_channels=(CHANNEL,)),
+    )
     assert second["processed"] == 0
     assert second["skipped"] == 1
     assert len(seen) == 1
     restarted = []
-    run_once(spool, db_path=db, clock=clock, on_job=restarted.append)
+    run_once(
+        spool,
+        db_path=db,
+        clock=clock,
+        on_job=restarted.append,
+        config=CodeModeConfig(allowed_channels=(CHANNEL,)),
+    )
     assert restarted == []
 
 
@@ -132,11 +152,14 @@ def test_cli_once_exits_and_does_not_reprocess(tmp_path):
         "--db",
         str(db),
     ]
-    first = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=15, check=False)
+    env = os.environ.copy()
+    env["UBLAB_CONFIG"] = ""
+    env["UBLAB_ALLOWED_CHANNELS"] = str(CHANNEL)
+    first = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=15, check=False, env=env)
     assert first.returncode == 0, first.stderr
     assert (spool / "runtime.heartbeat").is_file()
     state = (job_dir / "state.json").read_text(encoding="utf-8")
     assert json.loads(state)["status"] == "done"
-    second = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=15, check=False)
+    second = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=15, check=False, env=env)
     assert second.returncode == 0, second.stderr
     assert (job_dir / "state.json").read_text(encoding="utf-8") == state

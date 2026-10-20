@@ -2,7 +2,7 @@ FFF                                                                      [100%]
 =================================== FAILURES ===================================
 ______________ test_inbox_is_processed_once_and_survives_restart _______________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0')
 
     def test_inbox_is_processed_once_and_survives_restart(tmp_path):
         spool = make_spool(tmp_path / "spool")
@@ -16,8 +16,8 @@ tmp_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_inbox_is_processed_once_
 tests/test_labcode_runtime.py:66: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-spool = PosixPath('/tmp/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0/spool')
-db_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0/mode.sqlite')
+spool = PosixPath('<tmp>/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0/spool')
+db_path = PosixPath('<tmp>/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0/mode.sqlite')
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f645d5442f0>
 on_job = <built-in method append of list object at 0x7f645d48f300>
 role_lookup = None
@@ -29,7 +29,7 @@ E       NotImplementedError: run_once
 src/universal_bot/labcode_runtime.py:9: NotImplementedError
 ___________________ test_stop_answer_pauses_the_running_job ____________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0')
 
     def test_stop_answer_pauses_the_running_job(tmp_path):
         spool = make_spool(tmp_path / "spool")
@@ -63,8 +63,8 @@ tmp_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_stop_answer_pauses_the_r
 tests/test_labcode_runtime.py:112: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-spool = PosixPath('/tmp/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0/spool')
-db_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0/mode.sqlite')
+spool = PosixPath('<tmp>/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0/spool')
+db_path = PosixPath('<tmp>/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0/mode.sqlite')
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f645d7a2850>
 on_job = <built-in method append of list object at 0x7f645d4c62c0>
 role_lookup = None
@@ -76,7 +76,7 @@ E       NotImplementedError: run_once
 src/universal_bot/labcode_runtime.py:9: NotImplementedError
 __________________ test_cli_once_exits_and_does_not_reprocess __________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_cli_once_exits_and_does_n0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-72/test_cli_once_exits_and_does_n0')
 
     def test_cli_once_exits_and_does_not_reprocess(tmp_path):
         spool = make_spool(tmp_path / "spool")

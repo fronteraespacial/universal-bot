@@ -1,3 +1,2 @@
-Fixture generada con `labcode_bridge.write_job()` (FE-BOT, <fe-bot>) contra un spool temporal, 2026-10-20.
-Es el JSON exacto que escribe el puente. `outbox_dir`/`answers_dir` apuntan al spool temporal original: los tests deben reescribirlos a su tmp_path.
+Fixture de un job del puente (`lc_msg1`). Ids cortos de prueba. `outbox_dir` y `answers_dir` usan `<tmp>`: los tests los reescriben a su directorio temporal.
 `author_context` es un valor de ejemplo.

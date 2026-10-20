@@ -1,6 +1,7 @@
 """El inbox pasa por CodeModeApp: triage, sesión, lab y el spool sin esperar results."""
 
 import json
+from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -20,10 +21,10 @@ from universal_bot.contracts import Tier, TriageDecision, WorkType
 from universal_bot.labcode_runtime import run_once
 
 T0 = datetime(2026, 10, 20, 18, 35, 1, tzinfo=timezone.utc)
-CHANNEL = 910001
+CHANNEL = 100
 GUILD = 10
-JULIAN = 910004
-EMANUEL = 910006
+JULIAN = 200
+EMANUEL = 201
 OUTSIDE = "esto lo atiende el bot normal: usá el prefijo de siempre"
 INSIDE = "esto lo atiende el bot normal, usá el prefijo"
 USER_OK = (
@@ -109,10 +110,21 @@ def write_job(spool: Path, *, message_id="555", job_id="job-1", prompt="hola", a
     return job_dir
 
 
+def flow_config(**overrides):
+    config = CodeModeConfig(
+        allowed_channels=(CHANNEL,),
+        role_map=(
+            (str(JULIAN), ("@dev", "@admin")),
+            (str(EMANUEL), ("@dev", "@admin")),
+        ),
+    )
+    return replace(config, **overrides) if overrides else config
+
+
 def make_app(tmp_path, labs=None, config=None):
     labs = labs or FakeLabs()
     discord = FakeDiscord()
-    config = config or CodeModeConfig()
+    config = config or flow_config()
     app = CodeModeApp(tmp_path / "mode.sqlite", discord, FakeClock(T0), config, lab_runner=labs)
     app.labs = labs
     return app
@@ -184,8 +196,26 @@ def test_propose_only_for_high_t2_t3(tier, confidence, threshold, expected):
     assert should_propose(tier, confidence, threshold, ("T2", "T3")) is expected
 
 
-def test_default_roles_and_unknown_author():
+def test_default_roles_are_closed():
     config = CodeModeConfig()
+    assert config.allowed_channels == ()
+    assert author_roles(JULIAN, config) == ()
+    assert author_roles(EMANUEL, config) == ()
+    assert author_roles(1, config) == ()
+
+
+def test_empty_allowlist_does_not_serve(tmp_path):
+    app = make_app(tmp_path, config=CodeModeConfig())
+    spool = make_spool(tmp_path / "spool")
+    job_dir = write_job(spool, prompt="refactor del store")
+    app.handle_job(load_job(app, job_dir), job_dir)
+    assert contents(app.discord) == []
+    assert app.labs.runs == 0
+    assert state_of(job_dir)["status"] == "skipped"
+
+
+def test_configured_role_map_grants_only_those_ids():
+    config = flow_config()
     assert author_roles(JULIAN, config) == ("@dev", "@admin")
     assert author_roles(EMANUEL, config) == ("@dev", "@admin")
     assert author_roles(1, config) == ()
@@ -221,7 +251,7 @@ def test_outside_without_a_session_gets_the_short_reply(tmp_path, prompt):
 
 
 def test_t2_below_the_threshold_stays_outside(tmp_path):
-    app = make_app(tmp_path, config=CodeModeConfig(proposal_threshold=0.99))
+    app = make_app(tmp_path, config=flow_config(proposal_threshold=0.99))
     spool = make_spool(tmp_path / "spool")
     job_dir = write_job(spool, prompt="refactor del store")
     app.handle_job(load_job(app, job_dir), job_dir)
@@ -315,7 +345,7 @@ def test_security_fail_waits_and_resume_does_not_launch_again(tmp_path):
     db = tmp_path / "mode.sqlite"
     job_dir = write_job(spool, prompt="pasemos a modo código: refactor del store", author=str(JULIAN))
     clock = FakeClock(T0)
-    run_once(spool, db_path=db, clock=clock, lab_runner=labs)
+    run_once(spool, db_path=db, clock=clock, lab_runner=labs, config=flow_config())
     state = state_of(job_dir)
     assert state["status"] == "waiting_human"
     assert state["active_step"] == "SANDBOX_CHECK"
@@ -334,7 +364,7 @@ def test_security_fail_waits_and_resume_does_not_launch_again(tmp_path):
         "ts": 1.0,
     }
     (spool / "answers" / f"pq__{state['question_id']}.json").write_text(json.dumps(answer), encoding="utf-8")
-    run_once(spool, db_path=db, clock=clock, lab_runner=labs)
+    run_once(spool, db_path=db, clock=clock, lab_runner=labs, config=flow_config())
     resumed = state_of(job_dir)
     assert labs.runs == 1
     assert resumed["status"] == "done"
@@ -382,7 +412,7 @@ def test_run_once_replies_outside_once(tmp_path):
     job_dir = write_job(spool, prompt="hola", author=str(JULIAN))
     clock = FakeClock(T0)
     labs = FakeLabs()
-    run_once(spool, db_path=tmp_path / "mode.sqlite", clock=clock, lab_runner=labs)
+    run_once(spool, db_path=tmp_path / "mode.sqlite", clock=clock, lab_runner=labs, config=flow_config())
     ops = sorted((spool / "outbox").glob("*.json"))
     bodies = [json.loads(path.read_text(encoding="utf-8")) for path in ops]
     assert any(body.get("content") == OUTSIDE for body in bodies)
@@ -391,7 +421,7 @@ def test_run_once_replies_outside_once(tmp_path):
     assert state["status"] == "done"
     assert state["op_ids"]
     assert (spool / "runtime.heartbeat").is_file()
-    run_once(spool, db_path=tmp_path / "mode.sqlite", clock=clock, lab_runner=labs)
+    run_once(spool, db_path=tmp_path / "mode.sqlite", clock=clock, lab_runner=labs, config=flow_config())
     assert sorted((spool / "outbox").glob("*.json")) == ops
 
 
@@ -401,7 +431,7 @@ def test_proposal_click_here_runs_the_lab(tmp_path):
     job_dir = write_job(spool, prompt="refactor del store", author=str(JULIAN), job_id="job-1")
     clock = FakeClock(T0)
     labs = FakeLabs()
-    run_once(spool, db_path=db, clock=clock, lab_runner=labs)
+    run_once(spool, db_path=db, clock=clock, lab_runner=labs, config=flow_config())
     assert state_of(job_dir)["status"] == "waiting_human"
     assert labs.runs == 0
     answer = {
@@ -416,7 +446,7 @@ def test_proposal_click_here_runs_the_lab(tmp_path):
         "ts": 1.0,
     }
     (spool / "answers" / "propose__job-1.json").write_text(json.dumps(answer), encoding="utf-8")
-    run_once(spool, db_path=db, clock=clock, lab_runner=labs)
+    run_once(spool, db_path=db, clock=clock, lab_runner=labs, config=flow_config())
     assert labs.runs == 1
     assert labs.consults == 1
     assert state_of(job_dir)["status"] == "done"
@@ -433,7 +463,7 @@ def test_proposal_decline_goes_back_to_the_normal_bot(tmp_path):
     job_dir = write_job(spool, prompt="refactor del store", author=str(JULIAN), job_id="job-2", message_id="556")
     clock = FakeClock(T0)
     labs = FakeLabs()
-    run_once(spool, db_path=db, clock=clock, lab_runner=labs)
+    run_once(spool, db_path=db, clock=clock, lab_runner=labs, config=flow_config())
     answer = {
         "version": 1,
         "kind": "propose",
@@ -446,7 +476,7 @@ def test_proposal_decline_goes_back_to_the_normal_bot(tmp_path):
         "ts": 1.0,
     }
     (spool / "answers" / "propose__job-2.json").write_text(json.dumps(answer), encoding="utf-8")
-    run_once(spool, db_path=db, clock=clock, lab_runner=labs)
+    run_once(spool, db_path=db, clock=clock, lab_runner=labs, config=flow_config())
     assert labs.runs == 0
     assert state_of(job_dir)["status"] == "done"
     assert state_of(job_dir)["summary"] == OUTSIDE

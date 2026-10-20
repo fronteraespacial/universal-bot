@@ -2,7 +2,7 @@ FF                                                                       [100%]
 =================================== FAILURES ===================================
 ____________________ test_local_command_writes_the_job_dir _____________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-75/test_local_command_writes_the_0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-75/test_local_command_writes_the_0')
 
     def test_local_command_writes_the_job_dir(tmp_path):
         runner = JobRunner(tmp_path / "jobs", FakeClock(T0))
@@ -20,7 +20,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 self = <universal_bot.code_mode.job_runner.JobRunner object at 0x7f23bfcc3e00>
 slug = 'eco'
 command = ['<repo>/.venv/bin/python', '-c', "print('eco')"]
-cwd = PosixPath('/tmp/pytest-of-box/pytest-75/test_local_command_writes_the_0')
+cwd = PosixPath('<tmp>/pytest-of-box/pytest-75/test_local_command_writes_the_0')
 prompt = 'imprimí eco', timeout_s = 5
 
     def run(self, *, slug: str, command: list[str], cwd: Path, prompt: str, timeout_s: float) -> JobRun:
@@ -30,7 +30,7 @@ E       NotImplementedError: run
 src/universal_bot/code_mode/job_runner.py:24: NotImplementedError
 _______________ test_timeout_keeps_partial_stdout_and_null_exit ________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-75/test_timeout_keeps_partial_std0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-75/test_timeout_keeps_partial_std0')
 
     def test_timeout_keeps_partial_stdout_and_null_exit(tmp_path):
         runner = JobRunner(tmp_path / "jobs", FakeClock(T0))
@@ -49,7 +49,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 self = <universal_bot.code_mode.job_runner.JobRunner object at 0x7f23bfcf6350>
 slug = 'lento'
 command = ['<repo>/.venv/bin/python', '-c', "import time; print('hola', flush=True); time.sleep(30)"]
-cwd = PosixPath('/tmp/pytest-of-box/pytest-75/test_timeout_keeps_partial_std0')
+cwd = PosixPath('<tmp>/pytest-of-box/pytest-75/test_timeout_keeps_partial_std0')
 prompt = 'esperá', timeout_s = 0.5
 
     def run(self, *, slug: str, command: list[str], cwd: Path, prompt: str, timeout_s: float) -> JobRun:

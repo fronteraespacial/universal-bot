@@ -2,7 +2,7 @@
  "command": [
   "grok",
   "--prompt-file",
-  "<workspace>/codemode-base/jobs/20261020-171543-smoke/labs/2026-10-20-pasemos-a-modo-c-digo-se-puede-transcrib-1/prompt.txt",
+  "<codemode-base>/jobs/20261020-171543-smoke/labs/2026-10-20-pasemos-a-modo-c-digo-se-puede-transcrib-1/prompt.txt",
   "--always-approve",
   "--output-format",
   "plain",
@@ -11,7 +11,7 @@
   "--effort",
   "medium",
   "--cwd",
-  "<workspace>/codemode-base/jobs/20261020-171543-smoke/labs/2026-10-20-pasemos-a-modo-c-digo-se-puede-transcrib-1",
+  "<codemode-base>/jobs/20261020-171543-smoke/labs/2026-10-20-pasemos-a-modo-c-digo-se-puede-transcrib-1",
   "--sandbox",
   "workspace",
   "--no-subagents",
@@ -24,7 +24,7 @@
   "--deny",
   "mcp__*"
  ],
- "cwd": "<workspace>/codemode-base/jobs/20261020-171543-smoke/labs/2026-10-20-pasemos-a-modo-c-digo-se-puede-transcrib-1",
+ "cwd": "<codemode-base>/jobs/20261020-171543-smoke/labs/2026-10-20-pasemos-a-modo-c-digo-se-puede-transcrib-1",
  "start": "2026-10-20T20:15:43.522702+00:00",
  "end": "2026-10-20T20:18:40.445091+00:00",
  "exit_code": 0,

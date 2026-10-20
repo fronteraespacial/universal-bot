@@ -1,10 +1,10 @@
 # Modo código: relevamiento (2026-10-20, solo lectura)
 
-Lo único que se escribió es este archivo. No hay commit, no se mandaron mensajes y no se tocó ningún repo. Para leer orquestador-sx hice un clon superficial de solo lectura en `/tmp/orq-sx-ro` (commit `36d0ff7`, v1.5.0, 2026-08-26).
+Lo único que se escribió es este archivo. No hay commit, no se mandaron mensajes y no se tocó ningún repo. Para leer orquestador-sx hice un clon superficial de solo lectura en `<tmp>/orq-sx-ro` (commit `36d0ff7`, v1.5.0, 2026-08-26).
 
 ## 1. Repo universal-bot
 
-- Path: `<workspace>/universal-bot`. Remote: `origin https://github.com/fronteraespacial/universal-bot.git`.
+- Path: `<repo>`. Remote: `origin https://github.com/fronteraespacial/universal-bot.git`.
 - Branch actual: `docs/roadmap-steer`. Locales: `main`, `feat/opencode-serve`, `feat/unified-progress`, `docs/lecciones-koda`.
 - Historia de la rama actual (5 commits en total):
   - `355e013` 2026-10-20 docs: roadmap de steer a mitad de ejecución (Reason Network evaluado)
@@ -33,7 +33,7 @@ Qué hay hoy:
 - **Contratos:** `contracts.py` tiene `JobStatus`, `DeliveryStatus`, `JobRequest`, `JobResult`, `JobEvent`, `AdapterCapabilities` y `RoutingDecision`.
 - **Store:** `store.py` usa SQLite con jobs, lease, `recover_abandoned_jobs` y un outbox con reintento. Es la base natural para guardar el estado de las preguntas pendientes.
 - **Invocación de CLIs:** no hay en `main`. En el PR #3 está la de OpenCode (`run.py`, `serve.py`, `pty_spawn.py`) y en el PR #2 los parsers de streams.
-- **Ledger:** no está en el repo. Vive en `<workspace>/project-ledger/` (`ledger.py`, `universal-bot.md` rev 7, `universal-bot.log.md` y `universal-bot.bots/{fe,lp,xp,tyr,koda,infra,cj,box-admin}.md`). El adaptador del pack es `<fe-bot>/project_ledger.py` (tool MCP/Zen `ledger`).
+- **Ledger:** no está en el repo. Vive en `<repo>/` (`ledger.py`, `universal-bot.md` rev 7, `universal-bot.log.md` y `universal-bot.bots/{fe,lp,xp,tyr,koda,infra,cj,box-admin}.md`). El adaptador del pack es `<fe-bot>/project_ledger.py` (tool MCP/Zen `ledger`).
 - **Steer:** `docs/roadmap-steer.md` propone `steer(task_id,msg)` / `cancel(task_id)` por adaptador. Opciones: opencode v2 inbox, Codex App Server `turn/steer` / `turn/interrupt`, y abortar+relanzar como fallback. Está marcado "No implementar todavía".
 
 ## 2. Metodología Orquestador SX (canon/)
@@ -116,7 +116,7 @@ Señales que mira el gate (≤10 líneas): número de archivos y boundaries, wor
   - Grok CLI: `grok-4.7` medium.
 - **Pack edit:** solo se permite en #admin-febot y #uni-bot, y solo para Julian o Emanuel (`_pack_edit_note`).
 
-### LP-BOT: `<workspace>/xp-bot/LaPostaHH/listener/`
+### LP-BOT: `<repo>/LaPostaHH/listener/`
 - Archivos: `listener.py` (934), `routing.py` (811), `brains.py` (629), `run_job.sh`, `job_deadline.py`, `job_stop.py`, `inflight.py`, `ub_cli_streams.py`, `unified_card.py` y `mcp_server.py`.
 - **Modelo job-dir:** `brains._write_job_files` escribe `job.json` y `prompt.txt` en el directorio del job. Después `run_job.sh <job-dir>` arma el comando por brain (codex por defecto `gpt-6-luna`; opencode, agy, cursor y grokcli) y escribe `stdout.txt`, `stderr.txt` y `meta.json`. `_run_job_proc` usa `Popen` + `communicate(timeout)` + `killpg`, y `job_stop.register` lo deja cancelable.
 - Este modelo desacopla mejor que FE-BOT y es el que conviene copiar.

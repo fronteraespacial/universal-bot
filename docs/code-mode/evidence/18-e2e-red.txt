@@ -2,7 +2,7 @@ FFF                                                                      [100%]
 =================================== FAILURES ===================================
 ___________ test_manual_phrase_stays_sticky_until_an_authorized_exit ___________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-83/test_manual_phrase_stays_stick0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-83/test_manual_phrase_stays_stick0')
 
     def test_manual_phrase_stays_sticky_until_an_authorized_exit(tmp_path):
 >       app, _discord = make(tmp_path)
@@ -16,7 +16,7 @@ tests/test_code_mode_e2e.py:21: in make
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <universal_bot.code_mode.app.CodeModeApp object at 0x7f7297117770>
-db_path = PosixPath('/tmp/pytest-of-box/pytest-83/test_manual_phrase_stays_stick0/mode.sqlite')
+db_path = PosixPath('<tmp>/pytest-of-box/pytest-83/test_manual_phrase_stays_stick0/mode.sqlite')
 discord = FakeDiscord(messages=[], channels=[], threads=[], pins=[], unpins=[], ephemeral=[], views=[], permissions={'manage_channels': True}, named_channels={'proyectos': 700, 'admin-bot': 800}, _seq=1, create_channel_calls=0)
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f72971174d0>
 config = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...s_pause_after='24h', reminders_cancel_paused_after='7d', language_user='es-AR-simple', language_stages='es-AR-tecnico')
@@ -28,7 +28,7 @@ E       NotImplementedError: CodeModeApp
 src/universal_bot/code_mode/app.py:8: NotImplementedError
 __________ test_thread_project_reaches_done_with_zero_approval_clicks __________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-83/test_thread_project_reaches_do0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-83/test_thread_project_reaches_do0')
 
     def test_thread_project_reaches_done_with_zero_approval_clicks(tmp_path):
 >       app, discord = make(tmp_path)
@@ -42,7 +42,7 @@ tests/test_code_mode_e2e.py:21: in make
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <universal_bot.code_mode.app.CodeModeApp object at 0x7f72971a4910>
-db_path = PosixPath('/tmp/pytest-of-box/pytest-83/test_thread_project_reaches_do0/mode.sqlite')
+db_path = PosixPath('<tmp>/pytest-of-box/pytest-83/test_thread_project_reaches_do0/mode.sqlite')
 discord = FakeDiscord(messages=[], channels=[], threads=[], pins=[], unpins=[], ephemeral=[], views=[], permissions={'manage_channels': True}, named_channels={'proyectos': 700, 'admin-bot': 800}, _seq=1, create_channel_calls=0)
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f72971a4550>
 config = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...s_pause_after='24h', reminders_cancel_paused_after='7d', language_user='es-AR-simple', language_stages='es-AR-tecnico')
@@ -54,7 +54,7 @@ E       NotImplementedError: CodeModeApp
 src/universal_bot/code_mode/app.py:8: NotImplementedError
 ____________ test_t3_deploy_rejects_the_requester_and_accepts_a_dev ____________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-83/test_t3_deploy_rejects_the_req0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-83/test_t3_deploy_rejects_the_req0')
 
     def test_t3_deploy_rejects_the_requester_and_accepts_a_dev(tmp_path):
 >       app, discord = make(tmp_path)
@@ -68,7 +68,7 @@ tests/test_code_mode_e2e.py:21: in make
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <universal_bot.code_mode.app.CodeModeApp object at 0x7f72971a5310>
-db_path = PosixPath('/tmp/pytest-of-box/pytest-83/test_t3_deploy_rejects_the_req0/mode.sqlite')
+db_path = PosixPath('<tmp>/pytest-of-box/pytest-83/test_t3_deploy_rejects_the_req0/mode.sqlite')
 discord = FakeDiscord(messages=[], channels=[], threads=[], pins=[], unpins=[], ephemeral=[], views=[], permissions={'manage_channels': True}, named_channels={'proyectos': 700, 'admin-bot': 800}, _seq=1, create_channel_calls=0)
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f72971a5090>
 config = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...s_pause_after='24h', reminders_cancel_paused_after='7d', language_user='es-AR-simple', language_stages='es-AR-tecnico')

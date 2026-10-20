@@ -6,15 +6,18 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from universal_bot.code_mode.clock import FakeClock
+from universal_bot.code_mode.config import CodeModeConfig
 from universal_bot.code_mode.custom_id import parse_custom_id
 from universal_bot.code_mode.lab_runner import LabOutcome
 from universal_bot.code_mode.models import LabEvidence
 from universal_bot.labcode_runtime import run_once
 
 T0 = datetime(2026, 10, 20, 18, 35, 1, tzinfo=timezone.utc)
-FIXTURE = Path(__file__).resolve().parents[0] / "fixtures" / "labcode" / "lc_1562300000000000001"
-MESSAGE = 910003
-CHANNEL = 910001
+FIXTURE = Path(__file__).resolve().parents[0] / "fixtures" / "labcode" / "lc_msg1"
+MESSAGE = 301
+CHANNEL = 100
+GUILD = 10
+AUTHOR = 200
 USER_OK = (
     "Se puede hacer. Lo probé en un directorio aparte y anduvo. "
     "El detalle está en los hilos de cada etapa. "
@@ -82,7 +85,11 @@ def test_real_bridge_job_replies_once_and_stays_idempotent(tmp_path):
     spool, job_dir = _spool_with_fixture(tmp_path)
     clock = FakeClock(T0)
     labs = FakeLabs()
-    run_once(spool, db_path=tmp_path / "mode.sqlite", clock=clock, lab_runner=labs)
+    config = CodeModeConfig(
+        allowed_channels=(CHANNEL,),
+        role_map=((str(AUTHOR), ("@dev", "@admin")),),
+    )
+    run_once(spool, db_path=tmp_path / "mode.sqlite", clock=clock, lab_runner=labs, config=config)
     ops = sorted(path for path in (spool / "outbox").glob("*.json"))
     names = [path.name for path in ops]
     assert names == sorted(names)
@@ -109,11 +116,11 @@ def test_real_bridge_job_replies_once_and_stays_idempotent(tmp_path):
     assert state["status"] == "done"
     assert state["active_step"] == "03-plan"
     assert state["error"] is None
-    assert state["session_key"] == "discord:910002:910001"
+    assert state["session_key"] == f"discord:{GUILD}:{CHANNEL}"
     assert state["op_ids"]
     assert (spool / "runtime.heartbeat").read_text(encoding="utf-8") == T0.isoformat()
     assert labs.runs == 1
     assert labs.consults == 1
-    run_once(spool, db_path=tmp_path / "mode.sqlite", clock=clock, lab_runner=labs)
+    run_once(spool, db_path=tmp_path / "mode.sqlite", clock=clock, lab_runner=labs, config=config)
     assert sorted(path for path in (spool / "outbox").glob("*.json")) == ops
     assert labs.runs == 1

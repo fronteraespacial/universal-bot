@@ -2,7 +2,7 @@ FFFFFFF                                                                  [100%]
 =================================== FAILURES ===================================
 _____________ test_send_is_atomic_and_returns_the_created_message ______________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_send_is_atomic_and_return0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-62/test_send_is_atomic_and_return0')
 monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f2a8a41f360>
 
     def test_send_is_atomic_and_returns_the_created_message(tmp_path, monkeypatch):
@@ -25,7 +25,7 @@ tests/test_file_outbox.py:97:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a224050>
-channel_id = 910001, content = 'hola', thread_id = None
+channel_id = <LABCODE_CHANNEL_ID>, content = 'hola', thread_id = None
 reply_to = 50, components = None, embeds = None
 
     def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
@@ -35,7 +35,7 @@ E       NotImplementedError: send
 src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
 ___________ test_thread_target_and_buttons_and_sequence_never_reused ___________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_thread_target_and_buttons0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-62/test_thread_target_and_buttons0')
 
     def test_thread_target_and_buttons_and_sequence_never_reused(tmp_path):
         spool = make_spool(tmp_path)
@@ -47,7 +47,7 @@ tests/test_file_outbox.py:118:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a18a990>
-channel_id = 910001, content = 'en el hilo', thread_id = 77
+channel_id = <LABCODE_CHANNEL_ID>, content = 'en el hilo', thread_id = 77
 reply_to = None, components = None, embeds = None
 
     def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
@@ -57,7 +57,7 @@ E       NotImplementedError: send
 src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
 _________________ test_invalid_ops_are_rejected_before_writing _________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_invalid_ops_are_rejected_0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-62/test_invalid_ops_are_rejected_0')
 
     def test_invalid_ops_are_rejected_before_writing(tmp_path):
         spool = make_spool(tmp_path)
@@ -69,7 +69,7 @@ tests/test_file_outbox.py:144:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a18b250>
-channel_id = 910001, content = '', thread_id = None
+channel_id = <LABCODE_CHANNEL_ID>, content = '', thread_id = None
 reply_to = None, components = None, embeds = None
 
     def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
@@ -79,7 +79,7 @@ E       NotImplementedError: send
 src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
 __________ test_create_channel_thread_pin_and_edit_match_the_contract __________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_create_channel_thread_pin0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-62/test_create_channel_thread_pin0')
 
     def test_create_channel_thread_pin_and_edit_match_the_contract(tmp_path):
         spool = make_spool(tmp_path)
@@ -102,7 +102,7 @@ E       NotImplementedError: create_channel
 src/universal_bot/code_mode/file_outbox.py:58: NotImplementedError
 ______________ test_out_of_scope_and_toggle_off_are_domain_errors ______________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_out_of_scope_and_toggle_o0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-62/test_out_of_scope_and_toggle_o0')
 
     def test_out_of_scope_and_toggle_off_are_domain_errors(tmp_path):
         spool = make_spool(tmp_path / "a")
@@ -123,7 +123,7 @@ E       NotImplementedError: send
 src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
 _____________________ test_poll_times_out_without_hanging ______________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_poll_times_out_without_ha0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-62/test_poll_times_out_without_ha0')
 
     def test_poll_times_out_without_hanging(tmp_path):
         spool = make_spool(tmp_path)
@@ -135,7 +135,7 @@ tests/test_file_outbox.py:211:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a1e39b0>
-channel_id = 910001, content = 'hola', thread_id = None
+channel_id = <LABCODE_CHANNEL_ID>, content = 'hola', thread_id = None
 reply_to = None, components = None, embeds = None
 
     def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
@@ -145,7 +145,7 @@ E       NotImplementedError: send
 src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
 ______________________ test_unsupported_ops_do_not_write _______________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_unsupported_ops_do_not_wr0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-62/test_unsupported_ops_do_not_wr0')
 
     def test_unsupported_ops_do_not_write(tmp_path):
         spool = make_spool(tmp_path)
@@ -157,7 +157,7 @@ tests/test_file_outbox.py:219:
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a1999d0>
-channel_id = 910001, message_id = 1, thread_id = None
+channel_id = <LABCODE_CHANNEL_ID>, message_id = 1, thread_id = None
 
     def unpin(self, channel_id: int, message_id: int, *, thread_id: int | None = None) -> None:
 >       raise NotImplementedError("unpin")

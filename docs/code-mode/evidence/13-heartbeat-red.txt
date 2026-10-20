@@ -2,7 +2,7 @@ FF                                                                       [100%]
 =================================== FAILURES ===================================
 ___________________ test_touch_is_fresh_until_twenty_seconds ___________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-69/test_touch_is_fresh_until_twen0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-69/test_touch_is_fresh_until_twen0')
 
     def test_touch_is_fresh_until_twenty_seconds(tmp_path):
         clock = FakeClock(T0)
@@ -11,7 +11,7 @@ tmp_path = PosixPath('/tmp/pytest-of-box/pytest-69/test_touch_is_fresh_until_twe
 tests/test_heartbeat.py:13: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-spool = PosixPath('/tmp/pytest-of-box/pytest-69/test_touch_is_fresh_until_twen0')
+spool = PosixPath('<tmp>/pytest-of-box/pytest-69/test_touch_is_fresh_until_twen0')
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fb8a7ed7b60>
 
     def touch_heartbeat(spool: Path, clock) -> None:
@@ -21,7 +21,7 @@ E       NotImplementedError: touch_heartbeat
 src/universal_bot/code_mode/heartbeat.py:9: NotImplementedError
 _______________ test_missing_or_older_than_sixty_is_unavailable ________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-69/test_missing_or_older_than_six0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-69/test_missing_or_older_than_six0')
 
     def test_missing_or_older_than_sixty_is_unavailable(tmp_path):
         clock = FakeClock(T0)
@@ -31,7 +31,7 @@ tmp_path = PosixPath('/tmp/pytest-of-box/pytest-69/test_missing_or_older_than_si
 tests/test_heartbeat.py:26: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-spool = PosixPath('/tmp/pytest-of-box/pytest-69/test_missing_or_older_than_six0')
+spool = PosixPath('<tmp>/pytest-of-box/pytest-69/test_missing_or_older_than_six0')
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fb8a7f0a490>
 
     def heartbeat_status(spool: Path, clock) -> str:

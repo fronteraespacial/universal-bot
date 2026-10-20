@@ -1,9 +1,9 @@
 # Gentle AI + Engram: qué copiar para el verificador del modo código
 
-> Research de solo lectura, 2026-10-20 (hora ART). Clones de lectura en `/tmp/gentle-lab/` con `--depth`:
+> Research de solo lectura, 2026-10-20 (hora ART). Clones de lectura en `<tmp>/gentle-lab/` con `--depth`:
 > `gentle-ai` @ `bc27d9e` (2026-10-20, tag más reciente v4.2.0) y `engram` @ `41f1254` (release v3.5.1).
-> orquestador-sx: clon RO `/tmp/orq-sx-ro` (VERSION 1.5.0). No se instaló nada global ni se tocó `~/.config`.
-> Lo marcado **[verificado en lab]** se corrió en `/tmp/gentle-lab` con `HOME`/`ENGRAM_DATA_DIR` aislados.
+> orquestador-sx: clon RO `<tmp>/orq-sx-ro` (VERSION 1.5.0). No se instaló nada global ni se tocó `~/.config`.
+> Lo marcado **[verificado en lab]** se corrió en `<tmp>/gentle-lab` con `HOME`/`ENGRAM_DATA_DIR` aislados.
 
 ## TL;DR
 
@@ -40,8 +40,8 @@
 - Compartir: `engram sync` exporta chunks a `.engram/` para commitear en git (excluye prompts por defecto); **cloud opcional** self-hosted (Postgres, token/JWT, allowlist de proyectos).
 - Integración: `engram setup <agent>` para Claude Code, OpenCode, Gemini CLI, Codex, Antigravity CLI, Cursor, Windsurf, Qwen, Kiro, Kimi, VS Code… o `engram mcp` para "cualquier agente MCP". ([docs/AGENT-SETUP.md](https://github.com/Gentleman-Programming/engram/blob/main/docs/AGENT-SETUP.md))
 
-**[verificado en lab]** Compilé `engram` 3.5.1 desde fuente (`go build`, ~26 s) en `/tmp/gentle-lab/bin/engram`, con `HOME` y `ENGRAM_DATA_DIR` en `/tmp/gentle-lab`:
-`engram save … --project codemode-lab` → `Memory saved: #1`; `engram search "verifier probes"` lo encuentra; `engram mcp` responde `tools/list` con **26 tools** (`mem_save`, `mem_search`, `mem_context`, `mem_session_summary`, `mem_judge`, …). La DB quedó solo en `/tmp/gentle-lab/engram-data/`.
+**[verificado en lab]** Compilé `engram` 3.5.1 desde fuente (`go build`, ~26 s) en `<tmp>/gentle-lab/bin/engram`, con `HOME` y `ENGRAM_DATA_DIR` en `<tmp>/gentle-lab`:
+`engram save … --project codemode-lab` → `Memory saved: #1`; `engram search "verifier probes"` lo encuentra; `engram mcp` responde `tools/list` con **26 tools** (`mem_save`, `mem_search`, `mem_context`, `mem_session_summary`, `mem_judge`, …). La DB quedó solo en `<tmp>/gentle-lab/engram-data/`.
 
 ## 3. Flujo y sistema de verificación de Gentle AI
 
@@ -179,5 +179,5 @@ Restricciones: varios CLIs y servidores, **una sola suscripción**, gratis/local
 - https://github.com/Gentleman-Programming/gentle-ai/blob/main/internal/assets/skills/judgment-day/SKILL.md
 - Engram: https://github.com/Gentleman-Programming/engram · https://github.com/Gentleman-Programming/engram/blob/main/DOCS.md · https://github.com/Gentleman-Programming/engram/blob/main/docs/AGENT-SETUP.md · https://github.com/Gentleman-Programming/engram/blob/main/docs/ARCHITECTURE.md · https://www.mintlify.com/Gentleman-Programming/engram/quickstart
 - Metadatos: https://api.github.com/repos/Gentleman-Programming/gentle-ai · https://api.github.com/repos/Gentleman-Programming/engram · https://api.github.com/repos/Gentleman-Programming/gentle-shell (+ `/releases`)
-- orquestador-sx: https://github.com/fronteraespacial/orquestador-sx, leído en `/tmp/orq-sx-ro`: `canon/01-METHODOLOGY-SPACEX.md` (§8.7, §8.9), `canon/02-ROLES-HANDOFFS-GATES.md`, `canon/09-VERIFY-CHECKLIST.md`, `runtime/cursor/agents/verifier.md`, `runtime/skills/orchestrator/references/fase-verify.md`, `runtime/skills/orchestrator/SKILL.md`
-- Base local: `<workspace>/codemode-base/SKILL.md`, `<workspace>/codemode-base/references/tdd-evidence.md`
+- orquestador-sx: https://github.com/fronteraespacial/orquestador-sx, leído en `<tmp>/orq-sx-ro`: `canon/01-METHODOLOGY-SPACEX.md` (§8.7, §8.9), `canon/02-ROLES-HANDOFFS-GATES.md`, `canon/09-VERIFY-CHECKLIST.md`, `runtime/cursor/agents/verifier.md`, `runtime/skills/orchestrator/references/fase-verify.md`, `runtime/skills/orchestrator/SKILL.md`
+- Base local: `<codemode-base>/SKILL.md`, `<codemode-base>/references/tdd-evidence.md`

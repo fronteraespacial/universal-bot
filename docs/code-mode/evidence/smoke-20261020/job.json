@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "job_id": "lc_1562400000000000001",
+  "job_id": "lc_msg",
   "instance": "fe-labcode",
   "source": "discord",
-  "guild_id": "910002",
-  "channel_id": "910001",
+  "guild_id": "<GUILD_ID>",
+  "channel_id": "<LABCODE_CHANNEL_ID>",
   "thread_id": null,
   "parent_channel_id": null,
-  "message_id": "910007",
+  "message_id": "<MSG_ID>",
   "author": {
-    "id": "910004",
+    "id": "<USER_JULIAN_ID>",
     "display_name": "Julian"
   },
   "author_context": "rol: @dev, @admin",
@@ -18,12 +18,12 @@
   "attachments": [],
   "audio_transcripts": [],
   "previous_messages": [],
-  "location_key": "discord:910002:910001",
-  "session_key": "discord:910002:910001",
+  "location_key": "discord:<GUILD_ID>:<LABCODE_CHANNEL_ID>",
+  "session_key": "discord:<GUILD_ID>:<LABCODE_CHANNEL_ID>",
   "created_ts": 1792527343.3928163,
   "deadline_ts": 1792529143.3928163,
   "button_prefix": "ublab:",
-  "reply_to_message_id": "910007",
-  "outbox_dir": "<workspace>/codemode-base/jobs/20261020-171543-smoke/spool/outbox",
-  "answers_dir": "<workspace>/codemode-base/jobs/20261020-171543-smoke/spool/answers"
+  "reply_to_message_id": "<MSG_ID>",
+  "outbox_dir": "<codemode-base>/jobs/20261020-171543-smoke/spool/outbox",
+  "answers_dir": "<codemode-base>/jobs/20261020-171543-smoke/spool/answers"
 }

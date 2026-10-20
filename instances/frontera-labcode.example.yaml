@@ -18,7 +18,7 @@ code_mode:
   channel_prefix: "p-"
   max_open_projects: 10
   archive_after_days: 14
-  allowed_channels: [910001]
+  allowed_channels: []
   roles:
     can_start_project: ["@dev", "@admin"]
     can_start_thread: ["@everyone"]

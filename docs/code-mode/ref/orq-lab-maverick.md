@@ -1,7 +1,7 @@
 # Orquestador SX — Lab y Maverick: diseño actual, huecos y propuesta "lab-first" (idea de Julian)
 
 > **Tipo:** análisis de solo lectura. No se tocó el repo ni se corrió ninguna prueba de transcripción.
-> **Fuente:** `github.com/fronteraespacial/orquestador-sx`, clon RO `/tmp/orq-sx-ro`.
+> **Fuente:** `github.com/fronteraespacial/orquestador-sx`, clon RO `<tmp>/orq-sx-ro`.
 > **Versión analizada:** `git fetch` sin novedades → `HEAD = origin/HEAD = 36d0ff7` ("docs: mark AGENT-HANDOFF as v1.5.0 tagged"), `VERSION = 1.5.0`. El tag `v1.5.0` apunta a `f954344`; `36d0ff7` es un commit de docs posterior al tag. No hay nada más nuevo.
 > **Fecha:** 2026-10-20 (hora de Buenos Aires, UTC-3).
 > **Convención de citas:** `archivo:línea` o `archivo §sección`. Los archivos de la raíz `01-…`/`02-…` son stubs ("Moved"); el canon real está en `canon/`.

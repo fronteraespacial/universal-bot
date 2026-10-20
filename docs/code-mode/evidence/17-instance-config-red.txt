@@ -20,7 +20,7 @@ E       NotImplementedError: load_code_mode_config
 src/universal_bot/code_mode/config.py:118: NotImplementedError
 _______________________ test_partial_file_keeps_defaults _______________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-79/test_partial_file_keeps_defaul0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-79/test_partial_file_keeps_defaul0')
 
     def test_partial_file_keeps_defaults(tmp_path):
         path = tmp_path / "guild.yaml"
@@ -31,7 +31,7 @@ tmp_path = PosixPath('/tmp/pytest-of-box/pytest-79/test_partial_file_keeps_defau
 tests/test_instance_config.py:28: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-path = PosixPath('/tmp/pytest-of-box/pytest-79/test_partial_file_keeps_defaul0/guild.yaml')
+path = PosixPath('<tmp>/pytest-of-box/pytest-79/test_partial_file_keeps_defaul0/guild.yaml')
 
     def load_code_mode_config(path) -> CodeModeConfig:
 >       raise NotImplementedError("load_code_mode_config")
@@ -40,7 +40,7 @@ E       NotImplementedError: load_code_mode_config
 src/universal_bot/code_mode/config.py:118: NotImplementedError
 _ test_invalid_config_is_rejected[code_mode:\n  approvals:\n    production: cualquiera\n-production] _
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-79/test_invalid_config_is_rejecte0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-79/test_invalid_config_is_rejecte0')
 body = 'code_mode:\n  approvals:\n    production: cualquiera\n'
 match = 'production'
 
@@ -61,7 +61,7 @@ match = 'production'
 tests/test_instance_config.py:48: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-path = PosixPath('/tmp/pytest-of-box/pytest-79/test_invalid_config_is_rejecte0/guild.yaml')
+path = PosixPath('<tmp>/pytest-of-box/pytest-79/test_invalid_config_is_rejecte0/guild.yaml')
 
     def load_code_mode_config(path) -> CodeModeConfig:
 >       raise NotImplementedError("load_code_mode_config")
@@ -70,7 +70,7 @@ E       NotImplementedError: load_code_mode_config
 src/universal_bot/code_mode/config.py:118: NotImplementedError
 _ test_invalid_config_is_rejected[code_mode:\n  proposal_threshold: 2\n-proposal_threshold] _
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-79/test_invalid_config_is_rejecte1')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-79/test_invalid_config_is_rejecte1')
 body = 'code_mode:\n  proposal_threshold: 2\n', match = 'proposal_threshold'
 
     @pytest.mark.parametrize(
@@ -90,7 +90,7 @@ body = 'code_mode:\n  proposal_threshold: 2\n', match = 'proposal_threshold'
 tests/test_instance_config.py:48: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-path = PosixPath('/tmp/pytest-of-box/pytest-79/test_invalid_config_is_rejecte1/guild.yaml')
+path = PosixPath('<tmp>/pytest-of-box/pytest-79/test_invalid_config_is_rejecte1/guild.yaml')
 
     def load_code_mode_config(path) -> CodeModeConfig:
 >       raise NotImplementedError("load_code_mode_config")
@@ -99,7 +99,7 @@ E       NotImplementedError: load_code_mode_config
 src/universal_bot/code_mode/config.py:118: NotImplementedError
 _ test_invalid_config_is_rejected[code_mode:\n  security_check: off\n  host_role: vps\n-servidor compartido] _
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-79/test_invalid_config_is_rejecte2')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-79/test_invalid_config_is_rejecte2')
 body = 'code_mode:\n  security_check: off\n  host_role: vps\n'
 match = 'servidor compartido'
 
@@ -120,7 +120,7 @@ match = 'servidor compartido'
 tests/test_instance_config.py:48: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-path = PosixPath('/tmp/pytest-of-box/pytest-79/test_invalid_config_is_rejecte2/guild.yaml')
+path = PosixPath('<tmp>/pytest-of-box/pytest-79/test_invalid_config_is_rejecte2/guild.yaml')
 
     def load_code_mode_config(path) -> CodeModeConfig:
 >       raise NotImplementedError("load_code_mode_config")

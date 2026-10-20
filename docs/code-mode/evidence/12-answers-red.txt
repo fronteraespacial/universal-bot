@@ -2,7 +2,7 @@ FFF                                                                      [100%]
 =================================== FAILURES ===================================
 ____________ test_pq_click_answers_once_and_ignores_a_later_rewrite ____________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_pq_click_answers_once_and0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-66/test_pq_click_answers_once_and0')
 
     def test_pq_click_answers_once_and_ignores_a_later_rewrite(tmp_path):
         clock, ledger, bridge = env(tmp_path)
@@ -26,7 +26,7 @@ tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_pq_click_answers_once_an
 tests/test_answers.py:67: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-spool = PosixPath('/tmp/pytest-of-box/pytest-66/test_pq_click_answers_once_and0/spool')
+spool = PosixPath('<tmp>/pytest-of-box/pytest-66/test_pq_click_answers_once_and0/spool')
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f01d66852b0>
 ask_bridge = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f01d6685940>
 projects = <universal_bot.code_mode.projects.ProjectLedger object at 0x7f01d6685550>
@@ -39,7 +39,7 @@ E       NotImplementedError: consume_answers
 src/universal_bot/code_mode/answers.py:9: NotImplementedError
 ________________________ test_prod_click_uses_the_gate _________________________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_prod_click_uses_the_gate0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-66/test_prod_click_uses_the_gate0')
 
     def test_prod_click_uses_the_gate(tmp_path):
         clock, ledger, bridge = env(tmp_path)
@@ -65,7 +65,7 @@ tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_prod_click_uses_the_gate
 tests/test_answers.py:88: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-spool = PosixPath('/tmp/pytest-of-box/pytest-66/test_prod_click_uses_the_gate0/spool')
+spool = PosixPath('<tmp>/pytest-of-box/pytest-66/test_prod_click_uses_the_gate0/spool')
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f01d65e7250>
 ask_bridge = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f01d65e7750>
 projects = <universal_bot.code_mode.projects.ProjectLedger object at 0x7f01d65e7390>
@@ -79,7 +79,7 @@ E       NotImplementedError: consume_answers
 src/universal_bot/code_mode/answers.py:9: NotImplementedError
 _____________ test_stop_pauses_the_job_and_checkpoints_the_project _____________
 
-tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_stop_pauses_the_job_and_c0')
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-66/test_stop_pauses_the_job_and_c0')
 
     def test_stop_pauses_the_job_and_checkpoints_the_project(tmp_path):
         clock, ledger, _bridge = env(tmp_path)
@@ -98,7 +98,7 @@ tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_stop_pauses_the_job_and_
 tests/test_answers.py:139: 
 _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
-spool = PosixPath('/tmp/pytest-of-box/pytest-66/test_stop_pauses_the_job_and_c0/spool')
+spool = PosixPath('<tmp>/pytest-of-box/pytest-66/test_stop_pauses_the_job_and_c0/spool')
 clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f01d65e7b10>
 ask_bridge = None
 projects = <universal_bot.code_mode.projects.ProjectLedger object at 0x7f01d65502d0>

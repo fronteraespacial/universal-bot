@@ -4,7 +4,6 @@ from pathlib import Path
 
 from universal_bot.labcode_runtime import main
 
-POLICY = Path("<workspace>/codemode-base/catalog/routing-policy.yaml")
 DEFAULT_ROOT = Path("/tmp/ub-labcode")
 
 
@@ -59,6 +58,9 @@ def test_cli_flags_configure_the_lab(tmp_path, monkeypatch):
 
 
 def test_cli_lab_defaults_when_flags_are_absent(tmp_path, monkeypatch):
+    monkeypatch.setenv("UBLAB_CONFIG", "")
+    monkeypatch.delenv("UBLAB_ROUTING_POLICY", raising=False)
+    monkeypatch.delenv("UBLAB_LAB_ROOT", raising=False)
     seen = _spy(monkeypatch)
     code = _run(
         [
@@ -71,7 +73,7 @@ def test_cli_lab_defaults_when_flags_are_absent(tmp_path, monkeypatch):
     )
     assert code == 0
     assert seen.get("lab_root") == DEFAULT_ROOT
-    assert seen.get("routing_policy") == POLICY
+    assert seen.get("routing_policy") == Path()
     assert seen.get("timeout_s") == 900.0
     assert seen.get("maverick_timeout_s") == 300.0
     assert seen.get("max_labs_t2") == 2

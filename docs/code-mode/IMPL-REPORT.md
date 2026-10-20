@@ -147,15 +147,15 @@ El bridge no corre en tests ni en el humo, así que `run_once` usa el port con `
 
 ### Humo
 
-No se corrió contra grok ni contra el spool de FE-BOT. Lo hace el supervisor. Sin los flags de lab, el default es raíz `/tmp/ub-labcode`, política `<workspace>/codemode-base/catalog/routing-policy.yaml`, 900 s de lab, 300 s de Maverick, tope 2 labs en T2 y 3 en T3. `--max-labs N` tapa los dos tiers con N.
+No se corrió contra grok ni contra el spool de FE-BOT. Lo hace el supervisor. Sin los flags de lab, el default es raíz `<tmp>/ub-labcode`, política `<codemode-base>/catalog/routing-policy.yaml`, 900 s de lab, 300 s de Maverick, tope 2 labs en T2 y 3 en T3. `--max-labs N` tapa los dos tiers con N.
 
 ```bash
 cd <repo>
 .venv/bin/python -m universal_bot.labcode_runtime \
   --spool <fe-bot>/data/labcode \
   --db <repo>/state/labcode.sqlite \
-  --lab-root /tmp/ub-labcode \
-  --routing-policy <workspace>/codemode-base/catalog/routing-policy.yaml \
+  --lab-root <tmp>/ub-labcode \
+  --routing-policy <codemode-base>/catalog/routing-policy.yaml \
   --lab-timeout 900 \
   --maverick-timeout 300 \
   --interval 10
@@ -167,7 +167,7 @@ Hace falta el binario `grok` en el PATH. Esta sesión no lo invocó.
 
 1. El heartbeat tiene que estar fresco antes de escribir `on` en `data/labcode.txt`. El proceso de arriba, sin `--once`, es el que late.
 2. El puente de FE-BOT tiene que estar consumiendo el outbox. Hasta que no escriba `.result.json`, los hilos de etapa no tienen id de Discord y el detalle queda en el canal con prefijo.
-3. `grok` tiene que poder correr en `/tmp/ub-labcode` con la política de ruteo. Si no está, el lab no arranca.
+3. `grok` tiene que poder correr en `<tmp>/ub-labcode` con la política de ruteo. Si no está, el lab no arranca.
 4. Los botones `create_channel` y `create_thread` se muestran y no provisionan: solo `here_*`, `decline`, el stop y la pregunta de sandbox siguen el flujo.
 5. El aviso de «no tenés permiso» es efímero. El puente no tiene esa op, así que con el port diferido no llega a Discord.
 6. El pin de «modo activo» tampoco se encola mientras no haya id real.

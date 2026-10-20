@@ -8,7 +8,7 @@ import pytest
 from universal_bot.code_mode.inbox_job import InboxJobError, JobState, load_inbox_job, write_job_state
 from universal_bot.code_mode.models import Location
 
-CHANNEL = 910001
+CHANNEL = 100
 
 
 def sample(**overrides) -> dict:

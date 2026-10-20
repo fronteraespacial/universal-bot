@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import time
 
@@ -11,14 +12,14 @@ from universal_bot.code_mode.answers import consume_answers
 from universal_bot.code_mode.app import CodeModeApp
 from universal_bot.code_mode.ask_bridge import AskBridge
 from universal_bot.code_mode.clock import SystemClock
-from universal_bot.code_mode.config import CodeModeConfig
+from universal_bot.code_mode.config import CodeModeConfig, load_runtime_config
 from universal_bot.code_mode.file_outbox import FileOutboxDiscordPort
 from universal_bot.code_mode.heartbeat import touch_heartbeat
 from universal_bot.code_mode.inbox_flow import apply_clicks
 from universal_bot.code_mode.inbox_job import load_inbox_job
 from universal_bot.store import JobStore
 
-_PROCESSED = {"accepted", "done", "paused", "error", "running", "waiting_human"}
+_PROCESSED = {"accepted", "done", "paused", "error", "running", "waiting_human", "skipped"}
 
 
 def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None, lab_runner=None, config=None) -> dict:
@@ -48,10 +49,12 @@ def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None
 def build_lab_runner(clock, *, lab_root, routing_policy, lab_timeout, maverick_timeout, max_labs):
     from universal_bot.code_mode import lab_runner
 
-    root = Path(lab_root) if lab_root else Path("/tmp/ub-labcode")
-    policy = Path(routing_policy) if routing_policy else Path(
-        "<workspace>/codemode-base/catalog/routing-policy.yaml"
-    )
+    root = Path(lab_root) if lab_root else Path(os.environ.get("UBLAB_LAB_ROOT") or "/tmp/ub-labcode")
+    if routing_policy:
+        policy = Path(routing_policy)
+    else:
+        raw = os.environ.get("UBLAB_ROUTING_POLICY", "")
+        policy = Path(raw) if raw else Path()
     timeout = 900.0 if lab_timeout is None else float(lab_timeout)
     maverick = 300.0 if maverick_timeout is None else float(maverick_timeout)
     if max_labs is None:
@@ -84,19 +87,20 @@ def main(argv: list[str] | None = None) -> int:
     spool = Path(args.spool)
     db_path = Path(args.db) if args.db else spool / "runtime.sqlite"
     clock = SystemClock()
+    config = load_runtime_config()
     runner = build_lab_runner(
         clock,
-        lab_root=args.lab_root,
-        routing_policy=args.routing_policy,
+        lab_root=args.lab_root or config.lab_root or None,
+        routing_policy=args.routing_policy or config.routing_policy or None,
         lab_timeout=args.lab_timeout,
         maverick_timeout=args.maverick_timeout,
         max_labs=args.max_labs,
     )
     if args.once:
-        run_once(spool, db_path=db_path, clock=clock, lab_runner=runner)
+        run_once(spool, db_path=db_path, clock=clock, lab_runner=runner, config=config)
         return 0
     while True:
-        run_once(spool, db_path=db_path, clock=SystemClock(), lab_runner=runner)
+        run_once(spool, db_path=db_path, clock=SystemClock(), lab_runner=runner, config=config)
         time.sleep(min(max(args.interval, 1.0), 20.0))
 
 

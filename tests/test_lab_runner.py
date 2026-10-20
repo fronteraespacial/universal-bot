@@ -103,8 +103,8 @@ def runner(tmp_path, jobs, **kwargs):
     )
 
 
-def test_default_policy_path_is_the_catalog():
-    assert DEFAULT_ROUTING_POLICY == "<workspace>/codemode-base/catalog/routing-policy.yaml"
+def test_default_policy_path_is_empty():
+    assert DEFAULT_ROUTING_POLICY == ""
 
 
 @pytest.mark.parametrize(

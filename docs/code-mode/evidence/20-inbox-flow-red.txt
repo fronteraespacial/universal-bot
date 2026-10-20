@@ -1,8 +1,8 @@
 .F...FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.FFFFF                                [100%]
 =================================== FAILURES ===================================
 E   AssertionError: assert False is True
-     +  where False = is_manual_trigger('pasemos a modo código: ¿se puede transcribir rápido?', CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<workspace>/codemode-base/catalog/routing-policy.yaml', env_extra=()))
-     +    where CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<workspace>/codemode-base/catalog/routing-policy.yaml', env_extra=()) = CodeModeConfig()
+     +  where False = is_manual_trigger('pasemos a modo código: ¿se puede transcribir rápido?', CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()))
+     +    where CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()) = CodeModeConfig()
 <repo>/tests/test_inbox_flow.py:146: AssertionError: assert False is True
 E   NotImplementedError
 <repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
@@ -87,8 +87,8 @@ E   AssertionError: assert 'detalle tecnico' == '[02-lab] detalle tecnico'
 <repo>/tests/test_inbox_flow.py:517: AssertionError: assert 'detalle tecnico' == '[02-lab] detalle tecnico'
 =========================== short test summary info ============================
 FAILED tests/test_inbox_flow.py::test_manual_phrase_accepts_a_prefix[pasemos a modo c\xf3digo: \xbfse puede transcribir r\xe1pido?-True] - AssertionError: assert False is True
- +  where False = is_manual_trigger('pasemos a modo código: ¿se puede transcribir rápido?', CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<workspace>/codemode-base/catalog/routing-policy.yaml', env_extra=()))
- +    where CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<workspace>/codemode-base/catalog/routing-policy.yaml', env_extra=()) = CodeModeConfig()
+ +  where False = is_manual_trigger('pasemos a modo código: ¿se puede transcribir rápido?', CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()))
+ +    where CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()) = CodeModeConfig()
 FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals0-0.91] - NotImplementedError
 FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals1-0.9] - NotImplementedError
 FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals2-0.92] - NotImplementedError

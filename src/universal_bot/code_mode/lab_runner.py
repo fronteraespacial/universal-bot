@@ -15,7 +15,7 @@ from universal_bot.code_mode.job_runner import JobRunner
 from universal_bot.code_mode.models import LabEvidence
 from universal_bot.code_mode.security_gate import SandboxInspection, evaluate
 
-DEFAULT_ROUTING_POLICY = "<workspace>/codemode-base/catalog/routing-policy.yaml"
+DEFAULT_ROUTING_POLICY = ""
 DEFAULT_LAB_TIMEOUT_S = 900
 DEFAULT_MAVERICK_TIMEOUT_S = 300
 FALLBACK_ROUTE = ("grok", "grok-4.7", "medium")

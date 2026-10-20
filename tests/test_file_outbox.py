@@ -19,7 +19,7 @@ from universal_bot.code_mode.file_outbox import (
 
 T0 = datetime(2026, 10, 20, 18, 35, 1, tzinfo=timezone.utc)
 MENTIONS = {"parse": [], "replied_user": False}
-CHANNEL = 910001
+CHANNEL = 100
 
 
 def make_spool(path: Path) -> Path:
