@@ -320,7 +320,11 @@ class _JsonLines(_WarmBase):
             self._on_message(msg)
         turn = self._turn
         if turn is not None and not turn.done.is_set():
+            self._on_eof(turn)
             turn.finish("failed", "process_died")
+
+    def _on_eof(self, turn) -> None:
+        pass
 
     def _write(self, msg: dict) -> None:
         try:
@@ -530,10 +534,8 @@ class AgyStream(_JsonLines):
                 usage=result.usage, error=result.error,
             )
 
-    def _read(self):
-        super()._read()
-        turn = self._turn
-        if turn is not None and turn.steer_text is not None:
+    def _on_eof(self, turn):
+        if turn.steer_text is not None:
             self._died_turn = turn
 
 
