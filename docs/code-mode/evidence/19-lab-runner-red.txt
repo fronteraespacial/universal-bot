@@ -1,0 +1,126 @@
+.FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                [100%]
+=================================== FAILURES ===================================
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:29: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:29: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:29: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:29: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:29: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:29: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:29: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:33: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:37: NotImplementedError
+E   AssertionError: assert 2 == 1
+     +  where 2 = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='/workspace/codemode-base/catalog/routing-policy.yaml', env_extra=()).lab_max_t2
+/workspace/ub-codemode/tests/test_lab_runner.py:197: AssertionError: assert 2 == 1
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:41: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:41: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:41: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:41: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:41: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:41: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/lab_runner.py:46: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_lab_runner.py::test_resolve_route_picks_the_first_usable_step[lab-T2-expected0] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_resolve_route_picks_the_first_usable_step[lab-T3-expected1] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_resolve_route_picks_the_first_usable_step[scout-T2-expected2] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_resolve_route_picks_the_first_usable_step[maverick-T2-expected3] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_resolve_route_picks_the_first_usable_step[lab-None-expected4] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_missing_policy_falls_back_to_grok_medium - NotImplementedError
+FAILED tests/test_lab_runner.py::test_empty_chain_falls_back - NotImplementedError
+FAILED tests/test_lab_runner.py::test_grok_command_is_the_contract_list - NotImplementedError
+FAILED tests/test_lab_runner.py::test_sandbox_env_keeps_the_whitelist_and_extras - NotImplementedError
+FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[TOKEN] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[API_KEY] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[SECRET] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[PASSWORD] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[AUTH] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[X_TOKEN_Y] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[aws_secret] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_secret_names_never_pass_even_on_the_whitelist[MONKEY] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_yaml_lab_budget_overrides_the_defaults - AssertionError: assert 2 == 1
+ +  where 2 = CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='/workspace/codemode-base/catalog/routing-policy.yaml', env_extra=()).lab_max_t2
+FAILED tests/test_lab_runner.py::test_parse_marked_block[LAB_RESULT: {"hypothesis": "el audio entra en menos de un minuto", "commands": ["python probe.py"], "result": "40 segundos", "artifacts": ["probe.txt"], "verdict": "APPROVE", "evidence_class": "running"}-LAB_RESULT:-expected0] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_parse_marked_block[ruido\nLAB_RESULT: {"hypothesis": "el audio entra en menos de un minuto", "commands": ["python probe.py"], "result": "40 segundos", "artifacts": ["probe.txt"], "verdict": "APPROVE", "evidence_class": "running"}\n-LAB_RESULT:-expected1] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_parse_marked_block[sin bloque-LAB_RESULT:-None] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_parse_marked_block[LAB_RESULT: {"hypothesis": "el audio entra en menos de un minuto", "commands": ["python probe.py"], "result": "40 segundos", "artifacts": ["probe.txt"], "verdict": "TALVEZ", "evidence_class": "running"}-LAB_RESULT:-None] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_parse_marked_block[LAB_RESULT: {"hypothesis": "el audio entra en menos de un minuto", "commands": ["python probe.py"], "result": "40 segundos", "artifacts": ["probe.txt"], "verdict": "APPROVE", "evidence_class": "humo"}-LAB_RESULT:-None] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_parse_marked_block[LAB_RESULT: {-LAB_RESULT:-None] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_approve_parses_lab_evidence_and_does_not_use_a_shell - NotImplementedError
+FAILED tests/test_lab_runner.py::test_invalid_block_is_inconclusive_paper - NotImplementedError
+FAILED tests/test_lab_runner.py::test_timeout_keeps_partial_output - NotImplementedError
+FAILED tests/test_lab_runner.py::test_security_fail_does_not_launch - NotImplementedError
+FAILED tests/test_lab_runner.py::test_only_a_reject_opens_another_lab[INCONCLUSIVE] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_only_a_reject_opens_another_lab[YIELD] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_only_a_reject_opens_another_lab[REVISE] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_only_a_reject_opens_another_lab[APPROVE] - NotImplementedError
+FAILED tests/test_lab_runner.py::test_reject_replans_once_inside_the_budget - NotImplementedError
+FAILED tests/test_lab_runner.py::test_reject_stops_at_the_lab_cap - NotImplementedError
+FAILED tests/test_lab_runner.py::test_reject_then_approve_uses_the_replan - NotImplementedError
+FAILED tests/test_lab_runner.py::test_maverick_parses_one_call - NotImplementedError
+FAILED tests/test_lab_runner.py::test_maverick_timeout_is_a_missing_consult - NotImplementedError
+FAILED tests/test_lab_runner.py::test_maverick_without_a_block_is_a_missing_consult - NotImplementedError
+FAILED tests/test_lab_runner.py::test_maverick_error_is_a_missing_consult - NotImplementedError
+FAILED tests/test_lab_runner.py::test_runner_defaults_are_fifteen_and_five_minutes - NotImplementedError
+40 failed, 1 passed in 0.11s
