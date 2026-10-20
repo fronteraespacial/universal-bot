@@ -35,3 +35,28 @@ def test_main_loop_passes_the_orchestrator(tmp_path, monkeypatch):
     monkeypatch.setattr("universal_bot.labcode_runtime.run_once", lambda *a, **k: seen.update(k))
     main(["--spool", str(tmp_path / "spool"), "--once", "--db", str(tmp_path / "m.sqlite")])
     assert seen.get("orchestrator") == "ORCH"
+
+
+def _orch(tmp_path, **config):
+    from tests.test_main_brains import SIDECAR
+    runner = LabRunner(clock=FakeClock(T0), lab_root=tmp_path / "labs", routing_policy=policy(tmp_path))
+    cfg = CodeModeConfig(main_enabled=True, **config)
+    return build_orchestrator(FakeClock(T0), tmp_path / "mode.sqlite", cfg, runner, main_root=tmp_path / "main", sidecar=SIDECAR), runner
+
+
+def test_default_main_is_cursor_sdk_with_fallback(tmp_path):
+    from universal_bot.code_mode.main_brains import FallbackSession, SidecarSession
+    assert CodeModeConfig().main_cli == "auto"
+    orch, _ = _orch(tmp_path)
+    session = orch.brain.session_factory()
+    assert isinstance(session, FallbackSession) and isinstance(session.primary, SidecarSession)
+
+
+def test_quota_file_routes_main_and_lab_to_cursor_agent(tmp_path):
+    import json
+    from universal_bot.code_mode.main_brains import RelaunchSession
+    quota = tmp_path / "quota.json"
+    quota.write_text(json.dumps({"grok_remaining": 0.38}), encoding="utf-8")
+    orch, runner = _orch(tmp_path, main_cli="grok", quota_file=str(quota))
+    assert isinstance(orch.brain.session_factory(), RelaunchSession)
+    assert runner.quota is not None and runner.quota.grok_remaining() == 0.38

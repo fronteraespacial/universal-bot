@@ -1,0 +1,46 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_default_main_is_cursor_sdk_with_fallback _________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_default_main_is_cursor_sdk_with_fallback(tmp_path):
+        from universal_bot.code_mode.main_brains import FallbackSession, SidecarSession
+>       assert CodeModeConfig().main_cli == "auto"
+E       AssertionError: assert 'grok' == 'auto'
+E         
+E         - auto
+E         + grok
+
+tests/test_main_wiring.py:49: AssertionError
+_____________ test_quota_file_routes_main_and_lab_to_cursor_agent ______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_quota_file_routes_main_and_lab_to_cursor_agent(tmp_path):
+        import json
+        from universal_bot.code_mode.main_brains import RelaunchSession
+        quota = tmp_path / "quota.json"
+        quota.write_text(json.dumps({"grok_remaining": 0.38}), encoding="utf-8")
+>       orch, runner = _orch(tmp_path, main_cli="grok", quota_file=str(quota))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_wiring.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+tmp_path = PosixPath('<ruta>')
+config = {'main_cli': 'grok', 'quota_file': '<ruta>'}
+
+    def _orch(tmp_path, **config):
+        from tests.test_main_brains import SIDECAR
+        runner = LabRunner(clock=FakeClock(T0), lab_root=tmp_path / "labs", routing_policy=policy(tmp_path))
+        cfg = CodeModeConfig(main_enabled=True, **config)
+>       return build_orchestrator(FakeClock(T0), tmp_path / "mode.sqlite", cfg, runner, main_root=tmp_path / "main", sidecar=SIDECAR), runner
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: build_orchestrator() got an unexpected keyword argument 'sidecar'
+
+tests/test_main_wiring.py:44: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_main_wiring.py::test_default_main_is_cursor_sdk_with_fallback
+FAILED tests/test_main_wiring.py::test_quota_file_routes_main_and_lab_to_cursor_agent
+2 failed, 3 passed in 0.11s
