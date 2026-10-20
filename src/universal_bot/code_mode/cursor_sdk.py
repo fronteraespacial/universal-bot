@@ -156,3 +156,7 @@ def run_with_fallback(sdk: CursorSdkAdapter | None, cursor_agent: Callable[..., 
     if outcome.ok or not outcome.fallback:
         return ChatResult("cursor-sdk", outcome.text, outcome)
     return ChatResult("cursor-agent", cursor_agent(prompt, **options), outcome)
+
+
+def adapter_from_config(*args, **kwargs):
+    raise NotImplementedError

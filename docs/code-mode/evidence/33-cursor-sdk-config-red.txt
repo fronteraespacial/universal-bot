@@ -1,0 +1,128 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________ test_defaults_use_the_repo_launcher ______________________
+
+tmp_path = PosixPath('<tmp>')
+
+    def test_defaults_use_the_repo_launcher(tmp_path):
+        launcher = make_launcher(tmp_path)
+>       adapter = adapter_from_config({}, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cursor_sdk_config.py:19: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({}, PosixPath('<tmp>'))
+kwargs = {}
+
+    def adapter_from_config(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/cursor_sdk.py:162: NotImplementedError
+__________________________ test_local_values_are_used __________________________
+
+tmp_path = PosixPath('<tmp>')
+
+    def test_local_values_are_used(tmp_path):
+        make_launcher(tmp_path)
+>       adapter = adapter_from_config(
+            {"cursor_sdk": {"api_key_file": "~/k/cursor", "node_bin": "/opt/node/bin/node"}}, tmp_path
+        )
+
+tests/test_cursor_sdk_config.py:26: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'cursor_sdk': {'api_key_file': '~/k/cursor', 'node_bin': '/opt/node/bin/node'}}, PosixPath('<tmp>'))
+kwargs = {}
+
+    def adapter_from_config(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/cursor_sdk.py:162: NotImplementedError
+________ test_disabled_or_missing_launcher_gives_no_adapter[raw0-True] _________
+
+tmp_path = PosixPath('<tmp>')
+raw = {'cursor_sdk': {'enabled': False}}, with_launcher = True
+
+    @pytest.mark.parametrize(
+        "raw,with_launcher",
+        [({"cursor_sdk": {"enabled": False}}, True), ({}, False), ({"cursor_sdk": {"launcher": "nope/x"}}, True)],
+    )
+    def test_disabled_or_missing_launcher_gives_no_adapter(tmp_path, raw, with_launcher):
+        if with_launcher:
+            make_launcher(tmp_path)
+>       assert adapter_from_config(raw, tmp_path) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cursor_sdk_config.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'cursor_sdk': {'enabled': False}}, PosixPath('<tmp>'))
+kwargs = {}
+
+    def adapter_from_config(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/cursor_sdk.py:162: NotImplementedError
+________ test_disabled_or_missing_launcher_gives_no_adapter[raw1-False] ________
+
+tmp_path = PosixPath('<tmp>')
+raw = {}, with_launcher = False
+
+    @pytest.mark.parametrize(
+        "raw,with_launcher",
+        [({"cursor_sdk": {"enabled": False}}, True), ({}, False), ({"cursor_sdk": {"launcher": "nope/x"}}, True)],
+    )
+    def test_disabled_or_missing_launcher_gives_no_adapter(tmp_path, raw, with_launcher):
+        if with_launcher:
+            make_launcher(tmp_path)
+>       assert adapter_from_config(raw, tmp_path) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cursor_sdk_config.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({}, PosixPath('<tmp>'))
+kwargs = {}
+
+    def adapter_from_config(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/cursor_sdk.py:162: NotImplementedError
+________ test_disabled_or_missing_launcher_gives_no_adapter[raw2-True] _________
+
+tmp_path = PosixPath('<tmp>')
+raw = {'cursor_sdk': {'launcher': 'nope/x'}}, with_launcher = True
+
+    @pytest.mark.parametrize(
+        "raw,with_launcher",
+        [({"cursor_sdk": {"enabled": False}}, True), ({}, False), ({"cursor_sdk": {"launcher": "nope/x"}}, True)],
+    )
+    def test_disabled_or_missing_launcher_gives_no_adapter(tmp_path, raw, with_launcher):
+        if with_launcher:
+            make_launcher(tmp_path)
+>       assert adapter_from_config(raw, tmp_path) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cursor_sdk_config.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ({'cursor_sdk': {'launcher': 'nope/x'}}, PosixPath('<tmp>'))
+kwargs = {}
+
+    def adapter_from_config(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/cursor_sdk.py:162: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_cursor_sdk_config.py::test_defaults_use_the_repo_launcher
+FAILED tests/test_cursor_sdk_config.py::test_local_values_are_used - NotImple...
+FAILED tests/test_cursor_sdk_config.py::test_disabled_or_missing_launcher_gives_no_adapter[raw0-True]
+FAILED tests/test_cursor_sdk_config.py::test_disabled_or_missing_launcher_gives_no_adapter[raw1-False]
+FAILED tests/test_cursor_sdk_config.py::test_disabled_or_missing_launcher_gives_no_adapter[raw2-True]
+5 failed in 0.05s
