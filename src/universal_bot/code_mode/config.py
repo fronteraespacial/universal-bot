@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import timedelta
+import re
+
+_DURATION = re.compile(r"^(\d+)([mhd])$")
 
 
 class ConfigError(ValueError):
@@ -72,5 +76,41 @@ class CodeModeConfig:
     reminders_cancel_paused_after: str = "7d"
     language_user: str = "es-AR-simple"
     language_stages: str = "es-AR-tecnico"
+
+
+def parse_duration(spec: str) -> timedelta | None:
+    if spec == "until_exit":
+        return None
+    match = _DURATION.fullmatch(spec)
+    if match is None:
+        raise ValueError(f"duración desconocida: {spec}")
+    amount = int(match.group(1))
+    unit = match.group(2)
+    if unit == "m":
+        return timedelta(minutes=amount)
+    if unit == "h":
+        return timedelta(hours=amount)
+    return timedelta(days=amount)
+
+
+def role_allowed(
+    specs: tuple[str, ...],
+    actor_roles: tuple[str, ...],
+    *,
+    actor_id: int | None = None,
+    requester_id: int | None = None,
+    activator_id: int | None = None,
+) -> bool:
+    if "@everyone" in specs:
+        return True
+    roles = set(actor_roles)
+    for spec in specs:
+        if spec == "activator" and actor_id is not None and actor_id == activator_id:
+            return True
+        if spec == "requester" and actor_id is not None and actor_id == requester_id:
+            return True
+        if spec in roles:
+            return True
+    return False
 
 
