@@ -1,0 +1,295 @@
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+__________________ test_plan_without_lab_evidence_is_rejected __________________
+
+    def test_plan_without_lab_evidence_is_rejected():
+>       assert reasons_of(make_plan((step(),), lab_evidence=())) == ("missing_lab_evidence", "invalid_evidence:LE-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_plan_validator.py:108: in reasons_of
+    validate_plan(plan, **payload)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...E-1',), untested_reason=None),), lab_evidence=(), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': ()}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+_________________ test_step_without_refs_or_reason_is_rejected _________________
+
+    def test_step_without_refs_or_reason_is_rejected():
+        plan = make_plan((step(evidence_refs=(), untested_reason=None),))
+>       assert reasons_of(plan) == ("step_without_evidence:S1",)
+               ^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_plan_validator.py:108: in reasons_of
+    validate_plan(plan, **payload)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...zinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': ()}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+________________ test_bad_evidence_is_rejected[REJECT-running] _________________
+
+verdict = 'REJECT', evidence_class = 'running'
+
+    @pytest.mark.parametrize(
+        ("verdict", "evidence_class"),
+        [
+            ("REJECT", "running"),
+            ("INCONCLUSIVE", "running"),
+            ("APPROVE", "paper"),
+            ("REVISE", "running"),
+            ("YIELD", "running"),
+        ],
+    )
+    def test_bad_evidence_is_rejected(verdict, evidence_class):
+        plan = make_plan((step(),), (evidence(verdict=verdict, evidence_class=evidence_class),))
+>       assert reasons_of(plan) == ("invalid_evidence:LE-1",)
+               ^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_plan_validator.py:108: in reasons_of
+    validate_plan(plan, **payload)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...zinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': ()}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+_____________ test_bad_evidence_is_rejected[INCONCLUSIVE-running] ______________
+
+verdict = 'INCONCLUSIVE', evidence_class = 'running'
+
+    @pytest.mark.parametrize(
+        ("verdict", "evidence_class"),
+        [
+            ("REJECT", "running"),
+            ("INCONCLUSIVE", "running"),
+            ("APPROVE", "paper"),
+            ("REVISE", "running"),
+            ("YIELD", "running"),
+        ],
+    )
+    def test_bad_evidence_is_rejected(verdict, evidence_class):
+        plan = make_plan((step(),), (evidence(verdict=verdict, evidence_class=evidence_class),))
+>       assert reasons_of(plan) == ("invalid_evidence:LE-1",)
+               ^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_plan_validator.py:108: in reasons_of
+    validate_plan(plan, **payload)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...zinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': ()}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+_________________ test_bad_evidence_is_rejected[APPROVE-paper] _________________
+
+verdict = 'APPROVE', evidence_class = 'paper'
+
+    @pytest.mark.parametrize(
+        ("verdict", "evidence_class"),
+        [
+            ("REJECT", "running"),
+            ("INCONCLUSIVE", "running"),
+            ("APPROVE", "paper"),
+            ("REVISE", "running"),
+            ("YIELD", "running"),
+        ],
+    )
+    def test_bad_evidence_is_rejected(verdict, evidence_class):
+        plan = make_plan((step(),), (evidence(verdict=verdict, evidence_class=evidence_class),))
+>       assert reasons_of(plan) == ("invalid_evidence:LE-1",)
+               ^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_plan_validator.py:108: in reasons_of
+    validate_plan(plan, **payload)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...zinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': ()}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+________________ test_bad_evidence_is_rejected[REVISE-running] _________________
+
+verdict = 'REVISE', evidence_class = 'running'
+
+    @pytest.mark.parametrize(
+        ("verdict", "evidence_class"),
+        [
+            ("REJECT", "running"),
+            ("INCONCLUSIVE", "running"),
+            ("APPROVE", "paper"),
+            ("REVISE", "running"),
+            ("YIELD", "running"),
+        ],
+    )
+    def test_bad_evidence_is_rejected(verdict, evidence_class):
+        plan = make_plan((step(),), (evidence(verdict=verdict, evidence_class=evidence_class),))
+>       assert reasons_of(plan) == ("invalid_evidence:LE-1",)
+               ^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_plan_validator.py:108: in reasons_of
+    validate_plan(plan, **payload)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...zinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': ()}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+_________________ test_bad_evidence_is_rejected[YIELD-running] _________________
+
+verdict = 'YIELD', evidence_class = 'running'
+
+    @pytest.mark.parametrize(
+        ("verdict", "evidence_class"),
+        [
+            ("REJECT", "running"),
+            ("INCONCLUSIVE", "running"),
+            ("APPROVE", "paper"),
+            ("REVISE", "running"),
+            ("YIELD", "running"),
+        ],
+    )
+    def test_bad_evidence_is_rejected(verdict, evidence_class):
+        plan = make_plan((step(),), (evidence(verdict=verdict, evidence_class=evidence_class),))
+>       assert reasons_of(plan) == ("invalid_evidence:LE-1",)
+               ^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_plan_validator.py:108: in reasons_of
+    validate_plan(plan, **payload)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...zinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': ()}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+______________ test_untested_step_without_a_question_is_rejected _______________
+
+    def test_untested_step_without_a_question_is_rejected():
+        plan = make_plan((step(evidence_refs=(), untested_reason="sin probar: no hay sandbox"),))
+>       assert reasons_of(plan) == ("untested_without_question:S1",)
+               ^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_plan_validator.py:108: in reasons_of
+    validate_plan(plan, **payload)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...zinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': ()}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+_____________ test_untested_step_with_an_open_question_is_accepted _____________
+
+    def test_untested_step_with_an_open_question_is_accepted():
+        plan = make_plan((step(evidence_refs=(), untested_reason="sin probar: no hay sandbox"),))
+>       validate_plan(plan, lab_was_running=True, open_questions=(question(),))
+
+tests/test_plan_validator.py:143: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Plan(project_id='P-1', wave='O1', steps=(PlanStep(id='S1', workstream='api', summary='publicar el slug', paths=('src/...zinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False),)
+kwargs = {'lab_was_running': True, 'open_questions': (PendingQuestion(id='PQ-1', project_id='P-1', stage_key='02-lab', kind='sa..., 12, 0, tzinfo=datetime.timezone.utc), answer=None, answered_by=None, answered_at=None, resume_token='resume-plan'),)}
+
+    def validate_plan(*args, **kwargs):
+>       raise NotImplementedError("validate_plan")
+E       NotImplementedError: validate_plan
+
+src/universal_bot/code_mode/plan_validator.py:13: NotImplementedError
+_________________ test_plan_ready_requires_a_previous_lab_run __________________
+
+    def test_plan_ready_requires_a_previous_lab_run():
+        plan = make_plan((step(),))
+        with pytest.raises(PlanRejection) as caught:
+>           publish_plan(item(), plan, lab_was_running=False, open_questions=(), now=T0)
+
+tests/test_plan_validator.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...tzinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False))
+kwargs = {'lab_was_running': False, 'open_questions': (), 'now': datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc)}
+
+    def publish_plan(*args, **kwargs):
+>       raise NotImplementedError("publish_plan")
+E       NotImplementedError: publish_plan
+
+src/universal_bot/code_mode/plan_validator.py:17: NotImplementedError
+________________ test_valid_plan_is_published_without_approval _________________
+
+    def test_valid_plan_is_published_without_approval():
+        plan = make_plan((step(),), requires_production=False)
+>       published = publish_plan(item(), plan, lab_was_running=True, open_questions=(), now=T0)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_plan_validator.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...tzinfo=datetime.timezone.utc), timed_out=False),), maverick_consult='CONSULT: sin cambios', requires_production=False))
+kwargs = {'lab_was_running': True, 'open_questions': (), 'now': datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc)}
+
+    def publish_plan(*args, **kwargs):
+>       raise NotImplementedError("publish_plan")
+E       NotImplementedError: publish_plan
+
+src/universal_bot/code_mode/plan_validator.py:17: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_plan_validator.py::test_plan_without_lab_evidence_is_rejected - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_step_without_refs_or_reason_is_rejected - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_bad_evidence_is_rejected[REJECT-running] - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_bad_evidence_is_rejected[INCONCLUSIVE-running] - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_bad_evidence_is_rejected[APPROVE-paper] - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_bad_evidence_is_rejected[REVISE-running] - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_bad_evidence_is_rejected[YIELD-running] - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_untested_step_without_a_question_is_rejected - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_untested_step_with_an_open_question_is_accepted - NotImplementedError: validate_plan
+FAILED tests/test_plan_validator.py::test_plan_ready_requires_a_previous_lab_run - NotImplementedError: publish_plan
+FAILED tests/test_plan_validator.py::test_valid_plan_is_published_without_approval - NotImplementedError: publish_plan
+11 failed in 0.06s
