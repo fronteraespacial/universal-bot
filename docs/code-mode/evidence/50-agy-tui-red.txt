@@ -1,0 +1,87 @@
+FEEF                                                                     [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_prompt_returns_the_reply_once_the_tui_is_back_at_the_prompt _
+
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.fixture()
+    def session(tmp_path):
+>       s = AgyTuiSession([sys.executable, str(FAKE)], cwd=tmp_path, settle_s=0.4)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_agy_tui.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.agy_tui.AgyTuiSession object at 0x7f9cf0182f90>
+a = (['<ruta>', '<ruta>'],)
+k = {'cwd': PosixPath('<ruta>'), 'settle_s': 0.4}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/agy_tui.py:10: NotImplementedError
+_ ERROR at setup of test_main_stays_free_while_the_subagent_runs_and_steer_reaches_it _
+
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.fixture()
+    def session(tmp_path):
+>       s = AgyTuiSession([sys.executable, str(FAKE)], cwd=tmp_path, settle_s=0.4)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_agy_tui.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.agy_tui.AgyTuiSession object at 0x7f9cefea2c10>
+a = (['<ruta>', '<ruta>'],)
+k = {'cwd': PosixPath('<ruta>'), 'settle_s': 0.4}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/agy_tui.py:10: NotImplementedError
+=================================== FAILURES ===================================
+____________ test_argv_runs_the_interactive_tui_without_stream_json ____________
+
+    def test_argv_runs_the_interactive_tui_without_stream_json():
+>       argv = agy_tui_argv("gemini-3.8-flash-medium")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_agy_tui.py:34: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = ('gemini-3.8-flash-medium',), k = {}
+
+    def agy_tui_argv(*a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/agy_tui.py:5: NotImplementedError
+______________________ test_close_kills_the_tmux_session _______________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_close_kills_the_tmux_session(tmp_path):
+>       s = AgyTuiSession([sys.executable, str(FAKE)], cwd=tmp_path, settle_s=0.4)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_agy_tui.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.agy_tui.AgyTuiSession object at 0x7f9cefea2e90>
+a = (['<ruta>', '<ruta>'],)
+k = {'cwd': PosixPath('<ruta>'), 'settle_s': 0.4}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/agy_tui.py:10: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_agy_tui.py::test_argv_runs_the_interactive_tui_without_stream_json
+FAILED tests/test_agy_tui.py::test_close_kills_the_tmux_session - NotImplemen...
+ERROR tests/test_agy_tui.py::test_prompt_returns_the_reply_once_the_tui_is_back_at_the_prompt
+ERROR tests/test_agy_tui.py::test_main_stays_free_while_the_subagent_runs_and_steer_reaches_it
+2 failed, 2 errors in 0.04s
