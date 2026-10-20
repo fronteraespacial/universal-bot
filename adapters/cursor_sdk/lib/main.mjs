@@ -90,6 +90,12 @@ function agentOptions(request, apiKey, store) {
   return options;
 }
 
+// Stores efímeros vivos: se borran también si el proceso sale por process.exit, EPIPE o una excepción.
+const TEMP_STORES = new Set();
+process.on("exit", () => {
+  for (const dir of TEMP_STORES) { try { rmSync(dir, { recursive: true, force: true }); } catch { /* best effort */ } }
+});
+
 /** Store del agente: efímero (JSONL en un dir temporal que se borra), default del SDK o un dir propio. */
 function openStore(sdk, request) {
   if (request.store === "default") return { store: null, cleanup: () => {} };
@@ -97,7 +103,8 @@ function openStore(sdk, request) {
   if (typeof Jsonl !== "function") return { store: null, cleanup: () => {} };
   if (request.store === "dir") return { store: new Jsonl(request.store_dir), cleanup: () => {} };
   const dir = mkdtempSync(join(tmpdir(), "cursor-sdk-store-"));
-  return { store: new Jsonl(dir), cleanup: () => rmSync(dir, { recursive: true, force: true }) };
+  TEMP_STORES.add(dir);
+  return { store: new Jsonl(dir), cleanup: () => { TEMP_STORES.delete(dir); rmSync(dir, { recursive: true, force: true }); } };
 }
 
 let http1Configured = false;
@@ -346,6 +353,8 @@ async function serve(env, apiKey) {
     resolveDone(EXIT.OK);
   };
   globalThis.__sidecarOnSignal = () => { shutdown(); };
+  // El host cerró nuestra stdout: nadie lee las líneas finales. Cortar todo y salir (el exit borra los stores).
+  process.stdout.on("error", () => { shutdown(); setTimeout(() => process.exit(EXIT.CANCELLED), 2000).unref(); });
   const rl = createInterface({ input: process.stdin });
   rl.on("line", handle);
   rl.on("close", () => { shutdown(); });
