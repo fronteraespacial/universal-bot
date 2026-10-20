@@ -30,6 +30,11 @@ def normalize_text(text: str) -> str:
     return " ".join(cleaned.split())
 
 
+def strip_activation(text: str, config: CodeModeConfig) -> str:
+    del text, config
+    raise NotImplementedError
+
+
 def is_manual_trigger(text: str, config: CodeModeConfig) -> bool:
     norm = normalize_text(text)
     command = normalize_text(config.manual_trigger_command)
