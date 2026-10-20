@@ -1,0 +1,63 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________________ test_local_command_writes_the_job_dir _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-75/test_local_command_writes_the_0')
+
+    def test_local_command_writes_the_job_dir(tmp_path):
+        runner = JobRunner(tmp_path / "jobs", FakeClock(T0))
+>       result = runner.run(
+            slug="eco",
+            command=[sys.executable, "-c", "print('eco')"],
+            cwd=tmp_path,
+            prompt="imprimí eco",
+            timeout_s=5,
+        )
+
+tests/test_job_runner.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.job_runner.JobRunner object at 0x7f23bfcc3e00>
+slug = 'eco'
+command = ['/workspace/ub-codemode/.venv/bin/python', '-c', "print('eco')"]
+cwd = PosixPath('/tmp/pytest-of-box/pytest-75/test_local_command_writes_the_0')
+prompt = 'imprimí eco', timeout_s = 5
+
+    def run(self, *, slug: str, command: list[str], cwd: Path, prompt: str, timeout_s: float) -> JobRun:
+>       raise NotImplementedError("run")
+E       NotImplementedError: run
+
+src/universal_bot/code_mode/job_runner.py:24: NotImplementedError
+_______________ test_timeout_keeps_partial_stdout_and_null_exit ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-75/test_timeout_keeps_partial_std0')
+
+    def test_timeout_keeps_partial_stdout_and_null_exit(tmp_path):
+        runner = JobRunner(tmp_path / "jobs", FakeClock(T0))
+        script = "import time; print('hola', flush=True); time.sleep(30)"
+>       result = runner.run(
+            slug="lento",
+            command=[sys.executable, "-c", script],
+            cwd=tmp_path,
+            prompt="esperá",
+            timeout_s=0.5,
+        )
+
+tests/test_job_runner.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.job_runner.JobRunner object at 0x7f23bfcf6350>
+slug = 'lento'
+command = ['/workspace/ub-codemode/.venv/bin/python', '-c', "import time; print('hola', flush=True); time.sleep(30)"]
+cwd = PosixPath('/tmp/pytest-of-box/pytest-75/test_timeout_keeps_partial_std0')
+prompt = 'esperá', timeout_s = 0.5
+
+    def run(self, *, slug: str, command: list[str], cwd: Path, prompt: str, timeout_s: float) -> JobRun:
+>       raise NotImplementedError("run")
+E       NotImplementedError: run
+
+src/universal_bot/code_mode/job_runner.py:24: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_job_runner.py::test_local_command_writes_the_job_dir - NotImplementedError: run
+FAILED tests/test_job_runner.py::test_timeout_keeps_partial_stdout_and_null_exit - NotImplementedError: run
+2 failed in 0.04s
