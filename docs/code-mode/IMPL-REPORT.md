@@ -19,6 +19,12 @@ Resumen de la suite completa, corrida después del feat e2e `4e7cf7a`:
 
 La salida de cada par rojo/verde está en `docs/code-mode/evidence/`.
 
+La fase 2 cierra en `0493ca0`. Suite vigente:
+
+```
+347 passed in 2.46s
+```
+
 ## Cómo arrancar el runtime cuando Julian prenda el toggle
 
 El spool de producción es `/workspace/fe-bot-discord/data/labcode/`. El heartbeat es el archivo `runtime.heartbeat` adentro de ese directorio. FE-BOT mira ese archivo: si falta o tiene más de 60 s, responde «code mode no disponible». El runtime lo tiene que tocar cada 20 s o menos.
@@ -113,3 +119,56 @@ El contrato del puente entró en el primer commit de esta parte (`84e42d4`): `do
 - No hay conexión a Discord desde este proceso. Las menciones van apagadas en cada op (`allowed_mentions` con `parse` vacío y `replied_user` false).
 - No hay progreso unificado, footer de cuota ni registro de los `p-` en el store de auto-activación. Eso es del puente.
 - No se leyó ni se escribió `/workspace/fe-bot-discord` en esta sesión, y no se arrancó el runtime contra el spool real.
+
+## Fase 2
+
+El inbox ya entra por `CodeModeApp`. El lab es un CLI inyectado (`lab_runner`), con sandbox, presupuesto y Maverick. Los tests no llaman a grok.
+
+| Unidad | test | feat | Evidencia |
+| --- | --- | --- | --- |
+| lab runner | `77637bf` | `5448c83` | `19-lab-runner-red.txt`, `19-lab-runner-green.txt` |
+| inbox por CodeModeApp | `a0764e3` | `4ae2457` | `20-inbox-flow-red.txt`, `20-inbox-flow-green.txt` |
+| ticks, hilos sqlite, prod T3 | `9ad7536` | `e7babe3` | `21-phase1-debts-red.txt`, `21-phase1-debts-green.txt` |
+| e2e del job real del puente | `663865a` | `0493ca0` | `22-bridge-e2e-red.txt`, `22-bridge-e2e-green.txt` |
+| flags del entrypoint | `72f8512` | `98a5b8d` | `23-cli-lab-red.txt`, `23-cli-lab-green.txt` |
+
+El verde del e2e (`0493ca0`) quedó después del entrypoint. El rojo `663865a` es anterior. No se reescribió la historia.
+
+### Ids de hilo sin result
+
+El bridge no corre en tests ni en el humo, así que `run_once` usa el port con `defer_results=True`: publica la op y no espera el `.result.json`.
+
+- `thread` se encola igual (`02-lab`, `03-plan`). `create_thread` devuelve `None`.
+- El detalle técnico no entra a un hilo inventado. Va al canal, o al hilo raíz si el proyecto ya tiene uno, con prefijo `[02-lab]` o `[03-plan]`.
+- `pin` no se escribe: sin id real de Discord no hay qué fijar. El mensaje del botón de salida sí se encola.
+- `reply_ephemeral` y `unpin` no existen en el puente. Con resultados diferidos son no-op, para que una sesión vencida no corte la pasada.
+- `allowed_mentions` sigue apagado. La respuesta al usuario lleva `reply_to` al mensaje original.
+- Si más adelante hay un id de hilo (FakeDiscord en los tests, o un result que esta fase no consume), el post va adentro del hilo y sin prefijo. Ese id se guarda en sqlite (`stage_threads`) y otra instancia del router sobre el mismo archivo lo reutiliza.
+
+### Humo
+
+No se corrió contra grok ni contra el spool de FE-BOT. Lo hace el supervisor. Sin los flags de lab, el default es raíz `/tmp/ub-labcode`, política `/workspace/codemode-base/catalog/routing-policy.yaml`, 900 s de lab, 300 s de Maverick, tope 2 labs en T2 y 3 en T3. `--max-labs N` tapa los dos tiers con N.
+
+```bash
+cd /workspace/ub-codemode
+.venv/bin/python -m universal_bot.labcode_runtime \
+  --spool /workspace/fe-bot-discord/data/labcode \
+  --db /workspace/ub-codemode/state/labcode.sqlite \
+  --lab-root /tmp/ub-labcode \
+  --routing-policy /workspace/codemode-base/catalog/routing-policy.yaml \
+  --lab-timeout 900 \
+  --maverick-timeout 300 \
+  --interval 10
+```
+
+Hace falta el binario `grok` en el PATH. Esta sesión no lo invocó.
+
+### Qué falta para prender el toggle
+
+1. El heartbeat tiene que estar fresco antes de escribir `on` en `data/labcode.txt`. El proceso de arriba, sin `--once`, es el que late.
+2. El puente de FE-BOT tiene que estar consumiendo el outbox. Hasta que no escriba `.result.json`, los hilos de etapa no tienen id de Discord y el detalle queda en el canal con prefijo.
+3. `grok` tiene que poder correr en `/tmp/ub-labcode` con la política de ruteo. Si no está, el lab no arranca.
+4. Los botones `create_channel` y `create_thread` se muestran y no provisionan: solo `here_*`, `decline`, el stop y la pregunta de sandbox siguen el flujo.
+5. El aviso de «no tenés permiso» es efímero. El puente no tiene esa op, así que con el port diferido no llega a Discord.
+6. El pin de «modo activo» tampoco se encola mientras no haya id real.
+7. No se tocó `/workspace/fe-bot-discord`, no hay token y no hay conexión a Discord desde este proceso.
