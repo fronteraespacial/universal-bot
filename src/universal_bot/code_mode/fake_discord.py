@@ -55,7 +55,15 @@ class FakeDiscord:
         self._seq += 1
         return value
 
-    def send(self, channel_id: int, content: str, *, thread_id: int | None = None) -> int:
+    def send(
+        self,
+        channel_id: int,
+        content: str,
+        *,
+        thread_id: int | None = None,
+        reply_to: int | None = None,
+    ) -> int:
+        del reply_to
         message_id = self._next_id()
         self.messages.append(
             RecordedMessage(message_id, channel_id, thread_id, content, (), False)
