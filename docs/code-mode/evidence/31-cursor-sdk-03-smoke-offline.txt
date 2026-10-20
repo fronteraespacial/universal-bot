@@ -1,0 +1,5 @@
+ok   bad_request → BAD_REQUEST
+ok   no_key → NO_KEY
+ok   sin_red → NETWORK True (fallback esperado True)
+ok   node_viejo → NODE_TOO_OLD
+fallas: 0

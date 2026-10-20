@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Lanzador: elige Node >= 22.13 sin tocar el global y ejecuta runner.mjs.
+# Orden: $CURSOR_SDK_NODE → el node más nuevo que trae cursor-agent (~/.local/share/cursor-agent/versions/*/node) → node del PATH.
+# Si el Node elegido es viejo, runner.mjs responde NODE_TOO_OLD (exit 5).
+set -euo pipefail
+HERE="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+pick_node() {
+  if [ -n "${CURSOR_SDK_NODE:-}" ]; then echo "$CURSOR_SDK_NODE"; return; fi
+  local latest
+  latest="$(ls -1d "$HOME"/.local/share/cursor-agent/versions/*/node 2>/dev/null | sort -V | tail -1 || true)"
+  if [ -n "$latest" ]; then readlink -f "$latest"; return; fi
+  command -v node
+}
+exec "$(pick_node)" --disable-warning=ExperimentalWarning "$HERE/runner.mjs" "$@"

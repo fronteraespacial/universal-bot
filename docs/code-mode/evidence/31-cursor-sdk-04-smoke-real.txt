@@ -1,0 +1,11 @@
+(node:2452062) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ok: exit=0 wall_ms=6855
+{"type":"result","ok":true,"text":"OK","usage":{"inputTokens":10543,"outputTokens":61,"cacheReadTokens":4480,"totalTokens":15084},"cost":null,"duration_ms":3666,"sdk_duration_ms":2411,"run_id":"run-d981cecf-6da9-41ce-a729-09e7a4e31873","agent_id":"agent-9c11a966-cc65-4f2c-9137-143717e98b7a","model":"composer-2.5"}
+(node:2452214) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+steer: exit=0 wall_ms=9091
+{"type":"steer","ok":true,"outcome":"complete_delivered","text_len":59}
+{"type":"result","ok":true,"text":"STEERED","usage":{"inputTokens":10676,"outputTokens":456,"cacheReadTokens":10560,"totalTokens":21692},"cost":null,"duration_ms":8411,"sdk_duration_ms":4593,"run_id":"run-9601390a-29f7-49b2-bd76-0dae041d7333","agent_id":"agent-19f6cf1d-83be-4cd2-9fee-583dafcd173e","model":"composer-2.5"}
+smoke/real.sh: line 19: /tmp/tmp.dbQNg5mp7h/n.txt: No such file or directory
+lineas en n.txt: 0
