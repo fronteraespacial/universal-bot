@@ -32,7 +32,7 @@ from universal_bot.code_mode.proposer import PROMPT, Proposer
 from universal_bot.code_mode.security_gate import SandboxInspection, evaluate
 from universal_bot.code_mode.session_manager import SessionManager
 from universal_bot.code_mode.stage_router import StageRouter
-from universal_bot.code_mode.text_rules import is_manual_trigger, is_trivial_message
+from universal_bot.code_mode.text_rules import is_manual_trigger, is_trivial_message, strip_activation
 from universal_bot.contracts import TriageInput
 from universal_bot.triage.classify import classify
 
@@ -206,11 +206,12 @@ class CodeModeApp:
             return
         decision = classify(TriageInput(text=job.prompt))
         project = self._open_project(job, decision)
+        hypothesis = strip_activation(job.prompt, self.config)
         outcomes = self.lab_runner.run_hypothesis(
             project_id=project.id,
             slug=project.slug,
             tier=project.tier,
-            hypothesis=job.prompt,
+            hypothesis=hypothesis,
         )
         outcome = outcomes[-1]
         if not outcome.launched or outcome.evidence is None:
@@ -220,7 +221,7 @@ class CodeModeApp:
         consult = self.lab_runner.consult_maverick(
             project_id=project.id,
             slug=project.slug,
-            context=job.prompt,
+            context=hypothesis,
         )
         project = self._publish(project, outcome.evidence, consult)
         self.stages.post(project, "02-lab", f"Resultado: {outcome.evidence.result}")
