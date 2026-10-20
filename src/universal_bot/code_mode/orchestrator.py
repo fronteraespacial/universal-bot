@@ -279,6 +279,10 @@ class Orchestrator:
                 )
                 """
             )
+            have = {row[1] for row in conn.execute("PRAGMA table_info(main_jobs)")}
+            for name, kind in (("author_id", "INTEGER"), ("origin_message_id", "INTEGER"), ("project_id", "TEXT")):
+                if name not in have:
+                    conn.execute(f"ALTER TABLE main_jobs ADD COLUMN {name} {kind}")
 
     # --- SQLite ---------------------------------------------------------
     def job(self, job_id: str) -> dict | None:
@@ -317,11 +321,11 @@ class Orchestrator:
             conn.execute(
                 """
                 INSERT OR REPLACE INTO main_jobs (job_id, session_key, guild_id, channel_id, thread_id, prompt, status,
-                    reply_to, reply_channel, reply_thread, job_dir, created_ts, updated_ts)
-                VALUES (?, ?, ?, ?, ?, ?, 'running', ?, ?, ?, ?, ?, ?)
+                    reply_to, reply_channel, reply_thread, job_dir, created_ts, updated_ts, author_id, origin_message_id)
+                VALUES (?, ?, ?, ?, ?, ?, 'running', ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (job.job_id, job.session_key, job.guild_id, job.channel_id, job.thread_id, prompt, job.message_id,
-                 job.channel_id, job.thread_id, str(job_dir), now, now),
+                 job.channel_id, job.thread_id, str(job_dir), now, now, job.author.id, job.message_id),
             )
         self.workers[job.job_id] = self.worker_factory(job.job_id, prompt).start()
         self.port.send_buttons(
@@ -379,6 +383,7 @@ class Orchestrator:
                 self.workers.pop(job_id, None)
                 self._update(job_id, status="done")
                 self._write_state(row, "done", "main-done", "listo")
+                self._publish_stages(row, worker.result_text())
                 self.brain.submit(job_id, FINISHED_TEMPLATE.format(result=worker.result_text()[-1500:]))
             elif state == "failed":
                 self.workers.pop(job_id, None)
@@ -416,6 +421,19 @@ class Orchestrator:
             if worker is not None:
                 worker.stop()
             self.workers[row["job_id"]] = self.worker_factory(row["job_id"], compose_prompt(row["prompt"], instructions)).start()
+
+    def _publish_stages(self, row, result: str) -> None:
+        """El detalle del worker va a los hilos de etapa (02-lab y, con consulta, 03-plan); el canal solo ve al MAIN."""
+        publish = getattr(self.app, "publish_worker_result", None)
+        if publish is None:
+            return
+        try:
+            project_id = publish(row, result)
+        except Exception as exc:  # publicar las etapas no tumba el ciclo del MAIN
+            log.warning("etapas del MAIN %s: %s", row["job_id"], type(exc).__name__)
+            return
+        if project_id:
+            self._update(row["job_id"], project_id=project_id)
 
     def _relaunch(self, row, instructions) -> None:
         self._update(row["job_id"], restarts=row["restarts"] + 1)

@@ -284,6 +284,31 @@ class CodeModeApp:
         )
         return self._move(project, ProjectState.SANDBOX_CHECK)
 
+    def publish_worker_result(self, row, result: str) -> str:
+        """Resultado del worker del MAIN por el pipeline de etapas: 02-lab con el detalle y 03-plan con la consulta."""
+        decision = classify(TriageInput(text=row["prompt"]))
+        project = self.ledger.create_project(
+            guild_id=row["guild_id"],
+            requester_id=row["author_id"],
+            origin_message_id=row["origin_message_id"] or row["reply_to"],
+            slug=_slug(row["prompt"]),
+            title_plain=row["prompt"][:120],
+            tier=decision.tier.value,
+            work_type=decision.worktype.value,
+            mode=ProjectMode.CHANNEL,
+            state=ProjectState.PROVISIONING,
+            channel_id=row["channel_id"],
+            root_thread_id=row["thread_id"],
+        )
+        project = self._move(self._move(project, ProjectState.SANDBOX_CHECK), ProjectState.LAB_RUNNING)
+        self.stages.post(project, "02-lab", f"Resultado del worker:\n{(result or '(sin salida)')[-3000:]}")
+        consult_maverick = getattr(self.lab_runner, "consult_maverick", None)
+        if consult_maverick is not None:
+            consult = consult_maverick(project_id=project.id, slug=project.slug, context=f"{row['prompt']}\n\nResultado:\n{(result or '')[-1500:]}")
+            if consult:
+                self.stages.post(project, "03-plan", consult)
+        return project.id
+
     def _publish(self, project, evidence, consult):
         plan = Plan(
             project_id=project.id,
