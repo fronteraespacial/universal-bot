@@ -47,7 +47,7 @@ def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None
     return {"processed": processed, "skipped": skipped, "answers": len(clicks)}
 
 
-def build_lab_runner(clock, *, lab_root, routing_policy, lab_timeout, maverick_timeout, max_labs):
+def build_lab_runner(clock, *, lab_root, routing_policy, lab_timeout, maverick_timeout, max_labs, allow_network=False):
     from universal_bot.code_mode import lab_runner
 
     root = Path(lab_root) if lab_root else Path(os.environ.get("UBLAB_LAB_ROOT") or "/tmp/ub-labcode")
@@ -70,6 +70,7 @@ def build_lab_runner(clock, *, lab_root, routing_policy, lab_timeout, maverick_t
         maverick_timeout_s=maverick,
         max_labs_t2=cap_t2,
         max_labs_t3=cap_t3,
+        allow_network=bool(allow_network),
     )
 
 
@@ -84,6 +85,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--lab-timeout", default=None)
     parser.add_argument("--maverick-timeout", default=None)
     parser.add_argument("--max-labs", default=None)
+    parser.add_argument("--lab-allow-network", action="store_true")
     args = parser.parse_args(argv)
     spool = Path(args.spool)
     db_path = Path(args.db) if args.db else spool / "runtime.sqlite"
@@ -96,6 +98,7 @@ def main(argv: list[str] | None = None) -> int:
         lab_timeout=args.lab_timeout,
         maverick_timeout=args.maverick_timeout,
         max_labs=args.max_labs,
+        allow_network=args.lab_allow_network or config.allow_network,
     )
     if args.once:
         run_once(spool, db_path=db_path, clock=clock, lab_runner=runner, config=config)

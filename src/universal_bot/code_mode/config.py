@@ -90,6 +90,7 @@ class CodeModeConfig:
     maverick_timeout_s: float = 300.0
     lab_root: str = ""
     routing_policy: str = ""
+    allow_network: bool = False
     env_extra: tuple[str, ...] = ()
     role_map: tuple[tuple[str, tuple[str, ...]], ...] = ()
 
@@ -330,6 +331,7 @@ def _lab_fields(value: object, base: CodeModeConfig) -> dict:
         "maverick_timeout_s": float(maverick),
         "lab_root": str(value.get("lab_root", base.lab_root)),
         "routing_policy": str(value.get("routing_policy", base.routing_policy)),
+        "allow_network": bool(value["allow_network"]) if "allow_network" in value else base.allow_network,
         "env_extra": _strings(extra, "env_extra") if not isinstance(extra, tuple) else tuple(extra),
     }
 
