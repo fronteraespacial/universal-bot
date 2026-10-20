@@ -24,8 +24,11 @@ class StageView:
 
 
 class StageRouter:
-    def __init__(self, discord: DiscordPort):
+    def __init__(self, discord: DiscordPort, db_path=None):
+        if db_path is not None:
+            raise NotImplementedError
         self.discord = discord
+        self.db_path = None
         self._stages: dict[tuple[str, str], StageView] = {}
 
     def enter(self, project: Project, stage_key: str, *, wave: str | None = None) -> StageView:
