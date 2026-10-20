@@ -413,3 +413,5 @@ def _result_id(result: dict, key: str) -> int:
     if isinstance(value, str) and value.isdigit():
         return int(value)
     raise BridgeDomainError(f"el resultado no trae {key}")
+
+UNPINNED_TEXT = None

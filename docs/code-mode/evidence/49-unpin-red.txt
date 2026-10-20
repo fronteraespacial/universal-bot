@@ -1,0 +1,69 @@
+FFFF                                                                     [100%]
+=================================== FAILURES ===================================
+_____________ test_local_ids_are_negative_and_unique_across_ticks ______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_local_ids_are_negative_and_unique_across_ticks(tmp_path):
+        spool = _spool(tmp_path)
+        first = _pin_message(spool)
+        second = _pin_message(spool)
+>       assert first < 0 and second < 0 and first != second
+E       assert (1 < 0)
+
+tests/test_unpin_degrade.py:52: AssertionError
+______________ test_unpin_in_a_later_tick_edits_the_real_message _______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_unpin_in_a_later_tick_edits_the_real_message(tmp_path):
+        spool = _spool(tmp_path)
+        local = _pin_message(spool)
+        _result(spool, _ops(spool, "send")[0]["op_id"], 9001)
+        _port(spool).unpin(CHANNEL, local)
+        edits = _ops(spool, "edit")
+>       assert len(edits) == 1
+E       assert 0 == 1
+E        +  where 0 = len([])
+
+tests/test_unpin_degrade.py:61: AssertionError
+_____________ test_unpin_before_the_result_waits_and_flushes_later _____________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_unpin_before_the_result_waits_and_flushes_later(tmp_path):
+        spool = _spool(tmp_path)
+        local = _pin_message(spool)
+        _port(spool).unpin(CHANNEL, local)
+        assert _ops(spool, "edit") == []
+        _result(spool, _ops(spool, "send")[0]["op_id"], 9002)
+>       assert _port(spool).flush_pins() >= 1
+E       AssertionError: assert 0 >= 1
+E        +  where 0 = flush_pins()
+E        +    where flush_pins = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2c85c6a470>.flush_pins
+E        +      where <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2c85c6a470> = _port(PosixPath('<ruta>'))
+
+tests/test_unpin_degrade.py:72: AssertionError
+________________ test_pin_in_a_later_tick_resolves_the_local_id ________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_pin_in_a_later_tick_resolves_the_local_id(tmp_path):
+        spool = _spool(tmp_path)
+        local = _pin_message(spool)
+        _port(spool).pin(CHANNEL, local)
+        _result(spool, _ops(spool, "send")[0]["op_id"], 9003)
+        _port(spool).flush_pins()
+>       assert [op["message_id"] for op in _ops(spool, "pin")] == [9003]
+E       assert [1] == [9003]
+E         
+E         At index 0 diff: 1 != 9003
+E         Use -v to get more diff
+
+tests/test_unpin_degrade.py:84: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_unpin_degrade.py::test_local_ids_are_negative_and_unique_across_ticks
+FAILED tests/test_unpin_degrade.py::test_unpin_in_a_later_tick_edits_the_real_message
+FAILED tests/test_unpin_degrade.py::test_unpin_before_the_result_waits_and_flushes_later
+FAILED tests/test_unpin_degrade.py::test_pin_in_a_later_tick_resolves_the_local_id
+4 failed in 0.08s
