@@ -1,0 +1,175 @@
+FFFFFFF                                                                  [100%]
+=================================== FAILURES ===================================
+_____________ test_send_is_atomic_and_returns_the_created_message ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_send_is_atomic_and_return0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f2a8a41f360>
+
+    def test_send_is_atomic_and_returns_the_created_message(tmp_path, monkeypatch):
+        spool = make_spool(tmp_path)
+        seen = {}
+        real_replace = Path.replace
+    
+        def spy(self, target):
+            if self.name.startswith(".") and str(self).endswith(".tmp"):
+                seen["tmp"] = self.name
+                seen["body"] = json.loads(self.read_text(encoding="utf-8"))
+                seen["final_before"] = Path(target).exists()
+            return real_replace(self, target)
+    
+        monkeypatch.setattr(Path, "replace", spy)
+>       message_id = port(spool).send(CHANNEL, "hola", reply_to=50)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_file_outbox.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a224050>
+channel_id = 910001, content = 'hola', thread_id = None
+reply_to = 50, components = None, embeds = None
+
+    def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
+>       raise NotImplementedError("send")
+E       NotImplementedError: send
+
+src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
+___________ test_thread_target_and_buttons_and_sequence_never_reused ___________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_thread_target_and_buttons0')
+
+    def test_thread_target_and_buttons_and_sequence_never_reused(tmp_path):
+        spool = make_spool(tmp_path)
+        first = port(spool)
+>       message_id = first.send(CHANNEL, "en el hilo", thread_id=77)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_file_outbox.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a18a990>
+channel_id = 910001, content = 'en el hilo', thread_id = 77
+reply_to = None, components = None, embeds = None
+
+    def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
+>       raise NotImplementedError("send")
+E       NotImplementedError: send
+
+src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
+_________________ test_invalid_ops_are_rejected_before_writing _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_invalid_ops_are_rejected_0')
+
+    def test_invalid_ops_are_rejected_before_writing(tmp_path):
+        spool = make_spool(tmp_path)
+        adapter = port(spool)
+        with pytest.raises(ValueError):
+>           adapter.send(CHANNEL, "")
+
+tests/test_file_outbox.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a18b250>
+channel_id = 910001, content = '', thread_id = None
+reply_to = None, components = None, embeds = None
+
+    def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
+>       raise NotImplementedError("send")
+E       NotImplementedError: send
+
+src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
+__________ test_create_channel_thread_pin_and_edit_match_the_contract __________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_create_channel_thread_pin0')
+
+    def test_create_channel_thread_pin_and_edit_match_the_contract(tmp_path):
+        spool = make_spool(tmp_path)
+        adapter = port(spool)
+>       channel_id = adapter.create_channel(
+            1, "p-reservas-api", category_name="Proyectos", overwrites=(), topic="tema"
+        )
+
+tests/test_file_outbox.py:170: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a20d0f0>
+guild_id = 1, name = 'p-reservas-api', category_name = 'Proyectos'
+overwrites = (), topic = 'tema', parent_id = None
+
+    def create_channel(self, guild_id: int, name: str, *, category_name: str, overwrites=(), topic: str | None = None, parent_id: int | None = None) -> int:
+>       raise NotImplementedError("create_channel")
+E       NotImplementedError: create_channel
+
+src/universal_bot/code_mode/file_outbox.py:58: NotImplementedError
+______________ test_out_of_scope_and_toggle_off_are_domain_errors ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_out_of_scope_and_toggle_o0')
+
+    def test_out_of_scope_and_toggle_off_are_domain_errors(tmp_path):
+        spool = make_spool(tmp_path / "a")
+        with pytest.raises(OutOfScope, match="out_of_scope"):
+>           port(spool, error="out_of_scope", timeout_s=3).send(9, "hola")
+
+tests/test_file_outbox.py:201: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a20d810>
+channel_id = 9, content = 'hola', thread_id = None, reply_to = None
+components = None, embeds = None
+
+    def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
+>       raise NotImplementedError("send")
+E       NotImplementedError: send
+
+src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
+_____________________ test_poll_times_out_without_hanging ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_poll_times_out_without_ha0')
+
+    def test_poll_times_out_without_hanging(tmp_path):
+        spool = make_spool(tmp_path)
+        adapter = port(spool, tick=True, timeout_s=2)
+        with pytest.raises(BridgeTimeout):
+>           adapter.send(CHANNEL, "hola")
+
+tests/test_file_outbox.py:211: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a1e39b0>
+channel_id = 910001, content = 'hola', thread_id = None
+reply_to = None, components = None, embeds = None
+
+    def send(self, channel_id: int, content: str, *, thread_id: int | None = None, reply_to: int | None = None, components=None, embeds=None) -> int:
+>       raise NotImplementedError("send")
+E       NotImplementedError: send
+
+src/universal_bot/code_mode/file_outbox.py:49: NotImplementedError
+______________________ test_unsupported_ops_do_not_write _______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-62/test_unsupported_ops_do_not_wr0')
+
+    def test_unsupported_ops_do_not_write(tmp_path):
+        spool = make_spool(tmp_path)
+        adapter = port(spool)
+        with pytest.raises(UnsupportedBridgeOp):
+>           adapter.unpin(CHANNEL, 1)
+
+tests/test_file_outbox.py:219: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f2a8a1999d0>
+channel_id = 910001, message_id = 1, thread_id = None
+
+    def unpin(self, channel_id: int, message_id: int, *, thread_id: int | None = None) -> None:
+>       raise NotImplementedError("unpin")
+E       NotImplementedError: unpin
+
+src/universal_bot/code_mode/file_outbox.py:67: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_file_outbox.py::test_send_is_atomic_and_returns_the_created_message - NotImplementedError: send
+FAILED tests/test_file_outbox.py::test_thread_target_and_buttons_and_sequence_never_reused - NotImplementedError: send
+FAILED tests/test_file_outbox.py::test_invalid_ops_are_rejected_before_writing - NotImplementedError: send
+FAILED tests/test_file_outbox.py::test_create_channel_thread_pin_and_edit_match_the_contract - NotImplementedError: create_channel
+FAILED tests/test_file_outbox.py::test_out_of_scope_and_toggle_off_are_domain_errors - NotImplementedError: send
+FAILED tests/test_file_outbox.py::test_poll_times_out_without_hanging - NotImplementedError: send
+FAILED tests/test_file_outbox.py::test_unsupported_ops_do_not_write - NotImplementedError: unpin
+7 failed in 0.08s
