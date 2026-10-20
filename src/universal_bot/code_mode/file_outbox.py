@@ -55,6 +55,8 @@ class FileOutboxDiscordPort:
         self.poll_interval_s = poll_interval_s
         self.admin_category_id = admin_category_id
         self.named_channels = dict(named_channels or {})
+        self.op_ids: list[str] = []
+        self._local_ids = 0
 
     def send(
         self,
@@ -66,8 +68,6 @@ class FileOutboxDiscordPort:
         components=None,
         embeds=None,
     ) -> int:
-        if self.defer_results:
-            raise NotImplementedError
         target = self._target(channel_id, thread_id)
         payload = self._emit(
             "send",
@@ -77,6 +77,8 @@ class FileOutboxDiscordPort:
             components=_checked_components(components),
             embeds=_embeds(embeds),
         )
+        if self.defer_results:
+            return self._next_local_id()
         result = self._wait_result(payload["op_id"])
         return _result_id(result, "message_id")
 
@@ -121,9 +123,7 @@ class FileOutboxDiscordPort:
         result = self._wait_result(payload["op_id"])
         return _result_id(result, "channel_id")
 
-    def create_thread(self, channel_id: int, name: str, *, from_message_id: int | None = None) -> int:
-        if self.defer_results:
-            raise NotImplementedError
+    def create_thread(self, channel_id: int, name: str, *, from_message_id: int | None = None) -> int | None:
         if not isinstance(name, str) or not 1 <= len(name) <= 100:
             raise ValueError("name fuera de 1..100")
         payload = self._emit(
@@ -132,12 +132,14 @@ class FileOutboxDiscordPort:
             name=name,
             from_message_id=_optional_id(from_message_id, "from_message_id"),
         )
+        if self.defer_results:
+            return None
         result = self._wait_result(payload["op_id"])
         return _result_id(result, "thread_id")
 
     def pin(self, channel_id: int, message_id: int, *, thread_id: int | None = None) -> None:
         if self.defer_results:
-            raise NotImplementedError
+            return
         payload = self._emit(
             "pin",
             channel_id=self._target(channel_id, thread_id),
@@ -150,6 +152,8 @@ class FileOutboxDiscordPort:
         raise UnsupportedBridgeOp("unpin no existe en el puente")
 
     def reply_ephemeral(self, user_id: int, content: str) -> None:
+        if self.defer_results:
+            return
         del user_id, content
         raise UnsupportedBridgeOp("reply_ephemeral no existe en el puente")
 
@@ -163,6 +167,10 @@ class FileOutboxDiscordPort:
 
     def register_persistent_view(self, custom_id: str) -> None:
         parse_custom_id(custom_id)
+
+    def _next_local_id(self) -> int:
+        self._local_ids += 1
+        return self._local_ids
 
     def _parent(self, parent_id: int | None) -> int | None:
         chosen = self.admin_category_id if parent_id is None else parent_id
@@ -190,6 +198,7 @@ class FileOutboxDiscordPort:
             if value is not None:
                 payload[key] = value
         self._publish(op_id, payload)
+        self.op_ids.append(op_id)
         return payload
 
     def _allocate(self, kind: str) -> str:

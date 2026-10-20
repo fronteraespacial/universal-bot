@@ -54,7 +54,7 @@ class InboxJob:
     guild_id: int
     channel_id: int
     thread_id: int | None
-    parent_channel_id: int
+    parent_channel_id: int | None
     message_id: int
     author: InboxAuthor
     author_context: str
@@ -118,7 +118,7 @@ def load_inbox_job(job_dir: Path) -> InboxJob:
         guild_id=_num(raw["guild_id"], "guild_id"),
         channel_id=_num(raw["channel_id"], "channel_id"),
         thread_id=_num_or_null(raw["thread_id"], "thread_id"),
-        parent_channel_id=_num(raw["parent_channel_id"], "parent_channel_id"),
+        parent_channel_id=_num_or_null(raw["parent_channel_id"], "parent_channel_id"),
         message_id=_num(raw["message_id"], "message_id"),
         author=InboxAuthor(_num(author["id"], "author.id"), str(author["display_name"])),
         author_context=str(raw["author_context"]),

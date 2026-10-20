@@ -87,6 +87,7 @@ class CodeModeConfig:
     lab_root: str = ""
     routing_policy: str = "/workspace/codemode-base/catalog/routing-policy.yaml"
     env_extra: tuple[str, ...] = ()
+    role_map: tuple[tuple[str, tuple[str, ...]], ...] | None = None
 
 
 def parse_duration(spec: str) -> timedelta | None:
@@ -184,6 +185,7 @@ def load_code_mode_config(path) -> CodeModeConfig:
         ),
         language_user=str(language.get("user", base.language_user)),
         language_stages=str(language.get("stages", base.language_stages)),
+        role_map=_role_map(block["role_map"]) if "role_map" in block else base.role_map,
         **_lab_fields(block.get("lab"), base),
     )
 
@@ -312,6 +314,15 @@ def _lab_fields(value: object, base: CodeModeConfig) -> dict:
         "routing_policy": str(value.get("routing_policy", base.routing_policy)),
         "env_extra": _strings(extra, "env_extra") if not isinstance(extra, tuple) else tuple(extra),
     }
+
+
+def _role_map(value: object) -> tuple[tuple[str, tuple[str, ...]], ...]:
+    if not isinstance(value, dict):
+        raise ConfigError("role_map tiene que ser un mapa")
+    rows = []
+    for key, roles in value.items():
+        rows.append((str(key), _strings(roles, "role_map")))
+    return tuple(rows)
 
 
 def _sandbox(value: object, base: SandboxPolicy) -> SandboxPolicy:

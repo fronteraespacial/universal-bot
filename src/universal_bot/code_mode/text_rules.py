@@ -36,7 +36,15 @@ def is_manual_trigger(text: str, config: CodeModeConfig) -> bool:
     if norm == command or norm.startswith(command + " "):
         return True
     phrases = {normalize_text(phrase) for phrase in config.manual_trigger_phrases}
-    return norm in phrases
+    if norm in phrases:
+        return True
+    return any(_phrase_prefix(norm, phrase) for phrase in phrases)
+
+
+def _phrase_prefix(norm: str, phrase: str) -> bool:
+    if not norm.startswith(phrase) or len(norm) == len(phrase):
+        return False
+    return norm[len(phrase)] in " :,;-"
 
 
 def is_command(text: str, config: CodeModeConfig) -> bool:

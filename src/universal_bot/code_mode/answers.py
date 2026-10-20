@@ -71,7 +71,7 @@ def _apply(spool, raw, clock, ask_bridge, projects, approvals, role_lookup) -> A
         _apply_stop(spool, item_id, projects, clock)
         return AppliedClick(kind, item_id, opt)
     if kind == "propose":
-        raise NotImplementedError
+        return AppliedClick(kind, item_id, opt)
     raise AnswerError(f"kind desconocido: {kind}")
 
 
