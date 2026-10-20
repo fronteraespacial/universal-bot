@@ -71,7 +71,6 @@ class StageRouter:
             return view
         technical_text = technical if view.header is None else f"{view.header}\n{technical}"
         self.discord.send(project.channel_id, technical_text, thread_id=view.thread_id)
-        self.discord.send(project.channel_id, plain, thread_id=None)
         return view
 
     def flush_pending(self) -> None:

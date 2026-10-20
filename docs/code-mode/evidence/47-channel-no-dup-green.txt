@@ -1,0 +1,4 @@
+.....                                                                    [100%]
+5 passed in 0.04s
+Mutación: volver a mandar el texto simple al canal -> el test falla (es el rojo de 47).
+Incluye tests/conftest.py: los tests ignoran el config/local.yaml de la máquina (con el MAIN prendido en local, test_labcode_cli leía ese config).
