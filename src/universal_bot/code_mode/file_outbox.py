@@ -133,7 +133,7 @@ class FileOutboxDiscordPort:
             from_message_id=_optional_id(from_message_id, "from_message_id"),
         )
         if self.defer_results:
-            return None
+            return self._thread_id_or_none(payload["op_id"])
         result = self._wait_result(payload["op_id"])
         return _result_id(result, "thread_id")
 
@@ -169,6 +169,13 @@ class FileOutboxDiscordPort:
 
     def register_persistent_view(self, custom_id: str) -> None:
         parse_custom_id(custom_id)
+
+    def _thread_id_or_none(self, op_id: str) -> int | None:
+        try:
+            result = self._wait_result(op_id)
+        except (BridgeTimeout, BridgeDomainError):
+            return None
+        return _result_id(result, "thread_id")
 
     def _next_local_id(self) -> int:
         self._local_ids += 1

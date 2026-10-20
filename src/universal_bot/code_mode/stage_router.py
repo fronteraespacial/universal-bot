@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+import json
 from pathlib import Path
 
 from universal_bot.code_mode.db import connect
@@ -57,6 +58,9 @@ class StageRouter:
     def post(self, project: Project, stage_key: str, technical: str, *, wave: str | None = None) -> StageView:
         view = self.enter(project, stage_key, wave=wave)
         plain = render_plain(technical)
+        if project.mode == ProjectMode.CHANNEL and view.thread_id is None:
+            self._remember_pending(project, stage_key, technical)
+            return view
         if project.mode == ProjectMode.THREAD or view.thread_id is None:
             technical_text = f"[{stage_key}] {technical}"
             if view.header:
@@ -70,6 +74,26 @@ class StageRouter:
         self.discord.send(project.channel_id, plain, thread_id=None)
         return view
 
+    def flush_pending(self) -> None:
+        spool = getattr(self.discord, "spool", None)
+        if spool is None:
+            return
+        for row in self._pending_rows():
+            result = _result_file(Path(spool), row["op_id"])
+            if result is None or result.get("ok") is not True:
+                continue
+            thread_id = result.get("thread_id")
+            if isinstance(thread_id, bool) or not isinstance(thread_id, int):
+                continue
+            self.discord.send(row["channel_id"], row["technical"], thread_id=thread_id)
+            self._stages[(row["project_id"], row["stage_key"])] = StageView(
+                row["stage_key"],
+                thread_id,
+                None,
+                False,
+            )
+            self._save(row["project_id"], self._stages[(row["project_id"], row["stage_key"])])
+            self._drop_pending(row["project_id"], row["stage_key"])
 
     def _init_db(self) -> None:
         with connect(self.db_path) as conn:
@@ -79,6 +103,18 @@ class StageRouter:
                     project_id TEXT NOT NULL,
                     stage_key TEXT NOT NULL,
                     thread_id INTEGER,
+                    PRIMARY KEY (project_id, stage_key)
+                )
+                """
+            )
+            conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS pending_stage_posts (
+                    project_id TEXT NOT NULL,
+                    stage_key TEXT NOT NULL,
+                    channel_id INTEGER NOT NULL,
+                    op_id TEXT,
+                    technical TEXT NOT NULL,
                     PRIMARY KEY (project_id, stage_key)
                 )
                 """
@@ -107,6 +143,48 @@ class StageRouter:
                 """,
                 (project_id, view.key, view.thread_id),
             )
+
+    def _remember_pending(self, project: Project, stage_key: str, technical: str) -> None:
+        if self.db_path is None or project.channel_id is None:
+            return
+        ops = getattr(self.discord, "op_ids", None)
+        op_id = ops[-1] if ops else None
+        with connect(self.db_path) as conn:
+            conn.execute(
+                """
+                INSERT INTO pending_stage_posts (project_id, stage_key, channel_id, op_id, technical)
+                VALUES (?, ?, ?, ?, ?)
+                ON CONFLICT(project_id, stage_key) DO UPDATE SET
+                    channel_id = excluded.channel_id,
+                    op_id = excluded.op_id,
+                    technical = excluded.technical
+                """,
+                (project.id, stage_key, project.channel_id, op_id, technical),
+            )
+
+    def _pending_rows(self) -> list:
+        if self.db_path is None:
+            return []
+        with connect(self.db_path) as conn:
+            return list(conn.execute("SELECT project_id, stage_key, channel_id, op_id, technical FROM pending_stage_posts"))
+
+    def _drop_pending(self, project_id: str, stage_key: str) -> None:
+        if self.db_path is None:
+            return
+        with connect(self.db_path) as conn:
+            conn.execute(
+                "DELETE FROM pending_stage_posts WHERE project_id = ? AND stage_key = ?",
+                (project_id, stage_key),
+            )
+
+
+def _result_file(spool: Path, op_id: str | None) -> dict | None:
+    if not op_id:
+        return None
+    path = spool / "outbox" / f"{op_id}.result.json"
+    if not path.is_file():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
 def render_plain(text: str) -> str:

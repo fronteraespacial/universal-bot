@@ -511,7 +511,7 @@ def test_deferred_port_enqueues_without_waiting(tmp_path):
     assert send["channel_id"] == CHANNEL
 
 
-def test_missing_thread_id_falls_back_to_the_channel_prefix():
+def test_missing_thread_id_does_not_post_the_detail_on_the_channel():
     from universal_bot.code_mode.models import Project
     from universal_bot.code_mode.stage_router import StageRouter
 
@@ -544,5 +544,4 @@ def test_missing_thread_id_falls_back_to_the_channel_prefix():
     )
     StageRouter(discord).post(project, "02-lab", "detalle tecnico")
     assert discord.threads[0].name == "02-lab"
-    assert discord.messages[0].content == "[02-lab] detalle tecnico"
-    assert discord.messages[0].thread_id is None
+    assert discord.messages == []
