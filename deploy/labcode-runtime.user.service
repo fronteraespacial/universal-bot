@@ -1,0 +1,12 @@
+[Unit]
+Description=Runtime de modo codigo (labcode)
+After=default.target
+
+[Service]
+Type=simple
+WorkingDirectory=<repo>
+ExecStart=<repo>/.venv/bin/python -m universal_bot.labcode_runtime --spool <spool> --db <repo>/state/labcode.sqlite --interval 10
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
