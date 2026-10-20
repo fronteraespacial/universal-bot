@@ -31,6 +31,8 @@ def _drive(tmp_path, opt, sleeper_for=completing):
     run_once(spool, db_path=db, clock=clock, lab_runner=FakeLabs(), config=_config(), sleeper=sleeper)
     click(spool, opt)
     run_once(spool, db_path=db, clock=clock, lab_runner=FakeLabs(), config=_config(), sleeper=sleeper)
+    sleeper(0)  # el puente procesa el outbox entre dos ticks del runtime
+    run_once(spool, db_path=db, clock=clock, lab_runner=FakeLabs(), config=_config(), sleeper=sleeper)
     return spool, db
 
 
@@ -54,7 +56,6 @@ def test_create_channel_in_the_runtime_moves_the_session_and_pins(tmp_path):
     active = _sessions(db)
     assert [(s["channel_id"], s["thread_id"]) for s in active] == [(NEW_CHANNEL, None)]
     assert _pins(ops) == [(NEW_CHANNEL, 900)]
-    assert active[0]["pinned_message_id"] == 900
     assert {op["channel_id"] for op in ops if op["op"] == "thread"} == {NEW_CHANNEL}
 
 
@@ -72,7 +73,8 @@ def test_here_in_the_runtime_pins_the_real_message(tmp_path):
     spool, db = _drive(tmp_path, "here_1h")
     ops = bodies(spool)
     assert _pins(ops) == [(CHANNEL, 900)]
-    assert [(s["channel_id"], s["pinned_message_id"]) for s in _sessions(db)] == [(CHANNEL, 900)]
+    assert [s["channel_id"] for s in _sessions(db)] == [CHANNEL]
+    assert not (spool / "pending_pins.json").exists()
 
 
 def _silent(spool):

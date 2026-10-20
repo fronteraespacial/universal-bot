@@ -99,7 +99,7 @@ class FakeDiscord:
         self.channels.append(CreatedChannel(channel_id, guild_id, name, category_name, overwrites))
         return channel_id
 
-    def create_thread(self, channel_id: int, name: str) -> int:
+    def create_thread(self, channel_id: int, name: str, *, wait: bool = False) -> int:
         thread_id = self._next_id()
         self.threads.append(CreatedThread(thread_id, channel_id, name))
         return thread_id

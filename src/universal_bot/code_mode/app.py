@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from universal_bot.code_mode.file_outbox import BridgeDomainError, BridgeTimeout
+
 from dataclasses import replace
 import json
 from pathlib import Path
@@ -95,13 +97,17 @@ class CodeModeApp:
         if not role_allowed(self.config.roles.can_start_project, roles):
             return
         name = f"{self.config.channel_prefix}{_slug(job.prompt)}"
-        channel_id = self.discord.create_channel(
-            job.guild_id,
-            name,
-            category_name=self.config.projects_category,
-            parent_id=self.config.admin_category_id,
-        )
+        try:
+            channel_id = self.discord.create_channel(
+                job.guild_id,
+                name,
+                category_name=self.config.projects_category,
+                parent_id=self.config.admin_category_id,
+            )
+        except (BridgeTimeout, BridgeDomainError):
+            channel_id = None
         if not channel_id:
+            self._bridge_failed(job, job_dir, "create_channel")
             return
         opened = self.sessions.activate(
             Location(job.guild_id, channel_id),
@@ -120,8 +126,12 @@ class CodeModeApp:
             return
         channel_id = self.config.projects_channel_id or job.channel_id
         name = f"{self.config.channel_prefix}{_slug(job.prompt)}"
-        thread_id = self.discord.create_thread(channel_id, name)
+        try:
+            thread_id = self.discord.create_thread(channel_id, name, wait=True)
+        except (BridgeTimeout, BridgeDomainError):
+            thread_id = None
         if not thread_id:
+            self._bridge_failed(job, job_dir, "create_thread")
             return
         opened = self.sessions.activate(
             Location(job.guild_id, channel_id, thread_id),
@@ -134,6 +144,16 @@ class CodeModeApp:
         if not opened.ok:
             return
         self._route_active(replace(job, channel_id=channel_id, thread_id=thread_id), job_dir)
+
+    def _bridge_failed(self, job, job_dir, step: str) -> None:
+        self.close_job(
+            job,
+            job_dir,
+            status="error",
+            active_step=step,
+            summary="el puente no confirmó la operación",
+            error="bridge_timeout",
+        )
 
     def finish_untested(self, job_dir):
         path = Path(job_dir) / "state.json"

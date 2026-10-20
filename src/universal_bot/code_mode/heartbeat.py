@@ -35,5 +35,33 @@ def _age(spool: Path, clock) -> float | None:
 
 
 class HeartbeatThread:
-    def __init__(self, *args, **kwargs):
-        raise NotImplementedError
+    """Toca el heartbeat cada `interval_s` en un hilo aparte, así un lab largo no deja al runtime «caído»."""
+
+    def __init__(self, spool: Path, *, interval_s: float = 10.0, clock=None):
+        import threading
+
+        from universal_bot.code_mode.clock import SystemClock
+
+        self.spool = Path(spool)
+        self.interval_s = interval_s
+        self.clock = clock or SystemClock()
+        self._stop = threading.Event()
+        self._thread = threading.Thread(target=self._run, name="labcode-heartbeat", daemon=True)
+
+    def _run(self) -> None:
+        while not self._stop.is_set():
+            try:
+                touch_heartbeat(self.spool, self.clock)
+            except OSError:
+                pass
+            self._stop.wait(self.interval_s)
+
+    def start(self) -> None:
+        self._thread.start()
+
+    def stop(self) -> None:
+        self._stop.set()
+        self._thread.join(5)
+
+    def is_alive(self) -> bool:
+        return self._thread.is_alive()

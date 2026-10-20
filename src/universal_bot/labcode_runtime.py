@@ -14,7 +14,7 @@ from universal_bot.code_mode.ask_bridge import AskBridge
 from universal_bot.code_mode.clock import SystemClock
 from universal_bot.code_mode.config import CodeModeConfig, load_runtime_config
 from universal_bot.code_mode.file_outbox import FileOutboxDiscordPort
-from universal_bot.code_mode.heartbeat import touch_heartbeat
+from universal_bot.code_mode.heartbeat import HeartbeatThread, touch_heartbeat
 from universal_bot.code_mode.inbox_flow import apply_clicks
 from universal_bot.code_mode.inbox_job import load_inbox_job
 from universal_bot.store import JobStore
@@ -28,11 +28,12 @@ def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None
         (root / name).mkdir(parents=True, exist_ok=True)
     touch_heartbeat(root, clock)
     chosen = config or CodeModeConfig()
-    port = _port(root, clock)
+    port = _port(root, clock, chosen, sleeper)
     app = CodeModeApp(db_path, port, clock, chosen, lab_runner=lab_runner)
     bridge = AskBridge(db_path, JobStore(db_path), port, clock, app.ledger, chosen)
     app.ask_bridge = bridge
     app.stages.flush_pending()
+    port.flush_pins()
     bridge.tick()
     app.sessions.tick()
     clicks = consume_answers(
@@ -103,16 +104,32 @@ def main(argv: list[str] | None = None) -> int:
     if args.once:
         run_once(spool, db_path=db_path, clock=clock, lab_runner=runner, config=config)
         return 0
-    while True:
-        run_once(spool, db_path=db_path, clock=SystemClock(), lab_runner=runner, config=config)
-        time.sleep(min(max(args.interval, 1.0), 20.0))
+    beat = HeartbeatThread(spool, interval_s=10.0)
+    beat.start()
+    try:
+        while True:
+            run_once(spool, db_path=db_path, clock=SystemClock(), lab_runner=runner, config=config)
+            time.sleep(min(max(args.interval, 1.0), 20.0))
+    finally:
+        beat.stop()
 
 
-def _port(spool: Path, clock) -> FileOutboxDiscordPort:
-    def sleeper(_seconds: float) -> None:
-        raise RuntimeError("run_once no espera operaciones del puente")
-
-    return FileOutboxDiscordPort(spool, clock=clock, sleeper=sleeper, timeout_s=0, defer_results=True)
+def _port(spool: Path, clock, config, sleeper=None) -> FileOutboxDiscordPort:
+    """Difiere los resultados salvo create_channel/create_thread/pin, que esperan al puente (poll cada 2 s)."""
+    named = {}
+    if config.projects_channel_id is not None:
+        named[config.projects_channel] = config.projects_channel_id
+    return FileOutboxDiscordPort(
+        spool,
+        clock=clock,
+        sleeper=sleeper or time.sleep,
+        timeout_s=0,
+        poll_interval_s=0.5,
+        defer_results=True,
+        structural_timeout_s=30.0,
+        admin_category_id=config.admin_category_id,
+        named_channels=named,
+    )
 
 
 def _consume_inbox(spool: Path, clock, on_job, app) -> tuple[int, int]:

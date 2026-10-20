@@ -46,6 +46,7 @@ class FileOutboxDiscordPort:
         admin_category_id: int | None = None,
         named_channels: dict[str, int] | None = None,
         defer_results: bool = False,
+        structural_timeout_s: float = 30.0,
     ):
         self.spool = Path(spool)
         self.clock = clock
@@ -57,6 +58,8 @@ class FileOutboxDiscordPort:
         self.named_channels = dict(named_channels or {})
         self.op_ids: list[str] = []
         self._local_ids = 0
+        self._local_ops: dict[int, str] = {}
+        self.structural_timeout_s = structural_timeout_s
 
     def send(
         self,
@@ -78,7 +81,9 @@ class FileOutboxDiscordPort:
             embeds=_embeds(embeds),
         )
         if self.defer_results:
-            return self._next_local_id()
+            local = self._next_local_id()
+            self._local_ops[local] = payload["op_id"]
+            return local
         result = self._wait_result(payload["op_id"])
         return _result_id(result, "message_id")
 
@@ -120,10 +125,12 @@ class FileOutboxDiscordPort:
             topic=topic,
             parent_id=self._parent(parent_id),
         )
-        result = self._wait_result(payload["op_id"])
+        result = self._wait_structural(payload["op_id"])
         return _result_id(result, "channel_id")
 
-    def create_thread(self, channel_id: int, name: str, *, from_message_id: int | None = None) -> int | None:
+    def create_thread(
+        self, channel_id: int, name: str, *, from_message_id: int | None = None, wait: bool = False
+    ) -> int | None:
         if not isinstance(name, str) or not 1 <= len(name) <= 100:
             raise ValueError("name fuera de 1..100")
         payload = self._emit(
@@ -132,14 +139,16 @@ class FileOutboxDiscordPort:
             name=name,
             from_message_id=_optional_id(from_message_id, "from_message_id"),
         )
+        if self.defer_results and wait:
+            return _result_id(self._wait_structural(payload["op_id"]), "thread_id")
         if self.defer_results:
             return self._thread_id_or_none(payload["op_id"])
         result = self._wait_result(payload["op_id"])
         return _result_id(result, "thread_id")
 
-    def pin(self, channel_id: int, message_id: int, *, thread_id: int | None = None) -> None:
+    def pin(self, channel_id: int, message_id: int, *, thread_id: int | None = None) -> int | None:
         if self.defer_results:
-            return
+            return self._pin_deferred(channel_id, message_id, thread_id)
         payload = self._emit(
             "pin",
             channel_id=self._target(channel_id, thread_id),
@@ -176,6 +185,62 @@ class FileOutboxDiscordPort:
         except (BridgeTimeout, BridgeDomainError):
             return None
         return _result_id(result, "thread_id")
+
+    def _wait_structural(self, op_id: str) -> dict:
+        """Espera el resultado aunque el port difiera: create_channel/thread y el mensaje a fijar lo necesitan."""
+        previous = self.timeout_s
+        self.timeout_s = max(previous, self.structural_timeout_s)
+        try:
+            return self._wait_result(op_id)
+        finally:
+            self.timeout_s = previous
+
+    def _pin_deferred(self, channel_id: int, message_id: int, thread_id: int | None) -> None:
+        """Sin esperar: si el mensaje todavía no tiene id real, el pin queda pendiente para el próximo tick."""
+        target = self._target(channel_id, thread_id)
+        op_id = self._local_ops.get(message_id)
+        if op_id is None:
+            self._emit("pin", channel_id=target, message_id=_discord_id(message_id, "message_id"))
+            return None
+        pending = self._pending_pins()
+        pending.append({"send_op_id": op_id, "channel_id": target})
+        self._save_pending_pins(pending)
+        return None
+
+    def flush_pins(self) -> int:
+        """Emite los pins cuyo mensaje ya tiene resultado del puente. Devuelve cuántos emitió."""
+        emitted = 0
+        keep = []
+        for row in self._pending_pins():
+            result = self._read_result(row["send_op_id"])
+            if result is None:
+                keep.append(row)
+                continue
+            if result.get("ok") is not True:
+                continue
+            try:
+                real = _result_id(result, "message_id")
+            except BridgeDomainError:
+                continue
+            self._emit("pin", channel_id=row["channel_id"], message_id=real)
+            emitted += 1
+        self._save_pending_pins(keep)
+        return emitted
+
+    def _pending_pins(self) -> list[dict]:
+        path = self.spool / "pending_pins.json"
+        if not path.is_file():
+            return []
+        return list(json.loads(path.read_text(encoding="utf-8")))
+
+    def _save_pending_pins(self, rows: list[dict]) -> None:
+        path = self.spool / "pending_pins.json"
+        if not rows:
+            path.unlink(missing_ok=True)
+            return
+        tmp = self.spool / ".pending_pins.tmp"
+        tmp.write_text(json.dumps(rows), encoding="utf-8")
+        tmp.replace(path)
 
     def _next_local_id(self) -> int:
         self._local_ids += 1

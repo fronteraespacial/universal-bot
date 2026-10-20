@@ -1,0 +1,6 @@
+.....                                                                    [100%]
+5 passed in 0.56s
+Notas:
+- El pin del botón de salida quedó diferido y no bloqueante (pending_pins.json en el spool, se emite en el tick siguiente con el message_id real). Por eso el test agrega un tick de puente + runtime y ya no exige pinned_message_id real en la sesión (el puente no tiene unpin; ese campo no se usa).
+- create_channel / create_thread (botón) esperan al puente hasta 30 s; si no hay respuesta el job queda en error "bridge_timeout" sin tumbar el runtime.
+- Mutación: no emitir el pin en flush_pins → 3 tests fallan.
