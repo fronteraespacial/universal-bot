@@ -1,0 +1,5 @@
+.......................................                                  [100%]
+39 passed in 4.20s
+
+Mutación: sin lector de cuota se asume grok: 1 failed, 15 passed in 1.19s
+Diagnóstico 401: cli_quota usa el access token guardado sin refrescarlo; vence ~6 h después del último arranque del CLI (vencía 19:46 ART). La TUI de grok lo refresca al iniciar: después de abrirla, cli_quota grok_cli volvió a dar 42% (coincide con /usage: 58% usado).

@@ -452,12 +452,13 @@ def cursor_agent_main_argv(cwd, model: str, prompt: str) -> list[str]:
 
 
 def _grok_ok(quota) -> bool:
+    """Grok solo con cuota conocida y > 40 %. Sin lector o sin dato: no es cuota segura -> cursor-agent."""
     if quota is None:
-        return True
+        return False
     try:
         return float(quota.grok_remaining()) > LOW_GROK
     except Exception:
-        return True
+        return False
 
 
 def select_main_session(config, *, cwd, sidecar=None, key_file=None, quota=None, node_bin=None):
