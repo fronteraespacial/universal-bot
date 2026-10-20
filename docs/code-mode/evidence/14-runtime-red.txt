@@ -1,0 +1,126 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_inbox_is_processed_once_and_survives_restart _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0')
+
+    def test_inbox_is_processed_once_and_survives_restart(tmp_path):
+        spool = make_spool(tmp_path / "spool")
+        job_dir = write_job(spool)
+        clock = FakeClock(T0)
+        seen = []
+        db = tmp_path / "mode.sqlite"
+>       first = run_once(spool, db_path=db, clock=clock, on_job=seen.append)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_labcode_runtime.py:66: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spool = PosixPath('/tmp/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0/spool')
+db_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_inbox_is_processed_once_a0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f645d5442f0>
+on_job = <built-in method append of list object at 0x7f645d48f300>
+role_lookup = None
+
+    def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None) -> dict:
+>       raise NotImplementedError("run_once")
+E       NotImplementedError: run_once
+
+src/universal_bot/labcode_runtime.py:9: NotImplementedError
+___________________ test_stop_answer_pauses_the_running_job ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0')
+
+    def test_stop_answer_pauses_the_running_job(tmp_path):
+        spool = make_spool(tmp_path / "spool")
+        clock = FakeClock(T0)
+        db = tmp_path / "mode.sqlite"
+        ledger = ProjectLedger(db, clock)
+        project = ledger.create_project(id="P-stop", guild_id=10, requester_id=7, state=ProjectState.RUNNING)
+        job_dir = spool / "inbox" / "lc_1"
+        job_dir.mkdir()
+        (job_dir / "job.json").write_text(json.dumps({"job_id": "job-9"}), encoding="utf-8")
+        (job_dir / "state.json").write_text(
+            json.dumps({"version": 1, "status": "running", "project_id": project.id, "op_ids": ["op-1"]}),
+            encoding="utf-8",
+        )
+        answer = {
+            "version": 1,
+            "kind": "stop",
+            "id": "job-9",
+            "opt": "ahora",
+            "user_id": "7",
+            "channel_id": "10",
+            "message_id": "1",
+            "interaction_id": "ix-1",
+            "ts": 1.0,
+        }
+        (spool / "answers" / "stop__job-9.json").write_text(json.dumps(answer), encoding="utf-8")
+        seen = []
+>       report = run_once(spool, db_path=db, clock=clock, on_job=seen.append)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_labcode_runtime.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spool = PosixPath('/tmp/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0/spool')
+db_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_stop_answer_pauses_the_ru0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f645d7a2850>
+on_job = <built-in method append of list object at 0x7f645d4c62c0>
+role_lookup = None
+
+    def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None) -> dict:
+>       raise NotImplementedError("run_once")
+E       NotImplementedError: run_once
+
+src/universal_bot/labcode_runtime.py:9: NotImplementedError
+__________________ test_cli_once_exits_and_does_not_reprocess __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-72/test_cli_once_exits_and_does_n0')
+
+    def test_cli_once_exits_and_does_not_reprocess(tmp_path):
+        spool = make_spool(tmp_path / "spool")
+        job_dir = write_job(spool, message_id="777", job_id="job-cli", prompt="eco")
+        db = tmp_path / "mode.sqlite"
+        command = [
+            sys.executable,
+            "-m",
+            "universal_bot.labcode_runtime",
+            "--spool",
+            str(spool),
+            "--once",
+            "--db",
+            str(db),
+        ]
+        first = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, timeout=15, check=False)
+>       assert first.returncode == 0, first.stderr
+E       AssertionError: Traceback (most recent call last):
+E           File "<frozen runpy>", line 198, in _run_module_as_main
+E           File "<frozen runpy>", line 88, in _run_code
+E           File "/workspace/ub-codemode/src/universal_bot/labcode_runtime.py", line 17, in <module>
+E             raise SystemExit(main())
+E                              ~~~~^^
+E           File "/workspace/ub-codemode/src/universal_bot/labcode_runtime.py", line 13, in main
+E             raise NotImplementedError("main")
+E         NotImplementedError: main
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/workspace/ub-codemode/.venv/bin/python', '-m', 'universal_bot.labcode_runtime', '--spool', '/...iversal_bot/labcode_runtime.py", line 13, in main\n    raise NotImplementedError("main")\nNotImplementedError: main\n').returncode
+
+tests/test_labcode_runtime.py:136: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_labcode_runtime.py::test_inbox_is_processed_once_and_survives_restart - NotImplementedError: run_once
+FAILED tests/test_labcode_runtime.py::test_stop_answer_pauses_the_running_job - NotImplementedError: run_once
+FAILED tests/test_labcode_runtime.py::test_cli_once_exits_and_does_not_reprocess - AssertionError: Traceback (most recent call last):
+    File "<frozen runpy>", line 198, in _run_module_as_main
+    File "<frozen runpy>", line 88, in _run_code
+    File "/workspace/ub-codemode/src/universal_bot/labcode_runtime.py", line 17, in <module>
+      raise SystemExit(main())
+                       ~~~~^^
+    File "/workspace/ub-codemode/src/universal_bot/labcode_runtime.py", line 13, in main
+      raise NotImplementedError("main")
+  NotImplementedError: main
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/workspace/ub-codemode/.venv/bin/python', '-m', 'universal_bot.labcode_runtime', '--spool', '/...iversal_bot/labcode_runtime.py", line 13, in main\n    raise NotImplementedError("main")\nNotImplementedError: main\n').returncode
+3 failed in 0.10s
