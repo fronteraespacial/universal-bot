@@ -284,3 +284,63 @@ Humo (`evidence/smoke-20261020/main-run*.txt`): runtime real, puente simulado, M
 4. En modo canal con hilo conocido, el resumen plano también va al canal principal (el diseño actual de los tests lo pide así).
 5. `pinned_message_id` es un placeholder local: el puente no tiene unpin.
 6. Prueba en Discord real: la coordinan con Julian.
+
+## Fase 3c: MAIN cursor-sdk, hilos de etapa, unpin, agy TUI y sidecar v2
+
+| Unidad | test | feat | Evidencia |
+| --- | --- | --- | --- |
+| 45 cerebros del MAIN (sidecar, fallback, cursor-agent relanzar, selección por cuota) | `96af595` | `a0459cd` | `45-*` |
+| 46 el runtime arma el MAIN con cursor-sdk primero; cuota de grok rutea MAIN y lab | `e558b6f` | `e6fe419` | `46-*` |
+| 47 modo canal con hilo conocido: sin resumen duplicado en el canal | `1cb1244` | `b31d387` | `47-*` |
+| 48 resultado del worker por 02-lab y 03-plan | `933bb44` | `5b9a329` | `48-*` |
+| 49 sin unpin en el puente: el cierre edita el fijado | `e7a381d` | `e19b434` | `49-*` |
+| 50/54 spike agy MAIN por TUI (tmux) | `56e315c`, `6481d02` | `9d74221` | `50-*`, `54-*` |
+| 51 sidecar cursor-sdk v2 | `6ba7519` | `14a05b7` | `51-*` |
+| 52 stdout del sidecar solo JSONL | `393b053` | `9d25847` | `52-*` |
+| 53 serve sale limpio si el host cierra stdout | `976a0c6` | `64982e3` | `53-*` |
+
+### MAIN con cursor-sdk
+
+`main.cli: auto` (default) o `cursor-sdk`: el MAIN es `SidecarSession` (un run del sidecar por turno, historial corto en el prompt, `tools: ["read"]`, steer/cancel por archivos absolutos por turno). Si el sidecar pide fallback (`fallback: true`), `FallbackSession` pasa de forma pegajosa a grok warm si la cuota de grok es > 40 %, o a cursor-agent (`--mode ask`, grok-4.7-high-fast) con steer = matar y relanzar. Un cancel no dispara fallback.
+
+La cuota sale de `main.quota_file` (JSON con el restante de grok). No hay escritor todavía: sin archivo se asume grok disponible. El escritor natural es un cron que vuelque `cli_quota grok_cli` a ese archivo (hoy `cli_quota grok_cli` responde HTTP 401).
+
+Humo (`evidence/smoke-20261020/main-sdk-run1.txt`, spool temporal, puente simulado, sidecar real): 5 turnos del MAIN por cursor-sdk sin fallback, 4–9 s por turno. Hubo estado, cambio de alcance con relanzamiento del worker, el resultado en el hilo `02-lab` y la respuesta final con `reply_to`. 0 duplicados reales (el contador del driver marca 1 por los `content` vacíos de pin y thread). El outbox quedó vacío. `03-plan` no sale en el humo porque necesita `lab_runner.consult_maverick` (sólo existe con el runner de producción).
+
+### Unpin
+
+El puente no tiene `unpin`. Al salir, el runtime edita el mensaje fijado a «Modo programación terminado.» sin botones. En modo diferido, el id local (negativo, persistido en `spool/local_messages.json`) se resuelve contra el resultado del `send`. Si el resultado todavía no llegó, queda pendiente y se reintenta en el próximo tick. El mensaje queda fijado; agregar `unpin` al puente es del lado de FE-BOT.
+
+### opencode
+
+Texto final real re-verificado: «OK» en los dos turnos (arranque 1,30 s, OK1 1,87 s, OK2 0,71 s).
+
+### agy por TUI (spike)
+
+`AgyTuiSession` maneja `agy --model … --dangerously-skip-permissions` en un tmux con socket propio. Contesta el diálogo de confianza una sola vez, detecta la caja `>` entre separadores con el pie abajo, y la respuesta es lo nuevo entre lo tecleado y la caja. steer = escribir con el subagente vivo, cancel = Escape, close = matar el server y borrar el socket. En real (2 de 2): arranque 3,6 s, «OK» en 4,0 s (la corrida 1, antes del arreglo, se colgó en el diálogo).
+
+Falta:
+
+- cerrar el aviso «Verbosity…» dentro de la sesión (hoy lo hace el probe con Escape);
+- un steer real con subagente;
+- configurar Queued Messages = Send Immediately;
+- el spinner;
+- cablearlo en `select_main_session`.
+
+### Sidecar cursor-sdk v2
+
+Ver `adapters/cursor_sdk/CHANGELOG-v2.md` y `evidence/sidecar-v2-bench.md`.
+
+- Passthroughs de FE-BOT (`mcp`, `mcp_servers`, `setting_sources`, `model_params`, `http1`).
+- fast por defecto.
+- Validación estricta y `--capabilities`.
+- SIGTERM temprano con línea final.
+- `timeout_s` sobre create+send.
+- El resultado le gana al cancel tardío.
+- Redacción con buffer.
+- Truncado.
+- Store efímero.
+- stdout sólo JSONL.
+- `--serve` de larga vida con `session_id`.
+
+En `--serve`, el primer request de una sesión tarda ~5 s y los siguientes 1,3–2,3 s. El MAIN todavía usa one-shot por turno: pasarlo a `--serve` es el próximo paso para bajar los 4–9 s por turno.

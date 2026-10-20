@@ -1,0 +1,4 @@
+# AGY MAIN por TUI (tmux), corrida real 2 de 2 — 2026-10-20 20:01 ART
+modelo gemini-3.8-flash-low, settle_s 2.0, diálogo de confianza contestado una vez, aviso "Verbosity" cerrado con Escape desde el probe
+{"start_s": 3.64, "dismissed_notice": true, "ok": {"ok": true, "status": "completed", "text": "OK", "ms": 4048}}
+Corrida 1 (antes del arreglo): arranque 30 s y timeout del prompt (re-contestaba el diálogo de confianza en loop).
