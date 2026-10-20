@@ -11,3 +11,8 @@ code_mode:
   lab:
     routing_policy: ""
     lab_root: ""
+cursor_sdk:
+  enabled: true
+  # launcher relativo al repo; default adapters/cursor_sdk/bin/cursor-sdk-sidecar
+  api_key_file: "<home>/.secrets/cursor_api_key_frontera"   # nunca la key en este archivo
+  node_bin: null    # null = el node que trae cursor-agent (>=22.13)

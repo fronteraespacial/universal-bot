@@ -158,5 +158,19 @@ def run_with_fallback(sdk: CursorSdkAdapter | None, cursor_agent: Callable[..., 
     return ChatResult("cursor-agent", cursor_agent(prompt, **options), outcome)
 
 
-def adapter_from_config(*args, **kwargs):
-    raise NotImplementedError
+DEFAULT_LAUNCHER = Path("adapters") / "cursor_sdk" / "bin" / "cursor-sdk-sidecar"
+
+
+def adapter_from_config(raw: dict, repo_root) -> CursorSdkAdapter | None:
+    settings = raw.get("cursor_sdk") or {}
+    if settings.get("enabled", True) is False:
+        return None
+    launcher = Path(repo_root) / settings.get("launcher", DEFAULT_LAUNCHER)
+    if not launcher.exists():
+        return None
+    key_file = settings.get("api_key_file")
+    return CursorSdkAdapter(
+        launcher,
+        key_file=Path(key_file).expanduser() if key_file else None,
+        node_bin=settings.get("node_bin"),
+    )
