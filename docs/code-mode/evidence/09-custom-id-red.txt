@@ -1,0 +1,377 @@
+FFFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+___________________________ test_valid_ids_roundtrip ___________________________
+
+    def test_valid_ids_roundtrip():
+        cases = (
+            ("pq", "PQ-1", "seguir", "ublab:pq:PQ-1:seguir"),
+            ("propose", "req-1", "create_channel", "ublab:propose:req-1:create_channel"),
+            ("Kind_1", "id-2", "opt.3", "ublab:Kind_1:id-2:opt.3"),
+        )
+        for kind, item_id, opt, raw in cases:
+>           assert build_custom_id(kind, item_id, opt) == raw
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_custom_id.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kind = 'pq', item_id = 'PQ-1', opt = 'seguir'
+
+    def build_custom_id(kind: str, item_id: str, opt: str) -> str:
+>       raise NotImplementedError("build_custom_id")
+E       NotImplementedError: build_custom_id
+
+src/universal_bot/code_mode/custom_id.py:24: NotImplementedError
+______________ test_stop_is_valid_and_foreign_ub_stop_is_rejected ______________
+
+    def test_stop_is_valid_and_foreign_ub_stop_is_rejected():
+>       raw = build_custom_id("stop", "job-1", "ahora")
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_custom_id.py:21: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kind = 'stop', item_id = 'job-1', opt = 'ahora'
+
+    def build_custom_id(kind: str, item_id: str, opt: str) -> str:
+>       raise NotImplementedError("build_custom_id")
+E       NotImplementedError: build_custom_id
+
+src/universal_bot/code_mode/custom_id.py:24: NotImplementedError
+________ test_empty_parts_or_invalid_chars_are_rejected[ublab::id:opt] _________
+
+raw = 'ublab::id:opt'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab::id:opt'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+_______ test_empty_parts_or_invalid_chars_are_rejected[ublab:kind::opt] ________
+
+raw = 'ublab:kind::opt'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab:kind::opt'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+________ test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:] ________
+
+raw = 'ublab:kind:id:'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab:kind:id:'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+________ test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id] _________
+
+raw = 'ublab:kind:id'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab:kind:id'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+___ test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:opt:extra] ____
+
+raw = 'ublab:kind:id:opt:extra'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab:kind:id:opt:extra'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+______ test_empty_parts_or_invalid_chars_are_rejected[ublab:ki nd:id:opt] ______
+
+raw = 'ublab:ki nd:id:opt'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab:ki nd:id:opt'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+______ test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:opt!] ______
+
+raw = 'ublab:kind:id:opt!'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab:kind:id:opt!'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+_____ test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:\xf3pt] _____
+
+raw = 'ublab:kind:id:ópt'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab:kind:id:ópt'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+______ test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:a/b] _______
+
+raw = 'ublab:kind:id:a/b'
+
+    @pytest.mark.parametrize(
+        "raw",
+        (
+            "ublab::id:opt",
+            "ublab:kind::opt",
+            "ublab:kind:id:",
+            "ublab:kind:id",
+            "ublab:kind:id:opt:extra",
+            "ublab:ki nd:id:opt",
+            "ublab:kind:id:opt!",
+            "ublab:kind:id:ópt",
+            "ublab:kind:id:a/b",
+        ),
+    )
+    def test_empty_parts_or_invalid_chars_are_rejected(raw):
+        with pytest.raises(CustomIdError, match="inválido"):
+>           parse_custom_id(raw)
+
+tests/test_custom_id.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = 'ublab:kind:id:a/b'
+
+    def parse_custom_id(value: str) -> CustomId:
+>       raise NotImplementedError("parse_custom_id")
+E       NotImplementedError: parse_custom_id
+
+src/universal_bot/code_mode/custom_id.py:28: NotImplementedError
+_________________ test_builder_rejects_empty_and_invalid_parts _________________
+
+    def test_builder_rejects_empty_and_invalid_parts():
+        with pytest.raises(CustomIdError):
+>           build_custom_id("", "id", "opt")
+
+tests/test_custom_id.py:51: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kind = '', item_id = 'id', opt = 'opt'
+
+    def build_custom_id(kind: str, item_id: str, opt: str) -> str:
+>       raise NotImplementedError("build_custom_id")
+E       NotImplementedError: build_custom_id
+
+src/universal_bot/code_mode/custom_id.py:24: NotImplementedError
+_______________________ test_total_over_100_is_rejected ________________________
+
+    def test_total_over_100_is_rejected():
+        with pytest.raises(CustomIdError, match="100"):
+>           build_custom_id("k" * 40, "i" * 40, "o" * 20)
+
+tests/test_custom_id.py:60: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+kind = 'kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk'
+item_id = 'iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii'
+opt = 'oooooooooooooooooooo'
+
+    def build_custom_id(kind: str, item_id: str, opt: str) -> str:
+>       raise NotImplementedError("build_custom_id")
+E       NotImplementedError: build_custom_id
+
+src/universal_bot/code_mode/custom_id.py:24: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_custom_id.py::test_valid_ids_roundtrip - NotImplementedError: build_custom_id
+FAILED tests/test_custom_id.py::test_stop_is_valid_and_foreign_ub_stop_is_rejected - NotImplementedError: build_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab::id:opt] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab:kind::opt] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:opt:extra] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab:ki nd:id:opt] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:opt!] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:\xf3pt] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_empty_parts_or_invalid_chars_are_rejected[ublab:kind:id:a/b] - NotImplementedError: parse_custom_id
+FAILED tests/test_custom_id.py::test_builder_rejects_empty_and_invalid_parts - NotImplementedError: build_custom_id
+FAILED tests/test_custom_id.py::test_total_over_100_is_rejected - NotImplementedError: build_custom_id
+13 failed in 0.05s
