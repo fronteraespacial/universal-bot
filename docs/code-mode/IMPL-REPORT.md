@@ -19,10 +19,10 @@ Resumen de la suite completa, corrida después del feat e2e `4e7cf7a`:
 
 La salida de cada par rojo/verde está en `docs/code-mode/evidence/`.
 
-La fase 2 cierra en `0493ca0`. Suite vigente:
+La fase 2 cierra en `0493ca0` (347 passed). La fase 3 cierra en `88e135e`. Suite vigente:
 
 ```
-347 passed in 2.46s
+392 passed in 7.94s
 ```
 
 ## Cómo arrancar el runtime cuando Julian prenda el toggle
@@ -172,3 +172,63 @@ Hace falta el binario `grok` en el PATH. Esta sesión no lo invocó.
 5. El aviso de «no tenés permiso» es efímero. El puente no tiene esa op, así que con el port diferido no llega a Discord.
 6. El pin de «modo activo» tampoco se encola mientras no haya id real.
 7. No se tocó `<fe-bot>`, no hay token y no hay conexión a Discord desde este proceso.
+
+## Fase 3
+
+Arreglos previos al toggle y saneo del árbol público. Los ids reales y los paths internos no están en el código versionado: viven en `config/local.yaml` (gitignored) o en `UBLAB_*`. Sin allowlist, `handle_job` deja el job en `skipped` y no contesta. Los tests usan ids cortos (`100`, `200`). El guard `tests/test_no_internal_data.py` recorre `git ls-files` y falla si aparece un snowflake o un path interno del workspace o del home del box. No se editaron los cuatro archivos heredados de `origin/main`: `AGENTS.md`, `docs/architecture-review-codex-astra.md`, `tests/test_config.py`, `tests/test_progress_contract.py`.
+
+| Unidad | test | feat | Evidencia |
+| --- | --- | --- | --- |
+| 24 sanitización y allowlist cerrada | `4f7eeb8` | `65c4f23` | `24-sanitizacion-red.txt`, `24-sanitizacion-green.txt` |
+| 25 detalle técnico solo en el hilo | `15760ce` | `a8549a7` | `25-hilos-red.txt`, `25-hilos-green.txt` |
+| 26 botones que encolan ops | `2e56cc2` | `78208be` | `26-botones-red.txt`, `26-botones-green.txt` |
+| 27 sandbox bwrap | `57a3c7e` | `62b2d01` | `27-sandbox-red.txt`, `27-sandbox-green.txt` |
+| 28 un argv por CLI y cuota | `7a314d3` | `946e391` | `28-adaptadores-red.txt`, `28-adaptadores-green.txt` |
+| 29 frase de activación fuera de la hipótesis | `ab2d2aa` | `88e135e` | `29-hipotesis-red.txt`, `29-hipotesis-green.txt` |
+| 30 runtime como servicio | `de96919` | `a562892` | `30-servicio-red.txt`, `30-servicio-green.txt` |
+
+Los feat de 27 y 29 quedaron después del de 30. El código ya estaba verde; los commits de feat se hicieron al final, sin reescribir historia. Cada rojo es ancestro de su verde.
+
+### Sandbox real
+
+`bwrap_command` arma bubblewrap 0.12. Aísla esto:
+
+- Filesystem de solo lectura: `/usr`, `/bin`, `/lib`, `/lib64` y `/etc` entero (no un recorte de certs).
+- Escritura solo en el labdir (`--bind`). `/tmp` es tmpfs y va antes del bind, porque el lab suele vivir bajo `/tmp`.
+- `HOME` es el labdir. `--unshare-all`, `--die-with-parent`, `--chdir` al labdir.
+- Sin red por default. Un `python -c` adentro no lee un archivo fuera del labdir y no abre un socket.
+
+No aísla esto:
+
+- No hay allowlist de hosts. `--share-net` comparte toda la red o no comparte ninguna.
+- grok, cursor-agent y opencode reciben `--share-net` siempre, más binds de solo lectura del binario y del directorio de credenciales si existen (`~/.grok`, o `~/.cursor` y `~/.config/cursor`). Esas credenciales se leen desde el sandbox. El resto del home no se monta.
+- `lab.allow_network` o `--lab-allow-network` prenden `--share-net` también para el comando genérico.
+
+### Servicio
+
+```bash
+cd <repo>
+scripts/labcode-runtime.sh start \
+  --spool <spool> \
+  --db <repo>/state/labcode.sqlite \
+  --log <repo>/state/labcode.log \
+  --pidfile <repo>/state/labcode.pid \
+  --interval 10
+scripts/labcode-runtime.sh status --spool <spool> --pidfile <repo>/state/labcode.pid
+scripts/labcode-runtime.sh stop --spool <spool> --pidfile <repo>/state/labcode.pid
+```
+
+`status` imprime `activo edad=<n>s` cuando el pid vive. La edad sale del texto ISO de `runtime.heartbeat`, no del mtime. `deploy/labcode-runtime.user.service` es una plantilla systemd `--user` con `<repo>` y `<spool>`. Esta sesión no arrancó el servicio contra el spool real.
+
+La cuota de producción lee un JSON (`grok_remaining`) con `FileQuotaReader`. No hay lector por comando. Si el restante es 40 % o menos, elige `cursor-agent` con modelo `grok-4.7-high-fast`. Si el lector falla, usa la ruta de la política. La política por default está vacía: hay que pasarla en `config/local.yaml` o `UBLAB_ROUTING_POLICY`.
+
+### Qué falta para prender el toggle
+
+1. Heartbeat fresco antes de escribir `on` en `data/labcode.txt`. Sirve el módulo o `scripts/labcode-runtime.sh start` contra el spool del puente.
+2. El puente tiene que consumir el outbox. Sin `.result.json` el detalle técnico queda en sqlite (`pending_stage_posts`) y se reintenta; no se manda al canal del usuario. El canal solo recibe el texto sin jerga, con `reply_to`.
+3. Allowlist en `config/local.yaml` o `UBLAB_ALLOWED_CHANNELS`. Si no hay, no se sirve nada.
+4. Binario del CLI en el PATH y, si se quiere el corte del 40 %, un JSON de cuota. Sin política de ruteo el lab no elige modelo.
+5. La red del CLI no se puede limitar por host. Quien prenda el toggle acepta `--share-net` para grok, cursor-agent y opencode.
+6. El aviso de «no tenés permiso» sigue siendo efímero. El puente no tiene esa op.
+7. El pin necesita el id que devuelve el puente. Sin result no se encola.
+8. No se tocó `<fe-bot>`, no hay token y esta sesión no arrancó el runtime contra el spool real.
