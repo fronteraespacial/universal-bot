@@ -8,16 +8,17 @@ from pathlib import Path
 import time
 
 from universal_bot.code_mode.answers import consume_answers
+from universal_bot.code_mode.app import CodeModeApp
 from universal_bot.code_mode.ask_bridge import AskBridge
 from universal_bot.code_mode.clock import SystemClock
 from universal_bot.code_mode.config import CodeModeConfig
 from universal_bot.code_mode.file_outbox import FileOutboxDiscordPort
 from universal_bot.code_mode.heartbeat import touch_heartbeat
+from universal_bot.code_mode.inbox_flow import apply_clicks
 from universal_bot.code_mode.inbox_job import load_inbox_job
-from universal_bot.code_mode.projects import ProjectLedger
 from universal_bot.store import JobStore
 
-_PROCESSED = {"accepted", "done", "paused", "error", "running"}
+_PROCESSED = {"accepted", "done", "paused", "error", "running", "waiting_human"}
 
 
 def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None, lab_runner=None, config=None) -> dict:
@@ -25,23 +26,20 @@ def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None
     for name in ("inbox", "outbox", "answers"):
         (root / name).mkdir(parents=True, exist_ok=True)
     touch_heartbeat(root, clock)
-    ledger = ProjectLedger(db_path, clock)
-    bridge = AskBridge(
-        db_path,
-        JobStore(db_path),
-        _port(root, clock),
-        clock,
-        ledger,
-        CodeModeConfig(),
-    )
+    chosen = config or CodeModeConfig()
+    port = _port(root, clock)
+    app = CodeModeApp(db_path, port, clock, chosen, lab_runner=lab_runner)
+    bridge = AskBridge(db_path, JobStore(db_path), port, clock, app.ledger, chosen)
+    app.ask_bridge = bridge
     clicks = consume_answers(
         root,
         clock=clock,
         ask_bridge=bridge,
-        projects=ledger,
+        projects=app.ledger,
         role_lookup=role_lookup,
     )
-    processed, skipped = _consume_inbox(root, clock, on_job)
+    apply_clicks(app, root, clicks)
+    processed, skipped = _consume_inbox(root, clock, on_job, app)
     return {"processed": processed, "skipped": skipped, "answers": len(clicks)}
 
 
@@ -66,10 +64,10 @@ def _port(spool: Path, clock) -> FileOutboxDiscordPort:
     def sleeper(_seconds: float) -> None:
         raise RuntimeError("run_once no espera operaciones del puente")
 
-    return FileOutboxDiscordPort(spool, clock=clock, sleeper=sleeper, timeout_s=0)
+    return FileOutboxDiscordPort(spool, clock=clock, sleeper=sleeper, timeout_s=0, defer_results=True)
 
 
-def _consume_inbox(spool: Path, clock, on_job) -> tuple[int, int]:
+def _consume_inbox(spool: Path, clock, on_job, app) -> tuple[int, int]:
     processed = 0
     skipped = 0
     for job_json in sorted((spool / "inbox").glob("*/job.json")):
@@ -81,7 +79,9 @@ def _consume_inbox(spool: Path, clock, on_job) -> tuple[int, int]:
         job = load_inbox_job(job_dir)
         if on_job is not None:
             on_job(job)
-        _mark_done(job_dir, job, clock, state)
+        app.handle_job(job, job_dir)
+        if not _read_state(job_dir).get("status"):
+            _mark_done(job_dir, job, clock, state)
         processed += 1
     return processed, skipped
 

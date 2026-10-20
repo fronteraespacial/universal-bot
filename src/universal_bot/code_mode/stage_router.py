@@ -50,11 +50,11 @@ class StageRouter:
     def post(self, project: Project, stage_key: str, technical: str, *, wave: str | None = None) -> StageView:
         view = self.enter(project, stage_key, wave=wave)
         plain = render_plain(technical)
-        if project.mode == ProjectMode.THREAD:
+        if project.mode == ProjectMode.THREAD or view.thread_id is None:
             technical_text = f"[{stage_key}] {technical}"
             if view.header:
                 technical_text = f"{view.header}\n{technical_text}"
-            destination = project.root_thread_id
+            destination = view.thread_id
             self.discord.send(project.channel_id, technical_text, thread_id=destination)
             self.discord.send(project.channel_id, plain, thread_id=destination)
             return view

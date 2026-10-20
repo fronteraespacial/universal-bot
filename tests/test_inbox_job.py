@@ -71,6 +71,11 @@ def test_loads_job_and_uses_location_key_as_session_location(tmp_path):
     assert job.reply_to_message_id is None
 
 
+def test_null_parent_channel_is_allowed(tmp_path):
+    job = load_inbox_job(dump_job(tmp_path, sample(parent_channel_id=None)))
+    assert job.parent_channel_id is None
+
+
 def test_accepts_numeric_json_ids(tmp_path):
     payload = sample(guild_id=10, channel_id=CHANNEL, message_id=555, parent_channel_id=CHANNEL)
     payload["author"] = {"id": 7, "display_name": "Julian"}
