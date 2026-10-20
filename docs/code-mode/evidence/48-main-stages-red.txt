@@ -1,0 +1,39 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_______________ test_worker_result_goes_to_lab_and_plan_threads ________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_worker_result_goes_to_lab_and_plan_threads(tmp_path):
+        brain = FakeBrain(lambda text: "Listo: transcribí los 10 videos." if "terminó" in text else "Arranco.")
+        spool, db, clock, workers, brain, orch, first = _start(tmp_path, brain)
+        labs = FakeLabs()
+        workers.made[0].status = "done"
+        _tick(spool, db, clock, orch, labs)
+        threads = [op for op in _ops(spool) if op["op"] == "thread"]
+>       assert [op["name"] for op in threads] == ["02-lab", "03-plan"]
+E       AssertionError: assert [] == ['02-lab', '03-plan']
+E         
+E         Right contains 2 more items, first extra item: '02-lab'
+E         Use -v to get more diff
+
+tests/test_main_stages.py:41: AssertionError
+_____________ test_without_lab_runner_only_the_lab_thread_is_used ______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_without_lab_runner_only_the_lab_thread_is_used(tmp_path):
+        spool, db, clock, workers, brain, orch, first = _start(tmp_path)
+        workers.made[0].status = "done"
+        run_once(spool, db_path=db, clock=clock, config=_config(), orchestrator=orch)
+>       assert [op["name"] for op in _ops(spool) if op["op"] == "thread"] == ["02-lab"]
+E       AssertionError: assert [] == ['02-lab']
+E         
+E         Right contains one more item: '02-lab'
+E         Use -v to get more diff
+
+tests/test_main_stages.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_main_stages.py::test_worker_result_goes_to_lab_and_plan_threads
+FAILED tests/test_main_stages.py::test_without_lab_runner_only_the_lab_thread_is_used
+2 failed in 0.14s
