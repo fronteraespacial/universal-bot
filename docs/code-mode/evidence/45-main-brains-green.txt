@@ -1,0 +1,4 @@
+...........                                                              [100%]
+11 passed in 0.78s
+Ajuste post-rojo: el helper del test pasa env explícito al SidecarSession (el sidecar real filtra el entorno por whitelist y el fake necesita FAKE_SIDECAR).
+Mutación: FallbackSession no cambia al secundario -> 1 test falla (test_fallback_session_switches_and_sticks).

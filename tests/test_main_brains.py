@@ -25,7 +25,7 @@ def _lines(path):
 def _sidecar(tmp_path, monkeypatch, mode="ok", **kw):
     monkeypatch.setenv("FAKE_SIDECAR", mode)
     monkeypatch.setenv("FAKE_SIDECAR_LOG", str(tmp_path / "sidecar.log"))
-    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", **kw)
+    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", env=dict(__import__("os").environ), **kw)
 
 
 def _in_thread(fn):

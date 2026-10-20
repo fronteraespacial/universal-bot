@@ -82,6 +82,9 @@ class CodeModeConfig:
     main_cli: str = "grok"
     main_model: str = "grok-4.7"
     main_effort: str = "low"
+    main_sdk_model: str = "composer-2.5"
+    main_sdk_key_file: str = ""
+    quota_file: str = ""
     reminders_first_after: str = "4h"
     reminders_pause_after: str = "24h"
     reminders_cancel_paused_after: str = "7d"
@@ -167,6 +170,9 @@ def load_code_mode_config(path) -> CodeModeConfig:
         main_cli=str(main.get("cli", base.main_cli)),
         main_model=str(main.get("model", base.main_model)),
         main_effort=str(main.get("effort", base.main_effort)),
+        main_sdk_model=str(main.get("sdk_model", base.main_sdk_model)),
+        main_sdk_key_file=str(main.get("sdk_key_file", base.main_sdk_key_file) or ""),
+        quota_file=str(main.get("quota_file", base.quota_file) or ""),
         enabled=_flag(block, "enabled", base.enabled),
         propose_tiers=_tiers(block.get("propose_tiers", base.propose_tiers)),
         default_mode=str(block.get("default_mode", base.default_mode)),
