@@ -6,6 +6,7 @@ PASSWORD = os.environ.get("OPENCODE_SERVER_PASSWORD") or "fake-printed-password"
 PRINT_PASSWORD = not os.environ.get("OPENCODE_SERVER_PASSWORD") or os.environ.get("FAKE_IGNORE_ENV_PASSWORD")
 if os.environ.get("FAKE_IGNORE_ENV_PASSWORD"):
     PASSWORD = "fake-printed-password"
+DELTA_KEY = os.environ.get("FAKE_OC_DELTA_KEY", "delta")
 events = []
 cond = threading.Condition()
 sessions = {}
@@ -29,10 +30,10 @@ def execute(sid, text):
                 emit("session.inbox.delivered", sid)
                 text = s["steer"]
                 break
-            emit("session.text.delta", sid, delta=f"{n} ")
+            emit("session.text.delta", sid, **{DELTA_KEY: f"{n} "})
             time.sleep(0.02)
     answer = "STEERED" if "CAMBIO DE INSTRUCCIÓN" in text else "OK"
-    emit("session.text.delta", sid, delta=answer)
+    emit("session.text.delta", sid, **{DELTA_KEY: answer})
     s["messages"].insert(0, {"type": "assistant", "content": [{"type": "text", "text": answer}]})
     emit("session.execution.succeeded", sid)
 

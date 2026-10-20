@@ -1,0 +1,20 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_opencode_reads_the_final_text_from_messages_when_deltas_have_another_shape _
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_opencode_reads_the_final_text_from_messages_when_deltas_have_another_shape(tmp_path):
+        session = session_for("opencode", tmp_path, env={"FAKE_OC_DELTA_KEY": "chunkDelta"})
+        session.start()
+        try:
+            result = session.prompt("Respondé solo OK", timeout_s=10)
+>           assert result.text.strip() == "OK"
+E           AssertionError: assert '' == 'OK'
+E             
+E             - OK
+
+tests/test_warm.py:275: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_warm.py::test_opencode_reads_the_final_text_from_messages_when_deltas_have_another_shape
+1 failed, 27 deselected in 16.13s

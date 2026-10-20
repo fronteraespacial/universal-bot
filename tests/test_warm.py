@@ -265,3 +265,14 @@ def test_pool_warm_result_is_marked_warm(tmp_path):
         assert result.mode == "warm" and result.text.strip() == "OK"
     finally:
         pool.close()
+
+
+def test_opencode_reads_the_final_text_from_messages_when_deltas_have_another_shape(tmp_path):
+    session = session_for("opencode", tmp_path, env={"FAKE_OC_DELTA_KEY": "chunkDelta"})
+    session.start()
+    try:
+        result = session.prompt("Respondé solo OK", timeout_s=10)
+        assert result.text.strip() == "OK"
+        assert result.first_token_ms is not None
+    finally:
+        session.close()
