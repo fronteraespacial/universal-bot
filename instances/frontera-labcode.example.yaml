@@ -30,7 +30,7 @@ code_mode:
     production: "requester|dev"
     production_t3: dev
     dev_roles: ["@dev"]
-    plan: none
+    plan: "none"
     plan_requires_evidence: true
   lab:
     auto_approve: true
