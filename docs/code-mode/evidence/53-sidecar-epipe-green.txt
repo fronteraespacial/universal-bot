@@ -67,3 +67,4 @@
 ℹ fail 0
 mutación sin limpieza en exit: ℹ fail 0 (el shutdown ya limpia; el handler de exit queda como red de seguridad para process.exit/excepciones)
 mutación sin handler de error de stdout: ℹ fail 0
+mutación sin ninguno de los dos (redundantes a propósito): ℹ fail 1
