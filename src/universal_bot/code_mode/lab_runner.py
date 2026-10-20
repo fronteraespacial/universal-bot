@@ -13,6 +13,7 @@ import yaml
 
 from universal_bot.code_mode.job_runner import JobRunner
 from universal_bot.code_mode.models import LabEvidence
+from universal_bot.code_mode.sandbox import bwrap_command, cli_ro_binds
 from universal_bot.code_mode.security_gate import SandboxInspection, evaluate
 
 DEFAULT_ROUTING_POLICY = ""
@@ -63,32 +64,9 @@ def resolve_route(path, role: str, *, tier: str | None = None) -> ResolvedRoute:
 
 
 def grok_command(labdir, model: str, effort: str) -> list[str]:
-    folder = Path(labdir)
-    return [
-        "grok",
-        "--prompt-file",
-        str(folder / "prompt.txt"),
-        "--always-approve",
-        "--output-format",
-        "plain",
-        "-m",
-        model,
-        "--effort",
-        effort,
-        "--cwd",
-        str(folder),
-        "--sandbox",
-        "workspace",
-        "--no-subagents",
-        "--deny",
-        "Bash(git push*)",
-        "--deny",
-        "Bash(sudo*)",
-        "--deny",
-        "Bash(rm -rf /*)",
-        "--deny",
-        "mcp__*",
-    ]
+    from universal_bot.code_mode.cli_adapters import grok_argv
+
+    return grok_argv(labdir, model, effort)
 
 
 def sandbox_env(source, extra=()) -> dict[str, str]:
@@ -140,6 +118,7 @@ class LabRunner:
         security_check: str = "on",
         host_role: str = "vps",
         allowlist: tuple[str, ...] = ("pypi.org", "files.pythonhosted.org", "github.com"),
+        allow_network: bool = False,
     ):
         self.clock = clock
         self.lab_root = Path(lab_root)
@@ -156,6 +135,8 @@ class LabRunner:
         self.security_check = security_check
         self.host_role = host_role
         self.allowlist = allowlist
+        self.allow_network = allow_network
+        self.quota = None
 
     def run_hypothesis(self, *, project_id: str, slug: str, tier: str, hypothesis: str) -> tuple[LabOutcome, ...]:
         limit = self.max_labs_t3 if tier == "T3" else self.max_labs_t2
@@ -227,7 +208,11 @@ class LabRunner:
     ) -> LabOutcome:
         folder = self._allocate(slug, number)
         route = resolve_route(self.routing_policy, role, tier=tier)
-        command = self._command(route, folder, kind)
+        if self.quota is not None:
+            from universal_bot.code_mode.cli_adapters import choose_cli
+
+            route = choose_cli(self.quota, route)
+        command = self._command(route, folder, kind, prompt)
         cleaned = sandbox_env(self._source_env(), self.env_extra)
         decision = evaluate(
             SandboxInspection(
@@ -288,12 +273,21 @@ class LabRunner:
                 return folder
             index += 1
 
-    def _command(self, route: ResolvedRoute, folder: Path, kind: str) -> list[str]:
+    def _command(self, route: ResolvedRoute, folder: Path, kind: str, prompt: str) -> list[str]:
+        from universal_bot.code_mode.cli_adapters import cursor_argv, grok_argv, opencode_argv
+
         if self.command_for is not None:
             return list(self.command_for(route, folder, kind))
-        if route.cli == "grok":
-            return grok_command(folder, route.model, route.effort)
-        return [route.cli, "--model", route.model, "--effort", route.effort, "--cwd", str(folder)]
+        if route.cli == "cursor-agent":
+            inner = cursor_argv(folder, route.model, prompt)
+        elif route.cli == "opencode":
+            inner = opencode_argv(route.model, prompt)
+        elif route.cli == "grok":
+            inner = grok_argv(folder, route.model, route.effort)
+        else:
+            inner = [route.cli, "--model", route.model, "--effort", route.effort, "--cwd", str(folder)]
+        network = self.allow_network or route.cli in {"grok", "cursor-agent", "opencode"}
+        return bwrap_command(folder, inner, allow_network=network, ro_binds=cli_ro_binds(route.cli, Path.home()))
 
     def _source_env(self) -> dict:
         if self.environ is not None:

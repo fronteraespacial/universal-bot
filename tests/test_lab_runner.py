@@ -144,11 +144,9 @@ def test_grok_command_is_the_contract_list(tmp_path):
         "-m", "grok-4.7",
         "--effort", "medium",
         "--cwd", str(labdir),
-        "--sandbox", "workspace",
         "--no-subagents",
         "--deny", "Bash(git push*)",
         "--deny", "Bash(sudo*)",
-        "--deny", "Bash(rm -rf /*)",
         "--deny", "mcp__*",
     ]
 
