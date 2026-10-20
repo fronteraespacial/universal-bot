@@ -1,0 +1,819 @@
+✖ request mínimo aplica defaults (0.860015ms)
+✖ request inválido: vacío (0.70086ms)
+✖ request inválido: json inválido (0.133007ms)
+✖ request inválido: no objeto (0.131147ms)
+✖ request inválido: prompt vacío (0.120827ms)
+✖ request inválido: timeout 0 (0.096427ms)
+✖ request inválido: timeout string (0.084019ms)
+✖ request inválido: stream no bool (0.144215ms)
+✖ request inválido: modelo vacío (0.120943ms)
+✖ node 22.13.0 → ok (0.171446ms)
+✖ node 24.5.0 → ok (0.072343ms)
+✖ node 23.0.0 → ok (0.060641ms)
+✖ node 22.12.9 → NODE_TOO_OLD (0.049403ms)
+✖ node 20.19.2 → NODE_TOO_OLD (0.041789ms)
+✖ node v22.13.1 → ok (0.04009ms)
+✖ clasifica AuthenticationError:x → AUTH_INVALID (0.062309ms)
+✖ clasifica Error:401 Unauthorized → AUTH_INVALID (0.045078ms)
+✖ clasifica RateLimitError:x → USAGE_LIMIT (0.047646ms)
+✖ clasifica Error:You've hit your usage limit → USAGE_LIMIT (0.03989ms)
+✖ clasifica Error:429 too many requests → USAGE_LIMIT (0.036967ms)
+✖ clasifica NetworkError:x → NETWORK (0.102893ms)
+✖ clasifica Error:algo raro → SDK_ERROR (0.045278ms)
+✖ exit codes estables y fallback (1.333474ms)
+✖ el redactor borra la key y sus apariciones (0.082022ms)
+✖ ok devuelve resultado con usage y run_id (23.221641ms)
+✖ stream emite eventos antes del resultado (20.802373ms)
+✖ sin stream no emite eventos (18.636499ms)
+✖ getUsage con costo incluye chargedCents (16.856601ms)
+✖ error auth → AUTH_INVALID exit 4 (17.480611ms)
+✖ error rate → USAGE_LIMIT exit 8 (18.572175ms)
+✖ error network → NETWORK exit 11 (18.798264ms)
+✖ error crash → SDK_ERROR exit 9 (19.436364ms)
+✖ error run_error → SDK_ERROR exit 9 (18.826784ms)
+✖ request inválido → BAD_REQUEST exit 2 sin fallback (18.19009ms)
+✖ sin key → NO_KEY exit 3 (19.372548ms)
+✖ key por env si no hay archivo (19.989611ms)
+✖ SDK ausente → SDK_MISSING exit 6 (23.932814ms)
+✖ timeout corta el run → TIMEOUT exit 7 (20.483622ms)
+✖ cancel_file cancela → CANCELLED exit 10 (25.906237ms)
+✖ SIGTERM cancela → CANCELLED (20.438327ms)
+✖ steer lee la bandeja y lo entrega al run (22.285166ms)
+✖ mcp deshabilitado por defecto (19.327391ms)
+✔ la key nunca aparece en stdout/stderr (ok, con SDK que la imprime) (19.68452ms)
+✔ la key nunca aparece en stdout/stderr (auth, con SDK que la imprime) (19.426659ms)
+✔ la key nunca aparece en stdout/stderr (crash, con SDK que la imprime) (20.899943ms)
+✔ la key nunca aparece en stdout/stderr (run_error, con SDK que la imprime) (18.342535ms)
+✖ node viejo → NODE_TOO_OLD exit 5 (91.450756ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 4
+ℹ fail 43
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 671.588314
+
+✖ failing tests:
+
+test at test/protocol.test.mjs:5:1
+✖ request mínimo aplica defaults (0.860015ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:6:20)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.start (node:internal/test_runner/test:978:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:332:17)
+
+test at test/protocol.test.mjs:17:3
+✖ request inválido: vacío (0.70086ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NotImplemented
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NotImplemented
+        at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+        at file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:25
+        at getActual (node:assert:530:5)
+        at strict.throws (node:assert:676:24)
+        at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+        at Test.runInAsyncScope (node:async_hooks:214:14)
+        at Test.run (node:internal/test_runner/test:1081:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+        at Test.postRun (node:internal/test_runner/test:1210:19)
+        at Test.run (node:internal/test_runner/test:1138:12),
+    operator: 'throws'
+  }
+
+test at test/protocol.test.mjs:17:3
+✖ request inválido: json inválido (0.133007ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NotImplemented
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NotImplemented
+        at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+        at file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:25
+        at getActual (node:assert:530:5)
+        at strict.throws (node:assert:676:24)
+        at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+        at Test.runInAsyncScope (node:async_hooks:214:14)
+        at Test.run (node:internal/test_runner/test:1081:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+        at Test.postRun (node:internal/test_runner/test:1210:19)
+        at Test.run (node:internal/test_runner/test:1138:12),
+    operator: 'throws'
+  }
+
+test at test/protocol.test.mjs:17:3
+✖ request inválido: no objeto (0.131147ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NotImplemented
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NotImplemented
+        at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+        at file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:25
+        at getActual (node:assert:530:5)
+        at strict.throws (node:assert:676:24)
+        at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+        at Test.runInAsyncScope (node:async_hooks:214:14)
+        at Test.run (node:internal/test_runner/test:1081:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+        at Test.postRun (node:internal/test_runner/test:1210:19)
+        at Test.run (node:internal/test_runner/test:1138:12),
+    operator: 'throws'
+  }
+
+test at test/protocol.test.mjs:17:3
+✖ request inválido: prompt vacío (0.120827ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NotImplemented
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NotImplemented
+        at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+        at file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:25
+        at getActual (node:assert:530:5)
+        at strict.throws (node:assert:676:24)
+        at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+        at Test.runInAsyncScope (node:async_hooks:214:14)
+        at Test.run (node:internal/test_runner/test:1081:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+        at Test.postRun (node:internal/test_runner/test:1210:19)
+        at Test.run (node:internal/test_runner/test:1138:12),
+    operator: 'throws'
+  }
+
+test at test/protocol.test.mjs:17:3
+✖ request inválido: timeout 0 (0.096427ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NotImplemented
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NotImplemented
+        at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+        at file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:25
+        at getActual (node:assert:530:5)
+        at strict.throws (node:assert:676:24)
+        at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+        at Test.runInAsyncScope (node:async_hooks:214:14)
+        at Test.run (node:internal/test_runner/test:1081:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+        at Test.postRun (node:internal/test_runner/test:1210:19)
+        at Test.run (node:internal/test_runner/test:1138:12),
+    operator: 'throws'
+  }
+
+test at test/protocol.test.mjs:17:3
+✖ request inválido: timeout string (0.084019ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NotImplemented
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NotImplemented
+        at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+        at file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:25
+        at getActual (node:assert:530:5)
+        at strict.throws (node:assert:676:24)
+        at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+        at Test.runInAsyncScope (node:async_hooks:214:14)
+        at Test.run (node:internal/test_runner/test:1081:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+        at Test.postRun (node:internal/test_runner/test:1210:19)
+        at Test.run (node:internal/test_runner/test:1138:12),
+    operator: 'throws'
+  }
+
+test at test/protocol.test.mjs:17:3
+✖ request inválido: stream no bool (0.144215ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NotImplemented
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NotImplemented
+        at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+        at file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:25
+        at getActual (node:assert:530:5)
+        at strict.throws (node:assert:676:24)
+        at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+        at Test.runInAsyncScope (node:async_hooks:214:14)
+        at Test.run (node:internal/test_runner/test:1081:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+        at Test.postRun (node:internal/test_runner/test:1210:19)
+        at Test.run (node:internal/test_runner/test:1138:12),
+    operator: 'throws'
+  }
+
+test at test/protocol.test.mjs:17:3
+✖ request inválido: modelo vacío (0.120943ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: NotImplemented
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: NotImplemented
+        at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+        at file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:25
+        at getActual (node:assert:530:5)
+        at strict.throws (node:assert:676:24)
+        at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:18:12)
+        at Test.runInAsyncScope (node:async_hooks:214:14)
+        at Test.run (node:internal/test_runner/test:1081:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+        at Test.postRun (node:internal/test_runner/test:1210:19)
+        at Test.run (node:internal/test_runner/test:1138:12),
+    operator: 'throws'
+  }
+
+test at test/protocol.test.mjs:23:3
+✖ node 22.13.0 → ok (0.171446ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:23:78)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:23:3
+✖ node 24.5.0 → ok (0.072343ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:23:78)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:23:3
+✖ node 23.0.0 → ok (0.060641ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:23:78)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:23:3
+✖ node 22.12.9 → NODE_TOO_OLD (0.049403ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:23:78)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:23:3
+✖ node 20.19.2 → NODE_TOO_OLD (0.041789ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:23:78)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:23:3
+✖ node v22.13.1 → ok (0.04009ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:23:78)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:35:3
+✖ clasifica AuthenticationError:x → AUTH_INVALID (0.062309ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:35:77)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:35:3
+✖ clasifica Error:401 Unauthorized → AUTH_INVALID (0.045078ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:35:77)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:35:3
+✖ clasifica RateLimitError:x → USAGE_LIMIT (0.047646ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:35:77)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:35:3
+✖ clasifica Error:You've hit your usage limit → USAGE_LIMIT (0.03989ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:35:77)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:35:3
+✖ clasifica Error:429 too many requests → USAGE_LIMIT (0.036967ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:35:77)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:35:3
+✖ clasifica NetworkError:x → NETWORK (0.102893ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:35:77)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:35:3
+✖ clasifica Error:algo raro → SDK_ERROR (0.045278ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:35:77)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/protocol.test.mjs:38:1
+✖ exit codes estables y fallback (1.333474ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + {}
+  - {
+  -   AUTH_INVALID: 4,
+  -   BAD_REQUEST: 2,
+  -   CANCELLED: 10,
+  -   NETWORK: 11,
+  -   NODE_TOO_OLD: 5,
+  -   NO_KEY: 3,
+  -   OK: 0,
+  -   SDK_ERROR: 9,
+  -   SDK_MISSING: 6,
+  -   TIMEOUT: 7,
+  -   USAGE_LIMIT: 8
+  - }
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:39:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: {},
+    expected: { OK: 0, BAD_REQUEST: 2, NO_KEY: 3, AUTH_INVALID: 4, NODE_TOO_OLD: 5, SDK_MISSING: 6, TIMEOUT: 7, USAGE_LIMIT: 8, SDK_ERROR: 9, CANCELLED: 10, NETWORK: 11 },
+    operator: 'deepStrictEqual'
+  }
+
+test at test/protocol.test.mjs:44:1
+✖ el redactor borra la key y sus apariciones (0.082022ms)
+  Error: NotImplemented
+      at todo (file://<repo>/adapters/cursor_sdk/lib/protocol.mjs:1:28)
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/protocol.test.mjs:45:15)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1081:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:763:18)
+      at Test.postRun (node:internal/test_runner/test:1210:19)
+      at Test.run (node:internal/test_runner/test:1138:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/runner.test.mjs:33:1
+✖ ok devuelve resultado con usage y run_id (23.221641ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 0
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:35:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:45:1
+✖ stream emite eventos antes del resultado (20.802373ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'event',
+  -   'event'
+  - ]
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:47:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'event', 'event' ],
+    operator: 'deepStrictEqual'
+  }
+
+test at test/runner.test.mjs:51:1
+✖ sin stream no emite eventos (18.636499ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:53:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:56:1
+✖ getUsage con costo incluye chargedCents (16.856601ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'cost')
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:58:27)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/runner.test.mjs:65:3
+✖ error auth → AUTH_INVALID exit 4 (17.480611ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 4
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:67:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 4,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:65:3
+✖ error rate → USAGE_LIMIT exit 8 (18.572175ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 8
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:67:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 8,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:65:3
+✖ error network → NETWORK exit 11 (18.798264ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 11
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:67:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 11,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:65:3
+✖ error crash → SDK_ERROR exit 9 (19.436364ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 9
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:67:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 9,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:65:3
+✖ error run_error → SDK_ERROR exit 9 (18.826784ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 9
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:67:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 9,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:72:1
+✖ request inválido → BAD_REQUEST exit 2 sin fallback (18.19009ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 2
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:74:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 2,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:78:1
+✖ sin key → NO_KEY exit 3 (19.372548ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 3
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:80:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 3,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:84:1
+✖ key por env si no hay archivo (19.989611ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 0
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:86:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:89:1
+✖ SDK ausente → SDK_MISSING exit 6 (23.932814ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 6
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:91:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 6,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:95:1
+✖ timeout corta el run → TIMEOUT exit 7 (20.483622ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 7
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:97:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 7,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:101:1
+✖ cancel_file cancela → CANCELLED exit 10 (25.906237ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 10
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:106:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 10,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:110:1
+✖ SIGTERM cancela → CANCELLED (20.438327ms)
+  TypeError [Error]: Cannot read properties of undefined (reading 'code')
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:112:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7)
+
+test at test/runner.test.mjs:116:1
+✖ steer lee la bandeja y lo entrega al run (22.285166ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 0
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:121:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:127:1
+✖ mcp deshabilitado por defecto (19.327391ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 0
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:129:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 0,
+    operator: 'strictEqual'
+  }
+
+test at test/runner.test.mjs:141:1
+✖ node viejo → NODE_TOO_OLD exit 5 (91.450756ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  99 !== 5
+  
+      at TestContext.<anonymous> (file://<repo>/adapters/cursor_sdk/test/runner.test.mjs:143:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+      at async Test.run (node:internal/test_runner/test:1088:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:763:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 99,
+    expected: 5,
+    operator: 'strictEqual'
+  }
