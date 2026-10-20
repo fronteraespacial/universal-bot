@@ -16,6 +16,7 @@ class JobStatus(str, Enum):
     CANCELLED = "cancelled"
     TIMED_OUT = "timed_out"
     INTERRUPTED = "interrupted"
+    WAITING_HUMAN = "waiting_human"
 
     def is_terminal(self) -> bool:
         return self in {
@@ -24,6 +25,7 @@ class JobStatus(str, Enum):
             JobStatus.CANCELLED,
             JobStatus.TIMED_OUT,
             JobStatus.INTERRUPTED,
+            JobStatus.WAITING_HUMAN,
         }
 
 
