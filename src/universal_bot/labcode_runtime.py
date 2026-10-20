@@ -45,20 +45,58 @@ def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None
     return {"processed": processed, "skipped": skipped, "answers": len(clicks)}
 
 
+def build_lab_runner(clock, *, lab_root, routing_policy, lab_timeout, maverick_timeout, max_labs):
+    from universal_bot.code_mode import lab_runner
+
+    root = Path(lab_root) if lab_root else Path("/tmp/ub-labcode")
+    policy = Path(routing_policy) if routing_policy else Path(
+        "<workspace>/codemode-base/catalog/routing-policy.yaml"
+    )
+    timeout = 900.0 if lab_timeout is None else float(lab_timeout)
+    maverick = 300.0 if maverick_timeout is None else float(maverick_timeout)
+    if max_labs is None:
+        cap_t2, cap_t3 = 2, 3
+    else:
+        cap_t2 = cap_t3 = int(max_labs)
+    return lab_runner.LabRunner(
+        clock=clock,
+        lab_root=root,
+        routing_policy=policy,
+        timeout_s=timeout,
+        maverick_timeout_s=maverick,
+        max_labs_t2=cap_t2,
+        max_labs_t3=cap_t3,
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="universal_bot.labcode_runtime")
     parser.add_argument("--spool", required=True)
     parser.add_argument("--once", action="store_true")
     parser.add_argument("--db", default=None)
     parser.add_argument("--interval", type=float, default=10)
+    parser.add_argument("--lab-root", default=None)
+    parser.add_argument("--routing-policy", default=None)
+    parser.add_argument("--lab-timeout", default=None)
+    parser.add_argument("--maverick-timeout", default=None)
+    parser.add_argument("--max-labs", default=None)
     args = parser.parse_args(argv)
     spool = Path(args.spool)
     db_path = Path(args.db) if args.db else spool / "runtime.sqlite"
+    clock = SystemClock()
+    runner = build_lab_runner(
+        clock,
+        lab_root=args.lab_root,
+        routing_policy=args.routing_policy,
+        lab_timeout=args.lab_timeout,
+        maverick_timeout=args.maverick_timeout,
+        max_labs=args.max_labs,
+    )
     if args.once:
-        run_once(spool, db_path=db_path, clock=SystemClock())
+        run_once(spool, db_path=db_path, clock=clock, lab_runner=runner)
         return 0
     while True:
-        run_once(spool, db_path=db_path, clock=SystemClock())
+        run_once(spool, db_path=db_path, clock=SystemClock(), lab_runner=runner)
         time.sleep(min(max(args.interval, 1.0), 20.0))
 
 
