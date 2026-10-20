@@ -260,3 +260,18 @@ test("serve: request inválido no tumba el proceso y una sesión ocupada respond
   assert.equal(s.lines.find(final("a")).code, "CANCELLED", "SIGTERM corta los runs vivos con línea final");
   await s.closed;
 });
+
+// --- stdout solo JSONL ---------------------------------------------------------------
+test("lo que el SDK escribe en stdout va a stderr: stdout queda JSONL puro (one-shot y serve)", async () => {
+  const r = await once({ prompt: "x" }, { scenario: "stdout_noise" });
+  assert.equal(r.code, 0);
+  for (const l of r.out.trim().split("\n")) assert.equal(typeof JSON.parse(l), "object", l);
+  assert.match(r.err, /ruido en stdout/);
+  const s = serve({ scenario: "stdout_noise" });
+  s.send({ op: "run", id: "n", prompt: "x" });
+  const done = await s.wait(final("n"));
+  assert.equal(done.type, "result");
+  assert.ok(s.lines.every((m) => typeof m === "object" && m !== null && !Array.isArray(m)), "nada que no sea objeto");
+  s.child.stdin.end();
+  await s.closed;
+});

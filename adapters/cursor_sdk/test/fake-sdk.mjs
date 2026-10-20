@@ -81,6 +81,7 @@ export const Agent = {
       await sleep(20);
       process.stderr.write(`${k.slice(10)} fin\n`);
     }
+    if (s === "stdout_noise") { console.log("[sdk] ruido en stdout"); process.stdout.write("12\n"); }
     if (s === "slow_create") await sleep(1500);
     if (s === "auth") throw new AuthenticationError(`invalid api key ${options.apiKey}`);
     if (s === "rate") throw new RateLimitError("You've hit your usage limit");
