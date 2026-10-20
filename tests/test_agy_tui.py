@@ -71,3 +71,37 @@ def test_real_tui_layout_with_separators_footer_and_trust_dialog(tmp_path):
         assert result.ok and result.text == "Respuesta a: hola"
     finally:
         s.close()
+
+
+RAW = Path(__file__).parent / "fakes" / "fake_agy_tui_raw.py"
+
+
+def test_start_dismisses_the_verbosity_notice_and_mid_turn_steer_is_sent_immediately(tmp_path, monkeypatch):
+    log = tmp_path / "keys.log"
+    monkeypatch.setenv("FAKE_AGY_LOG", str(log))
+    s = AgyTuiSession([sys.executable, str(RAW)], cwd=tmp_path, settle_s=0.4)
+    s.start()
+    try:
+        assert "aviso cerrado" in s.screen(), "el adaptador cierra el aviso de Verbosity"
+        import threading
+        box = {}
+        thread = threading.Thread(target=lambda: box.update(r=s.prompt("LONG contá", timeout_s=10)), daemon=True)
+        thread.start()
+        time.sleep(0.6)
+        assert s.busy()
+        assert s.steer("pará") == "live"
+        thread.join(10)
+        assert box["r"].ok and "steered:pará" in box["r"].text
+    finally:
+        s.close()
+    keys = log.read_text(encoding="utf-8").split("\n")
+    assert "ESC" in keys and "ENTER:LONG contá" in keys and "IMMEDIATE:pará" in keys, "con turno vivo: alt+m (Send Immediately)"
+
+
+def test_select_main_session_wires_agy_through_the_tui(tmp_path):
+    from universal_bot.code_mode.config import CodeModeConfig
+    from universal_bot.code_mode.main_brains import select_main_session
+    session = select_main_session(CodeModeConfig(main_enabled=True, main_cli="agy", main_model="gemini-3.8-flash-low"),
+                                  cwd=tmp_path, sidecar=None, key_file=None, quota=None)()
+    assert isinstance(session, AgyTuiSession)
+    assert session.argv[:3] == ["agy", "--model", "gemini-3.8-flash-low"]
