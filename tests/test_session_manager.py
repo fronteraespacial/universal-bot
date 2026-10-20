@@ -58,7 +58,7 @@ def test_manual_phrase_with_permission_activates_and_pins_exit(tmp_path):
     assert session.pinned_message_id is not None
     pin = env.discord.messages[-1]
     assert pin.content == PIN_TEXT
-    assert _buttons(pin) == ((f"ublab:exit:{session.id}", EXIT_LABEL),)
+    assert _buttons(pin) == ((f"ublab:exit:{session.id}:salir", EXIT_LABEL),)
     assert (CHANNEL, session.pinned_message_id, None) in env.discord.pins
 
 
@@ -255,8 +255,8 @@ def test_tick_warns_then_expires_and_checkpoints(tmp_path):
     warning = env.discord.messages[-1]
     assert warning.content == WARN_TEXT
     assert _buttons(warning) == (
-        (f"ublab:extend:{session.id}", "Extender"),
-        (f"ublab:exit:{session.id}", "Salir ahora"),
+        (f"ublab:extend:{session.id}:extender", "Extender"),
+        (f"ublab:exit:{session.id}:ahora", "Salir ahora"),
     )
     env.clock.advance(minutes=10)
     assert env.manager.tick() == ("expired",)
@@ -276,7 +276,7 @@ def test_restart_keeps_active_session_and_reregisters_pin(tmp_path):
     assert session.id == created.session.id
     assert session.status == SessionStatus.ACTIVE
     assert session.until == created.session.until
-    assert revived_discord.views == [f"ublab:exit:{session.id}"]
+    assert revived_discord.views == [f"ublab:exit:{session.id}:salir"]
 
 
 def test_restart_expires_session_that_elapsed_while_down(tmp_path):

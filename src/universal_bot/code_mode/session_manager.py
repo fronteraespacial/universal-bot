@@ -8,6 +8,7 @@ import uuid
 
 from universal_bot.code_mode.clock import Clock
 from universal_bot.code_mode.config import CodeModeConfig, parse_duration, role_allowed
+from universal_bot.code_mode.custom_id import build_custom_id
 from universal_bot.code_mode.db import connect, dump_dt, load_dt
 from universal_bot.code_mode.discord_port import Button, DiscordPort
 from universal_bot.code_mode.models import ActivationKind, CodeModeSession, Location, SessionStatus
@@ -89,7 +90,7 @@ class SessionManager:
         message_id = self.discord.send_buttons(
             location.channel_id,
             PIN_TEXT,
-            (Button(f"ublab:exit:{session_id}", EXIT_LABEL),),
+            (Button(build_custom_id("exit", session_id, "salir"), EXIT_LABEL),),
             thread_id=location.thread_id,
         )
         self.discord.pin(location.channel_id, message_id, thread_id=location.thread_id)
@@ -228,8 +229,8 @@ class SessionManager:
             session.channel_id,
             WARN_TEXT,
             (
-                Button(f"ublab:extend:{session.id}", "Extender"),
-                Button(f"ublab:exit:{session.id}", "Salir ahora"),
+                Button(build_custom_id("extend", session.id, "extender"), "Extender"),
+                Button(build_custom_id("exit", session.id, "ahora"), "Salir ahora"),
             ),
             thread_id=session.thread_id,
         )
@@ -266,7 +267,7 @@ class SessionManager:
                 self._end(session, None, "expire")
                 continue
             if session.pinned_message_id is not None:
-                self.discord.register_persistent_view(f"ublab:exit:{session.id}")
+                self.discord.register_persistent_view(build_custom_id("exit", session.id, "salir"))
 
     def _exact_active(self, location: Location) -> CodeModeSession | None:
         with connect(self.db_path) as conn:
