@@ -1,0 +1,3 @@
+......                                                                   [100%]
+6 passed in 0.11s
+Durante el verde se sumó test_low_grok_quota_moves_the_worker_to_cursor_agent: falló primero (el worker del MAIN no pasaba por choose_cli) y después quedó verde.

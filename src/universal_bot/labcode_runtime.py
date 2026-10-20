@@ -207,23 +207,30 @@ def _mark_done(job_dir: Path, job, clock, state: dict) -> None:
     (job_dir / "state.json").write_text(json.dumps(state), encoding="utf-8")
 
 
-def build_orchestrator(clock, db_path, config, runner, *, main_root=None):
-    """MAIN warm (config.main_cli/main_model) y workers one-shot del lab dentro del sandbox. Apagado por defecto."""
+def build_orchestrator(clock, db_path, config, runner, *, main_root=None, sidecar=None):
+    """MAIN (cursor-sdk -> grok warm -> cursor-agent según config y cuota) y workers del lab en el sandbox. Apagado por defecto."""
     if not config.main_enabled or runner is None:
         return None
+    from universal_bot.code_mode.cli_adapters import FileQuotaReader, choose_cli
+    from universal_bot.code_mode.cursor_sdk import DEFAULT_LAUNCHER
     from universal_bot.code_mode.lab_runner import _lab_prompt, resolve_route
+    from universal_bot.code_mode.main_brains import select_main_session
     from universal_bot.code_mode.orchestrator import Orchestrator, ProcessWorker, WarmBrain
-    from universal_bot.code_mode.warm import make_session
 
     root = Path(main_root) if main_root else Path(runner.lab_root) / "main"
     root.mkdir(parents=True, exist_ok=True)
-
-    def brain_session():
-        return make_session(config.main_cli, config.main_model, cwd=root, effort=config.main_effort)
+    quota = FileQuotaReader(config.quota_file) if config.quota_file else None
+    if quota is not None and getattr(runner, "quota", None) is None:
+        runner.quota = quota
+    launcher = Path(sidecar) if sidecar else Path(__file__).resolve().parents[2] / DEFAULT_LAUNCHER
+    key_file = Path(config.main_sdk_key_file).expanduser() if config.main_sdk_key_file else None
+    brain_session = select_main_session(config, cwd=root, sidecar=launcher, key_file=key_file, quota=quota)
 
     def worker_factory(job_id, prompt):
         folder = runner._allocate(f"main-{job_id}", None)
         route = resolve_route(runner.routing_policy, "lab", tier="T2")
+        if runner.quota is not None:
+            route = choose_cli(runner.quota, route)
 
         def argv_for(text):
             body = _lab_prompt(text)

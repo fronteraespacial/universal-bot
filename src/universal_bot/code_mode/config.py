@@ -79,7 +79,7 @@ class CodeModeConfig:
     guild_id: int | None = None
     projects_channel_id: int | None = None
     main_enabled: bool = False
-    main_cli: str = "grok"
+    main_cli: str = "auto"
     main_model: str = "grok-4.7"
     main_effort: str = "low"
     main_sdk_model: str = "composer-2.5"

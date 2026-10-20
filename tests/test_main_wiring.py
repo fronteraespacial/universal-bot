@@ -60,3 +60,12 @@ def test_quota_file_routes_main_and_lab_to_cursor_agent(tmp_path):
     orch, runner = _orch(tmp_path, main_cli="grok", quota_file=str(quota))
     assert isinstance(orch.brain.session_factory(), RelaunchSession)
     assert runner.quota is not None and runner.quota.grok_remaining() == 0.38
+
+
+def test_low_grok_quota_moves_the_worker_to_cursor_agent(tmp_path):
+    import json
+    quota = tmp_path / "quota.json"
+    quota.write_text(json.dumps({"grok_remaining": 0.38}), encoding="utf-8")
+    orch, _ = _orch(tmp_path, quota_file=str(quota))
+    argv = orch.worker_factory("job-1", "probá algo").argv_for("probá algo")
+    assert "cursor-agent" in " ".join(argv) and "grok-4.7-high-fast" in argv
