@@ -208,3 +208,7 @@ def _mark_done(job_dir: Path, job, clock, state: dict) -> None:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+def build_orchestrator(*args, **kwargs):
+    raise NotImplementedError

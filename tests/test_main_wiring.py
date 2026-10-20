@@ -1,0 +1,37 @@
+"""El runtime arma el MAIN (warm) y los workers (lab en el sandbox) cuando main.enabled está prendido."""
+
+from pathlib import Path
+
+from universal_bot.code_mode.clock import FakeClock
+from universal_bot.code_mode.config import CodeModeConfig
+from universal_bot.code_mode.lab_runner import LabRunner
+from universal_bot.code_mode.orchestrator import Orchestrator, ProcessWorker, WarmBrain
+from universal_bot.labcode_runtime import build_orchestrator, main
+from tests.test_lab_runner import T0, policy
+
+
+def test_build_orchestrator_uses_a_warm_main_and_sandboxed_workers(tmp_path):
+    runner = LabRunner(clock=FakeClock(T0), lab_root=tmp_path / "labs", routing_policy=policy(tmp_path))
+    config = CodeModeConfig(main_enabled=True, main_cli="grok", main_model="grok-4.7")
+    orch = build_orchestrator(FakeClock(T0), tmp_path / "mode.sqlite", config, runner, main_root=tmp_path / "main")
+    assert isinstance(orch, Orchestrator)
+    assert isinstance(orch.brain, WarmBrain)
+    worker = orch.worker_factory("job-1", "probá algo")
+    assert isinstance(worker, ProcessWorker)
+    argv = worker.argv_for("probá algo")
+    assert argv[0] == "bwrap" and "--unshare-all" in argv
+    assert (Path(worker.cwd) / "prompt.txt").read_text(encoding="utf-8").startswith("Probá esta hipótesis")
+
+
+def test_build_orchestrator_is_off_by_default(tmp_path):
+    runner = LabRunner(clock=FakeClock(T0), lab_root=tmp_path / "labs", routing_policy=policy(tmp_path))
+    assert build_orchestrator(FakeClock(T0), tmp_path / "mode.sqlite", CodeModeConfig(), runner) is None
+
+
+def test_main_loop_passes_the_orchestrator(tmp_path, monkeypatch):
+    seen = {}
+    monkeypatch.setenv("UBLAB_CONFIG", "")
+    monkeypatch.setattr("universal_bot.labcode_runtime.build_orchestrator", lambda *a, **k: "ORCH")
+    monkeypatch.setattr("universal_bot.labcode_runtime.run_once", lambda *a, **k: seen.update(k))
+    main(["--spool", str(tmp_path / "spool"), "--once", "--db", str(tmp_path / "m.sqlite")])
+    assert seen.get("orchestrator") == "ORCH"
