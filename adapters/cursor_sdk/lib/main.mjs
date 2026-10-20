@@ -16,19 +16,27 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 
 // --- salida -------------------------------------------------------------------
 const guards = [];
+let writeLine = (text) => process.stdout.write(text);
 
+/**
+ * Redacción con buffer en stdout y stderr. stdout queda reservado para el JSONL del sidecar:
+ * cualquier otra escritura a process.stdout (logs del SDK, console.log) se desvía a stderr.
+ */
 function guardOutput(secret) {
-  for (const stream of [process.stdout, process.stderr]) {
-    const write = stream.write.bind(stream);
-    const guard = makeStreamRedactor(secret, (text) => write(text));
-    stream.write = (chunk, encoding, callback) => {
-      guard.write(typeof chunk === "string" ? chunk : Buffer.from(chunk).toString("utf8"));
-      const done = typeof encoding === "function" ? encoding : callback;
-      if (typeof done === "function") done();
-      return true;
-    };
-    guards.push(guard);
-  }
+  const rawOut = process.stdout.write.bind(process.stdout);
+  const rawErr = process.stderr.write.bind(process.stderr);
+  const out = makeStreamRedactor(secret, (text) => rawOut(text));
+  const err = makeStreamRedactor(secret, (text) => rawErr(text));
+  guards.push(out, err);
+  const wrap = (guard) => (chunk, encoding, callback) => {
+    guard.write(typeof chunk === "string" ? chunk : Buffer.from(chunk).toString("utf8"));
+    const done = typeof encoding === "function" ? encoding : callback;
+    if (typeof done === "function") done();
+    return true;
+  };
+  writeLine = (text) => out.write(text);
+  process.stdout.write = wrap(err);
+  process.stderr.write = wrap(err);
 }
 
 function flushOutput() {
@@ -36,7 +44,7 @@ function flushOutput() {
 }
 
 function emit(line) {
-  process.stdout.write(JSON.stringify(line) + "\n");
+  writeLine(JSON.stringify(line) + "\n");
 }
 
 function errorLine(code, message, extra = {}) {
