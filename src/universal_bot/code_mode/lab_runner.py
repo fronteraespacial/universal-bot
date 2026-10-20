@@ -299,6 +299,9 @@ class LabRunner:
         binds, layers = cli_mounts(route.cli, self.home, binary)
         return bwrap_command(folder, inner, allow_network=network, ro_binds=binds, home=self.home, overlays=layers)
 
+    def _worker_env(self) -> dict:
+        return sandbox_env(self._source_env(), self.env_extra)
+
     def _source_env(self) -> dict:
         if self.environ is not None:
             return dict(self.environ)

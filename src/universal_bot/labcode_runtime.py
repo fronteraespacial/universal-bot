@@ -106,14 +106,15 @@ def main(argv: list[str] | None = None) -> int:
         max_labs=args.max_labs,
         allow_network=args.lab_allow_network or config.allow_network,
     )
+    orchestrator = build_orchestrator(clock, db_path, config, runner)
     if args.once:
-        run_once(spool, db_path=db_path, clock=clock, lab_runner=runner, config=config)
+        run_once(spool, db_path=db_path, clock=clock, lab_runner=runner, config=config, orchestrator=orchestrator)
         return 0
     beat = HeartbeatThread(spool, interval_s=10.0)
     beat.start()
     try:
         while True:
-            run_once(spool, db_path=db_path, clock=SystemClock(), lab_runner=runner, config=config)
+            run_once(spool, db_path=db_path, clock=SystemClock(), lab_runner=runner, config=config, orchestrator=orchestrator)
             time.sleep(min(max(args.interval, 1.0), 20.0))
     finally:
         beat.stop()
@@ -210,5 +211,29 @@ if __name__ == "__main__":
     raise SystemExit(main())
 
 
-def build_orchestrator(*args, **kwargs):
-    raise NotImplementedError
+def build_orchestrator(clock, db_path, config, runner, *, main_root=None):
+    """MAIN warm (config.main_cli/main_model) y workers one-shot del lab dentro del sandbox. Apagado por defecto."""
+    if not config.main_enabled or runner is None:
+        return None
+    from universal_bot.code_mode.lab_runner import _lab_prompt, resolve_route
+    from universal_bot.code_mode.orchestrator import Orchestrator, ProcessWorker, WarmBrain
+    from universal_bot.code_mode.warm import make_session
+
+    root = Path(main_root) if main_root else Path(runner.lab_root) / "main"
+    root.mkdir(parents=True, exist_ok=True)
+
+    def brain_session():
+        return make_session(config.main_cli, config.main_model, cwd=root, effort=config.main_effort)
+
+    def worker_factory(job_id, prompt):
+        folder = runner._allocate(f"main-{job_id}", None)
+        route = resolve_route(runner.routing_policy, "lab", tier="T2")
+
+        def argv_for(text):
+            body = _lab_prompt(text)
+            (folder / "prompt.txt").write_text(body, encoding="utf-8")
+            return runner._command(route, folder, "lab", body)
+
+        return ProcessWorker(argv_for, prompt, cwd=folder, env=runner._worker_env())
+
+    return Orchestrator(db_path, clock=clock, brain=WarmBrain(brain_session), worker_factory=worker_factory)
