@@ -78,6 +78,7 @@ class CodeModeConfig:
     admin_category_id: int | None = None
     guild_id: int | None = None
     projects_channel_id: int | None = None
+    main_enabled: bool = False
     reminders_first_after: str = "4h"
     reminders_pause_after: str = "24h"
     reminders_cancel_paused_after: str = "7d"

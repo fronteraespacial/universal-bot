@@ -1,0 +1,352 @@
+FFFFFFFFFFFFF                                                            [100%]
+=================================== FAILURES ===================================
+______________ test_long_job_is_delegated_and_the_main_stays_free ______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_long_job_is_delegated_and_the_main_stays_free(tmp_path):
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path)
+                                                        ^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd824a4b620>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd825525fd0>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd824a4af90>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd825525940>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+_______ test_status_question_goes_to_the_main_and_the_reply_is_threaded ________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_status_question_goes_to_the_main_and_the_reply_is_threaded(tmp_path):
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path)
+                                                        ^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd8248f87d0>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd8248f8550>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd8248f8690>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd8248f8410>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+___________ test_order_change_is_applied_to_the_worker_and_persisted ___________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_order_change_is_applied_to_the_worker_and_persisted(tmp_path):
+        brain = FakeBrain(lambda text: 'Listo, le paso el cambio.\nACCION: {"tipo": "steer", "texto": "solo los de 2026"}' if "solo" in text else "Arranco.")
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path, brain)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:161: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd8248f91d0>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd8248f8b90>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd8248f8a50>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd8248f9090>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+____ test_relaunch_stops_the_worker_and_starts_one_with_the_new_instruction ____
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_relaunch_stops_the_worker_and_starts_one_with_the_new_instruction(tmp_path):
+        brain = FakeBrain(lambda text: 'Lo corto y arranco de nuevo.\nACCION: {"tipo": "relanzar", "texto": "usá whisper local"}' if "whisper" in text else "Arranco.")
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path, brain)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:171: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd824acdf30>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd824acdcd0>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd824acdba0>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd824acde00>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+______________________ test_stop_button_stops_the_worker _______________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_stop_button_stops_the_worker(tmp_path):
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path)
+                                                        ^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:187: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd824ace8b0>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd824ace2c0>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd824ace780>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd824ace650>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+_________________________ test_main_can_stop_by_itself _________________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_main_can_stop_by_itself(tmp_path):
+        brain = FakeBrain(lambda text: 'Freno.\nACCION: {"tipo": "frenar"}' if "pará" in text else "Arranco.")
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path, brain)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:202: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd824b13890>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd824b13650>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd824b13530>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd824b13770>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+_____________ test_exit_button_ends_the_session_and_stops_the_job ______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_exit_button_ends_the_session_and_stops_the_job(tmp_path):
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path)
+                                                        ^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd82490c5a0>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd82490c270>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd82490c490>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd82490c380>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+___________ test_finished_worker_gets_a_simple_summary_from_the_main ___________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_finished_worker_gets_a_simple_summary_from_the_main(tmp_path):
+        brain = FakeBrain(lambda text: "Terminé: transcribí los 10 videos." if "terminó" in text else "Arranco.")
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path, brain)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:224: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd82490d150>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd82490cf30>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd82490caf0>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd82490d040>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+__________________ test_a_crash_is_recovered_once_from_sqlite __________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_a_crash_is_recovered_once_from_sqlite(tmp_path):
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path)
+                                                        ^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:234: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd8254e7b50>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd8254e7150>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd8254e7c50>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd8254e7d50>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+_____________ test_unknown_answer_kind_does_not_crash_the_runtime ______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_unknown_answer_kind_does_not_crash_the_runtime(tmp_path):
+>       spool, db, clock, workers, brain, orch, first = _start(tmp_path)
+                                                        ^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:249: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_orchestrator.py:122: in _start
+    spool, db, clock, workers, brain, orch = _env(tmp_path, brain)
+                                             ^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_orchestrator.py:100: in _env
+    orch = Orchestrator(db, clock=clock, brain=brain, worker_factory=workers)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.Orchestrator object at 0x7fd824ae5850>
+args = (PosixPath('<ruta>'),)
+kwargs = {'clock': <universal_bot.code_mode.clock.FakeClock object at 0x7fd824ae6150>, 'brain': <test_main_orchestrator.FakeBrain object at 0x7fd824ae5950>, 'worker_factory': <test_main_orchestrator.Workers object at 0x7fd824ae5b50>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:8: NotImplementedError
+____________________________ test_parse_main_reply _____________________________
+
+    def test_parse_main_reply():
+>       assert parse_main_reply('Hola.\nACCION: {"tipo": "steer", "texto": "x"}') == ("Hola.", {"tipo": "steer", "texto": "x"})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:256: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'Hola.\nACCION: {"tipo": "steer", "texto": "x"}'
+
+    def parse_main_reply(text):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:22: NotImplementedError
+__________________ test_process_worker_tail_stop_and_relaunch __________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_process_worker_tail_stop_and_relaunch(tmp_path):
+        script = "import sys,time\nfor i in range(200):\n    print(sys.argv[1], i, flush=True); time.sleep(0.02)\n"
+    
+        def argv(prompt):
+            return [sys.executable, "-c", script, prompt.split()[-1]]
+    
+>       worker = ProcessWorker(argv, "tarea A", cwd=tmp_path).start()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_orchestrator.py:268: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.ProcessWorker object at 0x7fd825525940>
+args = (<function test_process_worker_tail_stop_and_relaunch.<locals>.argv at 0x7fd824836160>, 'tarea A')
+kwargs = {'cwd': PosixPath('<ruta>')}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:13: NotImplementedError
+_______ test_warm_brain_steers_the_main_when_a_message_arrives_mid_turn ________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_warm_brain_steers_the_main_when_a_message_arrives_mid_turn(tmp_path):
+>       brain = WarmBrain(lambda: __import__("universal_bot.code_mode.warm", fromlist=["make_session"]).make_session(
+            "grok", "grok-4.7", cwd=tmp_path, command=fake_command("grok")))
+
+tests/test_main_orchestrator.py:283: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.orchestrator.WarmBrain object at 0x7fd825525fd0>
+args = (<function test_warm_brain_steers_the_main_when_a_message_arrives_mid_turn.<locals>.<lambda> at 0x7fd824836ca0>,)
+kwargs = {}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/orchestrator.py:18: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_main_orchestrator.py::test_long_job_is_delegated_and_the_main_stays_free
+FAILED tests/test_main_orchestrator.py::test_status_question_goes_to_the_main_and_the_reply_is_threaded
+FAILED tests/test_main_orchestrator.py::test_order_change_is_applied_to_the_worker_and_persisted
+FAILED tests/test_main_orchestrator.py::test_relaunch_stops_the_worker_and_starts_one_with_the_new_instruction
+FAILED tests/test_main_orchestrator.py::test_stop_button_stops_the_worker - N...
+FAILED tests/test_main_orchestrator.py::test_main_can_stop_by_itself - NotImp...
+FAILED tests/test_main_orchestrator.py::test_exit_button_ends_the_session_and_stops_the_job
+FAILED tests/test_main_orchestrator.py::test_finished_worker_gets_a_simple_summary_from_the_main
+FAILED tests/test_main_orchestrator.py::test_a_crash_is_recovered_once_from_sqlite
+FAILED tests/test_main_orchestrator.py::test_unknown_answer_kind_does_not_crash_the_runtime
+FAILED tests/test_main_orchestrator.py::test_parse_main_reply - NotImplemente...
+FAILED tests/test_main_orchestrator.py::test_process_worker_tail_stop_and_relaunch
+FAILED tests/test_main_orchestrator.py::test_warm_brain_steers_the_main_when_a_message_arrives_mid_turn
+13 failed in 0.20s
