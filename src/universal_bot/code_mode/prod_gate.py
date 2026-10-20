@@ -39,13 +39,12 @@ def may_execute(project: Project, action: ProductionAction) -> bool:
 def can_approve(project: Project, user_id: int, roles: tuple[str, ...], approvals: ApprovalPolicy) -> bool:
     is_requester = user_id == project.requester_id
     is_dev = any(role in approvals.dev_roles for role in roles)
-    if project.tier == "T3":
-        return is_dev
-    if approvals.production == "requester":
+    mode = approvals.production_t3 if project.tier == "T3" else approvals.production
+    if mode == "requester":
         return is_requester
-    if approvals.production == "dev":
+    if mode == "dev":
         return is_dev
-    if approvals.production == "requester|dev":
+    if mode == "requester|dev":
         return is_requester or is_dev
     return False
 

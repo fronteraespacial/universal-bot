@@ -56,7 +56,7 @@ class CodeModeApp:
         self.jobs = JobRunner(self.jobs_root, clock)
         self.lab_runner = lab_runner
         self.ask_bridge = None
-        self.stages = StageRouter(discord)
+        self.stages = StageRouter(discord, db_path=db_path)
         self._op_cursor = 0
         self._requests: dict = {}
         self._actions: dict[str, ProductionAction] = {}

@@ -31,6 +31,8 @@ def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None
     app = CodeModeApp(db_path, port, clock, chosen, lab_runner=lab_runner)
     bridge = AskBridge(db_path, JobStore(db_path), port, clock, app.ledger, chosen)
     app.ask_bridge = bridge
+    bridge.tick()
+    app.sessions.tick()
     clicks = consume_answers(
         root,
         clock=clock,

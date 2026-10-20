@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from pathlib import Path
 
+from universal_bot.code_mode.db import connect
 from universal_bot.code_mode.discord_port import DiscordPort
 from universal_bot.code_mode.models import Project, ProjectMode
 
@@ -25,11 +27,12 @@ class StageView:
 
 class StageRouter:
     def __init__(self, discord: DiscordPort, db_path=None):
-        if db_path is not None:
-            raise NotImplementedError
         self.discord = discord
-        self.db_path = None
+        self.db_path = None if db_path is None else Path(db_path)
         self._stages: dict[tuple[str, str], StageView] = {}
+        if self.db_path is not None:
+            self._init_db()
+            self._load()
 
     def enter(self, project: Project, stage_key: str, *, wave: str | None = None) -> StageView:
         if stage_key == "03-plan" and (project.id, "02-lab") not in self._stages:
@@ -48,6 +51,7 @@ class StageRouter:
             thread_id = project.root_thread_id
         view = StageView(stage_key, thread_id, header, created)
         self._stages[(project.id, stage_key)] = view
+        self._save(project.id, view)
         return view
 
     def post(self, project: Project, stage_key: str, technical: str, *, wave: str | None = None) -> StageView:
@@ -65,6 +69,44 @@ class StageRouter:
         self.discord.send(project.channel_id, technical_text, thread_id=view.thread_id)
         self.discord.send(project.channel_id, plain, thread_id=None)
         return view
+
+
+    def _init_db(self) -> None:
+        with connect(self.db_path) as conn:
+            conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS stage_threads (
+                    project_id TEXT NOT NULL,
+                    stage_key TEXT NOT NULL,
+                    thread_id INTEGER,
+                    PRIMARY KEY (project_id, stage_key)
+                )
+                """
+            )
+
+    def _load(self) -> None:
+        with connect(self.db_path) as conn:
+            rows = conn.execute("SELECT project_id, stage_key, thread_id FROM stage_threads").fetchall()
+        for row in rows:
+            self._stages[(row["project_id"], row["stage_key"])] = StageView(
+                row["stage_key"],
+                row["thread_id"],
+                None,
+                False,
+            )
+
+    def _save(self, project_id: str, view: StageView) -> None:
+        if self.db_path is None:
+            return
+        with connect(self.db_path) as conn:
+            conn.execute(
+                """
+                INSERT INTO stage_threads (project_id, stage_key, thread_id)
+                VALUES (?, ?, ?)
+                ON CONFLICT(project_id, stage_key) DO UPDATE SET thread_id = excluded.thread_id
+                """,
+                (project_id, view.key, view.thread_id),
+            )
 
 
 def render_plain(text: str) -> str:
