@@ -1,0 +1,231 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+________________________ test_tiers_and_confidence_gate ________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_tiers_and_confidence_gate0')
+
+    def test_tiers_and_confidence_gate(tmp_path):
+        cases = (
+            ("T0", 1.0, False),
+            ("T1", 1.0, False),
+            ("T2", 0.79, False),
+            ("T2", 0.8, True),
+            ("T3", 0.8, True),
+            ("T3", 0.79, False),
+            ("T4", 1.0, False),
+        )
+        for index, (tier, confidence, proposes) in enumerate(cases):
+            env = make(tmp_path / str(index))
+>           proposal = env.proposer.propose(f"req-{index}", tier, confidence, loc(), ACTIVATOR)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_proposer.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f915a90>
+request_id = 'req-0', tier = 'T0', confidence = 1.0
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+________ test_t2_proposal_lists_four_options_and_the_duration_selector _________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_t2_proposal_lists_four_op0')
+
+    def test_t2_proposal_lists_four_options_and_the_duration_selector(tmp_path):
+        env = make(tmp_path)
+>       proposal = env.proposer.propose("req-1", "T2", 0.91, loc(), ACTIVATOR)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_proposer.py:68: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f847610>
+request_id = 'req-1', tier = 'T2', confidence = 0.91
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+________________ test_allow_channels_false_hides_create_channel ________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_allow_channels_false_hide0')
+
+    def test_allow_channels_false_hides_create_channel(tmp_path):
+        env = make(tmp_path, CodeModeConfig(allow_channels=False))
+>       proposal = env.proposer.propose("req-1", "T3", 0.9, loc(), ACTIVATOR)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_proposer.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f818690>
+request_id = 'req-1', tier = 'T3', confidence = 0.9
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+________________________ test_propose_once_per_request _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_propose_once_per_request0')
+
+    def test_propose_once_per_request(tmp_path):
+        env = make(tmp_path)
+>       first = env.proposer.propose("req-1", "T2", 0.9, loc(), ACTIVATOR)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_proposer.py:97: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f814c30>
+request_id = 'req-1', tier = 'T2', confidence = 0.9
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+________________ test_here_opens_session_with_default_duration _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_here_opens_session_with_d0')
+
+    def test_here_opens_session_with_default_duration(tmp_path):
+        env = make(tmp_path)
+>       env.proposer.propose("req-1", "T2", 0.9, loc(), ACTIVATOR)
+
+tests/test_proposer.py:111: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f815810>
+request_id = 'req-1', tier = 'T2', confidence = 0.9
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+______________ test_here_without_permission_does_not_open_session ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_here_without_permission_d0')
+
+    def test_here_without_permission_does_not_open_session(tmp_path):
+        env = make(tmp_path)
+>       env.proposer.propose("req-1", "T2", 0.9, loc(), ACTIVATOR)
+
+tests/test_proposer.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6fb3e330>
+request_id = 'req-1', tier = 'T2', confidence = 0.9
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+_____________ test_decline_routes_to_basic_cli_with_override_tier ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_decline_routes_to_basic_c0')
+
+    def test_decline_routes_to_basic_cli_with_override_tier(tmp_path):
+        env = make(tmp_path)
+>       env.proposer.propose("req-1", "T3", 0.95, loc(), ACTIVATOR)
+
+tests/test_proposer.py:132: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f857350>
+request_id = 'req-1', tier = 'T3', confidence = 0.95
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+_____________________ test_configured_tiers_can_exclude_t2 _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_configured_tiers_can_excl0')
+
+    def test_configured_tiers_can_exclude_t2(tmp_path):
+        env = make(tmp_path, CodeModeConfig(propose_tiers=("T3",)))
+>       assert env.proposer.propose("req-1", "T2", 0.99, loc(), ACTIVATOR) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_proposer.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f857df0>
+request_id = 'req-1', tier = 'T2', confidence = 0.99
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+______________ test_manual_command_activates_through_the_proposer ______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_manual_command_activates_0')
+
+    def test_manual_command_activates_through_the_proposer(tmp_path):
+        env = make(tmp_path)
+>       result = env.proposer.activate_manual(loc(), ACTIVATOR, ("@dev",), "/modo-codigo 1h")
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_proposer.py:149: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f85b450>
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+actor_roles = ('@dev',), text = '/modo-codigo 1h'
+
+    def activate_manual(self, location: Location, actor_id: int, actor_roles: tuple[str, ...], text: str):
+>       raise NotImplementedError("activate_manual")
+E       NotImplementedError: activate_manual
+
+src/universal_bot/code_mode/proposer.py:32: NotImplementedError
+______________________ test_custom_threshold_is_inclusive ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-41/test_custom_threshold_is_inclu0')
+
+    def test_custom_threshold_is_inclusive(tmp_path):
+        env = make(tmp_path, CodeModeConfig(proposal_threshold=0.95))
+>       assert env.proposer.propose("low", "T2", 0.94, loc(), ACTIVATOR) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_proposer.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.proposer.Proposer object at 0x7f3e6f770050>
+request_id = 'low', tier = 'T2', confidence = 0.94
+location = Location(guild_id=42, channel_id=100, thread_id=None), actor_id = 7
+
+    def propose(self, request_id: str, tier: str, confidence: float, location: Location, actor_id: int):
+>       raise NotImplementedError("propose")
+E       NotImplementedError: propose
+
+src/universal_bot/code_mode/proposer.py:26: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_proposer.py::test_tiers_and_confidence_gate - NotImplementedError: propose
+FAILED tests/test_proposer.py::test_t2_proposal_lists_four_options_and_the_duration_selector - NotImplementedError: propose
+FAILED tests/test_proposer.py::test_allow_channels_false_hides_create_channel - NotImplementedError: propose
+FAILED tests/test_proposer.py::test_propose_once_per_request - NotImplementedError: propose
+FAILED tests/test_proposer.py::test_here_opens_session_with_default_duration - NotImplementedError: propose
+FAILED tests/test_proposer.py::test_here_without_permission_does_not_open_session - NotImplementedError: propose
+FAILED tests/test_proposer.py::test_decline_routes_to_basic_cli_with_override_tier - NotImplementedError: propose
+FAILED tests/test_proposer.py::test_configured_tiers_can_exclude_t2 - NotImplementedError: propose
+FAILED tests/test_proposer.py::test_manual_command_activates_through_the_proposer - NotImplementedError: activate_manual
+FAILED tests/test_proposer.py::test_custom_threshold_is_inclusive - NotImplementedError: propose
+10 failed in 0.14s
