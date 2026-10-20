@@ -298,6 +298,10 @@ Humo (`evidence/smoke-20261020/main-run*.txt`): runtime real, puente simulado, M
 | 51 sidecar cursor-sdk v2 | `6ba7519` | `14a05b7` | `51-*` |
 | 52 stdout del sidecar solo JSONL | `393b053` | `9d25847` | `52-*` |
 | 53 serve sale limpio si el host cierra stdout | `976a0c6` | `64982e3` | `53-*` |
+| 55 MAIN cursor-sdk por `--serve` (un agente por job, config optimizada) | `407c8db`, `4ac31d6` | `c032771` | `55-*` |
+| 56/57 cuota de grok desde `/usage`; sin dato se prefiere cursor-agent; `~` en la ruta | `2d46e82`, `2f22104` | `f693b16`, `9f70894` | `56-*`, `57-*` |
+| 58 agy TUI: aviso de Verbosity, steer por alt+m, `main.cli: agy` | `9336680` | `9f02a14` | `58-*` |
+| 59 salir libera el cerebro del MAIN de cada job | `641c18a` | `b186278` | `59-*` |
 
 ### MAIN con cursor-sdk
 
@@ -344,3 +348,34 @@ Ver `adapters/cursor_sdk/CHANGELOG-v2.md` y `evidence/sidecar-v2-bench.md`.
 - `--serve` de larga vida con `session_id`.
 
 En `--serve`, el primer request de una sesión tarda ~5 s y los siguientes 1,3–2,3 s. El MAIN todavía usa one-shot por turno: pasarlo a `--serve` es el próximo paso para bajar los 4–9 s por turno.
+
+## Fase 3c (cierre): MAIN por `--serve`, cuota de grok, agy TUI y 03-plan
+
+### MAIN por `--serve`
+
+`main.sdk_serve: true` (default): `ServeSidecarSession` deja un proceso `--serve` vivo por job, con un `session_id` propio. El historial va sólo en el primer turno tras un (re)arranque. La config es `setting_sources: []`, sin MCP y `tools: ["read"]`. Un timeout manda `cancel` y pasa al fallback. Si el proceso muere, también hay fallback. Salir del modo código cierra el proceso del job (`WarmBrain.release`).
+
+Humo (`evidence/smoke-20261020/main-serve-run{1,2}.txt`, spool temporal, puente simulado, sidecar real):
+
+| corrida | turno | ms | tokens totales | cache read |
+| --- | --- | --- | --- | --- |
+| 1 (cambio de alcance) | arranque | 4228 | 4919 | 640 |
+| | estado | 1419 | 4958 | 448 |
+| | cambio | 2735 | 5437 | 448 |
+| 2 (job que termina) | arranque | 5035 | 4749 | 448 |
+| | estado | 1551 | 4979 | 448 |
+| | resultado del worker | 1154 | 9184 | 4480 |
+
+En el one-shot eran 4–9 s por turno. En ambas corridas: 0 duplicados, outbox vacío y 0 procesos `--serve` vivos después de Salir. En la corrida 1 el MAIN frenó el worker al pedir «solo 2», porque ya iban 3. En la corrida 2 salieron los hilos `02-lab` y `03-plan`.
+
+### 03-plan
+
+Lo probé con un runner tipo producción: `consult_maverick` toma una salida fija de maverick (no hay llamada a modelo) y la pasa por los `parse_marked_block` y `_render_maverick` reales. `03-plan` recibió «CONSULT: propone, no decide.» con la alternativa. En producción, el `LabRunner` real lanza el CLI maverick dentro del sandbox.
+
+### Cuota de grok
+
+`cli_quota` da 401 porque lee el access token de la sesión del CLI sin refrescarlo, y ese token vence unas 6 h después del último arranque del CLI. Abrir la TUI de grok lo refresca. `python -m universal_bot.code_mode.grok_quota --out ~/.local/state/ub-labcode/grok-quota.json` abre la TUI aparte en un tmux con socket propio, lee `/usage` (no gasta modelo) y escribe el archivo de forma atómica, con `as_of`. Pensado para cron cada 15–30 min (no está instalado). Si no hay archivo, el dato es viejo (> 1 h) o hay error, el MAIN y el lab usan cursor-agent grok-4.7-high-fast.
+
+### agy por TUI
+
+La sesión cierra el aviso de Verbosity. El steer con el turno vivo usa alt+m: manda en el modo opuesto al configurado, o sea inmediato si está en Queue. Así no hace falta tocar el `settings.json` global, que comparte el agy de producción. `main.cli: agy` usa la TUI. Steer real (`agy-tui-steer-run3.txt`): arranque 4,5 s, steer «live», respuesta a 4,7 s del steer. Pendiente: limpiar el «chrome» de la TUI en el texto («● Ran …», el eco del steer).

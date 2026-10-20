@@ -1,0 +1,19 @@
+0.0 send ch= 9100 reply_to= None name= None 'Modo programación activo.' ['ublab:exit:CMS-37cf7c5c42ee:salir']
+0.0 send ch= 9100 reply_to= None name= None 'Lo estoy haciendo en segundo plano. Escribime acá cuando quieras: te cuento cómo va, cambio lo que haga falta o lo freno.' ['ublab:main:lc_1563200000000000011:frenar']
+1.0 pin ch= 9100 reply_to= None name= None '' []
+6.0 send ch= 9100 reply_to= <id> name= None 'Ya arrancamos con la transcripción de solo 2 videos de SpaceX; podés escribirme cuando quieras mientras sigue el worker.' []
+10.1 send ch= 9100 reply_to= <id> name= None 'Vamos bien: ya terminamos uno de los dos videos de SpaceX; falta el otro.' []
+12.1 thread ch= 9100 reply_to= None name= 02-lab '' []
+12.1 thread ch= 9100 reply_to= None name= 03-plan '' []
+13.1 send ch= <id> reply_to= None name= None 'Resultado del worker:\nworker: arranco, objetivo 2 videos\nprocesé 1 de 2 videos\nprocesé 2 de 2 videos\nlisto: 2 videos transcriptos\n' []
+13.1 send ch= <id> reply_to= None name= None 'CONSULT: propone, no decide.\n- yt-dlp + whisper local: bajar audio y transcribir en la box | a favor: sin costo por minuto | en contra: CPU | costo: b' []
+14.1 send ch= 9100 reply_to= <id> name= None 'Listo: quedaron los dos videos de SpaceX transcriptos, sin drama.' []
+40.2 edit ch= 9100 reply_to= None name= None 'Modo programación terminado.' []
+40.2 send ch= 9100 reply_to= None name= None 'Salimos de modo programación. El trabajo quedó guardado; reactivá para seguir.' []
+eventos: [[0.0, "user", "pasemos a modo código: transcribí solo 2 videos de SpaceX"], [8.1, "user", "¿cómo vas?"], [40.2, "click", "ublab:exit:CMS-37cf7c5c42ee:salir"]]
+turnos MAIN: [{"ms": 5035, "ok": true, "steered": null, "mode": "sidecar-serve", "error": null, "usage": {"inputTokens": 3959, "outputTokens": 342, "cacheReadTokens": 448, "totalTokens": 4749}, "fresh_prompt_chars": 1227}, {"ms": 1551, "ok": true, "steered": null, "mode": "sidecar-serve", "error": null, "usage": {"inputTokens": 4401, "outputTokens": 130, "cacheReadTokens": 448, "totalTokens": 4979}, "fresh_prompt_chars": 198}, {"ms": 1154, "ok": true, "steered": null, "mode": "sidecar-serve", "error": null, "usage": {"inputTokens": 4637, "outputTokens": 67, "cacheReadTokens": 4480, "totalTokens": 9184}, "fresh_prompt_chars": 215}]
+consultas maverick: ['transcrib-solo-2-videos-de-spacex']
+sidecars --serve vivos antes/después de salir: 1 0
+left: []
+duplicados (sends): 0
+sesión: ServeSidecarSession activa: ServeSidecarSession secundaria arrancada: False turnos: 3
