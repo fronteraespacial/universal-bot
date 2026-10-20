@@ -119,3 +119,9 @@ def test_file_reader_rejects_stale_data(tmp_path):
     path.write_text(json.dumps({"grok_remaining": 0.9, "as_of": _t.time()}), encoding="utf-8")
     assert FileQuotaReader(path, max_age_s=1800).grok_remaining() == 0.9
     assert choose_cli(FileQuotaReader(tmp_path / "no-hay.json"), POLICY) == CURSOR
+
+
+def test_file_reader_expands_home(tmp_path, monkeypatch):
+    monkeypatch.setenv("HOME", str(tmp_path))
+    (tmp_path / "q.json").write_text(json.dumps({"grok_remaining": 0.5}), encoding="utf-8")
+    assert FileQuotaReader("~/q.json").grok_remaining() == 0.5
