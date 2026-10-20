@@ -79,6 +79,14 @@ class CodeModeConfig:
     reminders_cancel_paused_after: str = "7d"
     language_user: str = "es-AR-simple"
     language_stages: str = "es-AR-tecnico"
+    lab_max_t2: int = 2
+    lab_max_t3: int = 3
+    lab_max_replans: int = 1
+    lab_timeout_s: float = 900.0
+    maverick_timeout_s: float = 300.0
+    lab_root: str = ""
+    routing_policy: str = "<workspace>/codemode-base/catalog/routing-policy.yaml"
+    env_extra: tuple[str, ...] = ()
 
 
 def parse_duration(spec: str) -> timedelta | None:
