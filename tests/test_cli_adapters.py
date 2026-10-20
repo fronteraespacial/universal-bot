@@ -49,7 +49,7 @@ def test_cursor_argv_puts_effort_in_the_model_slug():
         "-p",
         "--output-format",
         "text",
-        "-m",
+        "--model",
         "grok-4.7-high-fast",
         "--force",
         "--trust",
@@ -97,3 +97,9 @@ def test_file_reader_uses_the_json_field(tmp_path):
     path.write_text(json.dumps({"grok_remaining": 0.25}), encoding="utf-8")
     assert FileQuotaReader(path).grok_remaining() == 0.25
     assert choose_cli(FileQuotaReader(path), POLICY) == CURSOR
+
+
+def test_cursor_argv_never_uses_the_short_model_flag():
+    argv = cursor_argv(LAB, "grok-4.7-high-fast", "hola")
+    assert "-m" not in argv
+    assert argv[argv.index("--model") + 1] == "grok-4.7-high-fast"
