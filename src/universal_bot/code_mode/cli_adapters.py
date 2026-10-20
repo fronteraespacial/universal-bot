@@ -71,7 +71,7 @@ class FileQuotaReader:
     """Lee `grok_remaining` (0..1) del archivo de cuota. Con `as_of` más viejo que `max_age_s` es dato vencido."""
 
     def __init__(self, path, *, max_age_s: float | None = 3600.0):
-        self.path = Path(path)
+        self.path = Path(path).expanduser()
         self.max_age_s = max_age_s
 
     def grok_remaining(self) -> float:
