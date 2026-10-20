@@ -39,7 +39,7 @@ for line in sys.stdin:
             delta(f"{n} ")
             time.sleep(0.02)
         if status == "INTERRUPTED":
-            out({"event": "result", "result": {"status": "INTERRUPTED", "response": ""}})
+            out({"event": "result", "result": {"status": "ERROR", "error": "interrupted", "response": ""}})  # forma real de agy 1.4.3
             continue
     answer = "STEERED" if "CAMBIO DE INSTRUCCIÓN" in text else "OK"
     delta(answer)

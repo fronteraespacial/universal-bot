@@ -1,0 +1,47 @@
+.FF..                                                                    [100%]
+=================================== FAILURES ===================================
+____________________ test_steer_mid_turn_ends_steered[agy] _____________________
+
+cli = 'agy'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_steer_mid_turn_ends_steered(cli, tmp_path):
+        session = session_for(cli, tmp_path)
+        session.start()
+        try:
+            thread, box = _prompt_in_thread(session, "LONG contá hasta 400")
+            outcome = session.steer(STEER)
+            thread.join(15)
+            result = box["result"]
+            assert outcome == CAPABILITIES[cli].steer_strategy
+>           assert result.ok is True
+E           AssertionError: assert False is True
+E            +  where False = TurnResult(ok=False, status='failed', text='1 ', duration_ms=32, first_token_ms=12, steered=None, usage={}, mode='warm', error='ERROR').ok
+
+tests/test_warm.py:99: AssertionError
+__________________________ test_cancel_mid_turn[agy] ___________________________
+
+cli = 'agy'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_cancel_mid_turn(cli, tmp_path):
+        session = session_for(cli, tmp_path)
+        session.start()
+        try:
+            thread, box = _prompt_in_thread(session, "LONG contá hasta 400")
+            session.cancel()
+            thread.join(15)
+            assert box["result"].ok is False
+>           assert box["result"].status == "cancelled"
+E           AssertionError: assert 'failed' == 'cancelled'
+E             
+E             - cancelled
+E             + failed
+
+tests/test_warm.py:115: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_warm.py::test_steer_mid_turn_ends_steered[agy] - AssertionE...
+FAILED tests/test_warm.py::test_cancel_mid_turn[agy] - AssertionError: assert...
+2 failed, 3 passed, 23 deselected in 8.64s
