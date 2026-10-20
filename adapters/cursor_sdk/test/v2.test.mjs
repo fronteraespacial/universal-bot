@@ -275,3 +275,17 @@ test("lo que el SDK escribe en stdout va a stderr: stdout queda JSONL puro (one-
   s.child.stdin.end();
   await s.closed;
 });
+
+test("serve: si el host cierra stdout (EPIPE) el proceso sale y borra los stores efímeros", async () => {
+  const s = serve({ env: { FAKE_SDK_ECHO_OPTIONS: "1" } });
+  s.send({ op: "run", id: "r1", session_id: "s1", prompt: "uno" });
+  const one = await s.wait(final("r1"));
+  const root = JSON.parse(one.text).store.rootDir;
+  assert.equal(existsSync(root), true, "el store de la sesión vive mientras la sesión está abierta");
+  s.child.stdout.destroy();
+  s.send({ op: "run", id: "r2", session_id: "s1", prompt: "dos" });
+  s.send({ op: "ping", id: "p" });
+  const code = await Promise.race([s.closed, new Promise((r) => setTimeout(() => r("colgado"), 4000))]);
+  assert.notEqual(code, "colgado");
+  assert.equal(existsSync(root), false, "store borrado al salir");
+});

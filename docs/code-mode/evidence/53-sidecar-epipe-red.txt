@@ -1,0 +1,7 @@
+# rojo: EPIPE en serve
+✖ serve: si el host cierra stdout (EPIPE) el proceso sale y borra los stores efímeros (38.199112ms)
+ℹ pass 0
+ℹ fail 1
+✖ failing tests:
+✖ serve: si el host cierra stdout (EPIPE) el proceso sale y borra los stores efímeros (38.199112ms)
+  AssertionError [ERR_ASSERTION]: store borrado al salir
