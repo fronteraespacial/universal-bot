@@ -1,0 +1,91 @@
+# sidecar v2 verde (2026-10-20 19:48 ART)
+$ bin/cursor-sdk-sidecar --exec-node --test --test-timeout=20000 test/*.test.mjs
+✔ request mínimo aplica defaults (1.418034ms)
+✔ request inválido: vacío (0.377642ms)
+✔ request inválido: json inválido (0.099193ms)
+✔ request inválido: no objeto (0.099516ms)
+✔ request inválido: prompt vacío (0.097876ms)
+✔ request inválido: timeout 0 (0.091092ms)
+✔ request inválido: timeout string (0.083429ms)
+✔ request inválido: stream no bool (0.089493ms)
+✔ request inválido: modelo vacío (0.098117ms)
+✔ node 22.13.0 → ok (0.315563ms)
+✔ node 24.5.0 → ok (0.127987ms)
+✔ node 23.0.0 → ok (0.088454ms)
+✔ node 22.12.9 → NODE_TOO_OLD (0.078066ms)
+✔ node 20.19.2 → NODE_TOO_OLD (0.056809ms)
+✔ node v22.13.1 → ok (0.137864ms)
+✔ clasifica AuthenticationError:x → AUTH_INVALID (0.134409ms)
+✔ clasifica Error:401 Unauthorized → AUTH_INVALID (0.216923ms)
+✔ clasifica RateLimitError:x → USAGE_LIMIT (0.099588ms)
+✔ clasifica Error:You've hit your usage limit → USAGE_LIMIT (0.093816ms)
+✔ clasifica Error:429 too many requests → USAGE_LIMIT (0.075003ms)
+✔ clasifica NetworkError:x → NETWORK (0.04804ms)
+✔ clasifica Error:algo raro → SDK_ERROR (0.078765ms)
+✔ exit codes estables y fallback (0.15041ms)
+✔ el redactor borra la key y sus apariciones (0.122643ms)
+✔ ok devuelve resultado con usage y run_id (38.023687ms)
+✔ stream emite eventos antes del resultado (30.523103ms)
+✔ sin stream no emite eventos (29.650743ms)
+✔ getUsage con costo incluye chargedCents (26.901572ms)
+✔ error auth → AUTH_INVALID exit 4 (25.752644ms)
+✔ error rate → USAGE_LIMIT exit 8 (25.980589ms)
+✔ error network → NETWORK exit 11 (25.62289ms)
+✔ error crash → SDK_ERROR exit 9 (26.708707ms)
+✔ error run_error → SDK_ERROR exit 9 (25.6056ms)
+✔ request inválido → BAD_REQUEST exit 2 sin fallback (24.100067ms)
+✔ sin key → NO_KEY exit 3 (24.433295ms)
+✔ key por env si no hay archivo (27.326014ms)
+✔ SDK ausente → SDK_MISSING exit 6 (26.522037ms)
+✔ timeout corta el run → TIMEOUT exit 7 (330.14294ms)
+✔ cancel_file cancela → CANCELLED exit 10 (433.653861ms)
+✔ SIGTERM cancela → CANCELLED (333.234834ms)
+✔ steer lee la bandeja y lo entrega al run (431.184613ms)
+✔ la key nunca aparece en stdout/stderr (ok, con SDK que la imprime) (32.746064ms)
+✔ la key nunca aparece en stdout/stderr (auth, con SDK que la imprime) (29.938633ms)
+✔ la key nunca aparece en stdout/stderr (crash, con SDK que la imprime) (30.560977ms)
+✔ la key nunca aparece en stdout/stderr (run_error, con SDK que la imprime) (28.147347ms)
+✔ default: MCP en disallowedTools, sin settingSources y modelo fast (37.644749ms)
+✔ composer-2.5-fast es composer-2.5 + fast=true; model_params explícito manda (58.077557ms)
+✔ mcp:true + mcp_servers + setting_sources + model_params + http1 pasan al SDK (26.009174ms)
+✔ mcp_servers sin mcp:true no se pasan (27.236589ms)
+✔ passthroughs con tipo inválido → BAD_REQUEST (120.972401ms)
+✔ campo desconocido → BAD_REQUEST que lo nombra (24.601158ms)
+✔ --capabilities y --version describen el contrato sin leer stdin (45.594281ms)
+✔ el launcher no depende de $HOME (27.074965ms)
+✔ SIGTERM apenas arranca igual deja una línea final (35.790661ms)
+✔ timeout_s cubre create+send (430.954232ms)
+✔ si el run ya terminó, el resultado le gana al cancel (433.059307ms)
+✔ una key partida entre dos writes no se escapa (49.942673ms)
+✔ eventos y resultados grandes se truncan (30.342672ms)
+✔ store efímero por defecto: JSONL en un dir temporal que se borra al terminar (56.490068ms)
+✔ serve: varios requests, un solo proceso, agente reutilizado por session_id (33.680783ms)
+✔ serve: steer y cancel por request (435.327557ms)
+✔ serve: request inválido no tumba el proceso y una sesión ocupada responde BUSY (83.90754ms)
+ℹ tests 63
+ℹ suites 0
+ℹ pass 62
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 6955.919998
+
+$ smoke/offline.sh
+ok   bad_request → BAD_REQUEST
+ok   no_key → NO_KEY
+ok   sin_red → NETWORK True (fallback esperado True)
+fallas: 0
+
+## Mutaciones (cada una revertida después)
+- M1 sin disallowedTools cuando mcp=false → 2 tests fallan
+- M2 serve no reutiliza el agente de la sesión → 1 falla
+- M3 cancel/timeout tardío gana al resultado terminado → 1 falla
+- M4 redactor sin buffer → falla la key partida (y más)
+- M5 truncado de eventos sin conservar forma → 1 falla
+- M6 deadline que no cubre el create → 1 falla
+
+## Ajustes de test después del rojo (documentados)
+- protocol.test: EXIT ahora incluye BUSY:12 (código nuevo del modo serve).
+- v2.test helper serve(): `cwd` solo se agrega a op=run (la validación estricta rechaza campos de más en steer/cancel/ping).
+- v2.test truncado: se agregó que el evento recortado conserva data.type.

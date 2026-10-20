@@ -2,7 +2,8 @@
 # Smoke offline: sin red (unshare -rn), valida schema y códigos de error. No gasta cuota.
 set -u
 HERE="$(cd "$(dirname "$0")/.." && pwd)"
-NODE="${CURSOR_SDK_NODE:-node}"
+SIDECAR="$HERE/bin/cursor-sdk-sidecar"
+NODE="${CURSOR_SDK_NODE:-$("$SIDECAR" --exec-node -e "process.stdout.write(process.execPath)")}"
 OLD_NODE="${OLD_NODE:-}"
 FAKE_KEY="crsr_offline_FAKE_0123456789abcdefghijklmnop"
 TMP="$(mktemp -d)"; trap 'rm -rf "$TMP"' EXIT

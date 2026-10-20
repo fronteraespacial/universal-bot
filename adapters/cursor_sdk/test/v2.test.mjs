@@ -122,7 +122,8 @@ test("el launcher no depende de $HOME", async () => {
 });
 
 test("SIGTERM apenas arranca igual deja una línea final", async () => {
-  const r = await once(null, { via: "launcher", scenario: "slow", onSpawn: (c) => c.kill("SIGTERM") });
+  // 30 ms: el lanzador ya tiene el trap puesto y Node todavía está arrancando.
+  const r = await once(null, { via: "launcher", scenario: "slow", onSpawn: (c) => c.on("spawn", () => setTimeout(() => c.kill("SIGTERM"), 30)) });
   assert.equal(r.last.type, "error");
   assert.equal(r.last.code, "CANCELLED");
   assert.equal(r.code, 10);
@@ -157,6 +158,7 @@ test("eventos y resultados grandes se truncan", async () => {
   const r = await once({ prompt: "x", stream: true, max_event_bytes: 2000, max_result_chars: 5000 }, { scenario: "big" });
   const big = r.lines.find((l) => l.type === "event" && l.truncated);
   assert.ok(big && JSON.stringify(big).length < 4000);
+  assert.equal(big.data?.type, "assistant", "el evento recortado conserva su forma");
   assert.equal(r.last.text.length, 5000);
   assert.equal(r.last.text_truncated, true);
   assert.equal(r.last.text_len, 300000);
@@ -187,7 +189,7 @@ function serve({ scenario = "ok", env = {} } = {}) {
   const closed = new Promise((resolve) => child.on("close", (code) => resolve(code)));
   return {
     dir, child, lines, closed, err: () => err,
-    send: (obj) => child.stdin.write(JSON.stringify({ cwd: dir, ...obj }) + "\n"),
+    send: (obj) => child.stdin.write(JSON.stringify(obj.op === "run" ? { cwd: dir, ...obj } : obj) + "\n"),
     raw: (text) => child.stdin.write(text + "\n"),
     wait: (match, ms = 5000) => {
       const found = lines.find(match);

@@ -38,7 +38,7 @@ for (const [err, code] of [
 }
 
 test("exit codes estables y fallback", () => {
-  assert.deepEqual(EXIT, { OK: 0, BAD_REQUEST: 2, NO_KEY: 3, AUTH_INVALID: 4, NODE_TOO_OLD: 5, SDK_MISSING: 6,
+  assert.deepEqual(EXIT, { BUSY: 12, OK: 0, BAD_REQUEST: 2, NO_KEY: 3, AUTH_INVALID: 4, NODE_TOO_OLD: 5, SDK_MISSING: 6,
     TIMEOUT: 7, USAGE_LIMIT: 8, SDK_ERROR: 9, CANCELLED: 10, NETWORK: 11 });
   assert.deepEqual([...FALLBACK_CODES].sort(), ["AUTH_INVALID", "NETWORK", "NODE_TOO_OLD", "NO_KEY", "SDK_ERROR", "SDK_MISSING", "TIMEOUT", "USAGE_LIMIT"]);
 });
