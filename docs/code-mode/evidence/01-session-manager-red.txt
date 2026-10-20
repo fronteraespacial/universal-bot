@@ -1,0 +1,950 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                            [100%]
+=================================== FAILURES ===================================
+__________ test_manual_phrase_with_permission_activates_and_pins_exit __________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_manual_phrase_with_permis0')
+
+    def test_manual_phrase_with_permission_activates_and_pins_exit(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad25092b0>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_manual_phrase_with_permis0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2508ec0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+____________________________ test_command_durations ____________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_command_durations0')
+
+    def test_command_durations(tmp_path):
+        cases = (
+            ("/modo-codigo", timedelta(hours=4)),
+            ("/modo-codigo 1h", timedelta(hours=1)),
+            ("/modo-codigo 4h", timedelta(hours=4)),
+        )
+        for index, (text, delta) in enumerate(cases):
+>           env = make(tmp_path / str(index))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad278fed0>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_command_durations0/0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad278fc50>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+___________________ test_command_until_exit_has_no_deadline ____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_command_until_exit_has_no0')
+
+    def test_command_until_exit_has_no_deadline(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad217c910>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_command_until_exit_has_no0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad217c190>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+___________ test_manual_phrase_without_permission_does_not_activate ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_manual_phrase_without_per0')
+
+    def test_manual_phrase_without_permission_does_not_activate(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:94: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2560c30>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_manual_phrase_without_per0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad25609d0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+________________ test_second_activate_extends_the_same_session _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_second_activate_extends_t0')
+
+    def test_second_activate_extends_the_same_session(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2561480>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_second_activate_extends_t0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2560fc0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+___________ test_child_thread_inherits_channel_until_it_has_its_own ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_child_thread_inherits_cha0')
+
+    def test_child_thread_inherits_channel_until_it_has_its_own(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad25471d0>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_child_thread_inherits_cha0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2546f90>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+______________ test_exit_on_thread_does_not_stop_channel_session _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_exit_on_thread_does_not_s0')
+
+    def test_exit_on_thread_does_not_stop_channel_session(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:136: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad247f130>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_exit_on_thread_does_not_s0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad247f9b0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+______________________ test_who_can_exit[7-roles0-exited] ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_7_roles0_exi0')
+actor_id = 7, roles = (), reason = 'exited'
+
+    @pytest.mark.parametrize(
+        ("actor_id", "roles", "reason"),
+        [
+            (ACTIVATOR, (), "exited"),
+            (STRANGER, ("@dev",), "exited"),
+            (STRANGER, ("@admin",), "exited"),
+            (STRANGER, (), "forbidden"),
+            (STRANGER, ("@everyone",), "forbidden"),
+        ],
+    )
+    def test_who_can_exit(tmp_path, actor_id, roles, reason):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2198050>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_7_roles0_exi0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad247fbd0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+______________________ test_who_can_exit[9-roles1-exited] ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_9_roles1_exi0')
+actor_id = 9, roles = ('@dev',), reason = 'exited'
+
+    @pytest.mark.parametrize(
+        ("actor_id", "roles", "reason"),
+        [
+            (ACTIVATOR, (), "exited"),
+            (STRANGER, ("@dev",), "exited"),
+            (STRANGER, ("@admin",), "exited"),
+            (STRANGER, (), "forbidden"),
+            (STRANGER, ("@everyone",), "forbidden"),
+        ],
+    )
+    def test_who_can_exit(tmp_path, actor_id, roles, reason):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2481e50>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_9_roles1_exi0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2482150>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+______________________ test_who_can_exit[9-roles2-exited] ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_9_roles2_exi0')
+actor_id = 9, roles = ('@admin',), reason = 'exited'
+
+    @pytest.mark.parametrize(
+        ("actor_id", "roles", "reason"),
+        [
+            (ACTIVATOR, (), "exited"),
+            (STRANGER, ("@dev",), "exited"),
+            (STRANGER, ("@admin",), "exited"),
+            (STRANGER, (), "forbidden"),
+            (STRANGER, ("@everyone",), "forbidden"),
+        ],
+    )
+    def test_who_can_exit(tmp_path, actor_id, roles, reason):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2483850>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_9_roles2_exi0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2483650>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+____________________ test_who_can_exit[9-roles3-forbidden] _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_9_roles3_for0')
+actor_id = 9, roles = (), reason = 'forbidden'
+
+    @pytest.mark.parametrize(
+        ("actor_id", "roles", "reason"),
+        [
+            (ACTIVATOR, (), "exited"),
+            (STRANGER, ("@dev",), "exited"),
+            (STRANGER, ("@admin",), "exited"),
+            (STRANGER, (), "forbidden"),
+            (STRANGER, ("@everyone",), "forbidden"),
+        ],
+    )
+    def test_who_can_exit(tmp_path, actor_id, roles, reason):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2220500>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_9_roles3_for0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad26f7890>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+____________________ test_who_can_exit[9-roles4-forbidden] _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_9_roles4_for0')
+actor_id = 9, roles = ('@everyone',), reason = 'forbidden'
+
+    @pytest.mark.parametrize(
+        ("actor_id", "roles", "reason"),
+        [
+            (ACTIVATOR, (), "exited"),
+            (STRANGER, ("@dev",), "exited"),
+            (STRANGER, ("@admin",), "exited"),
+            (STRANGER, (), "forbidden"),
+            (STRANGER, ("@everyone",), "forbidden"),
+        ],
+    )
+    def test_who_can_exit(tmp_path, actor_id, roles, reason):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:156: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2221220>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_who_can_exit_9_roles4_for0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2220d70>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+____________________ test_exit_checkpoints_running_project _____________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_exit_checkpoints_running_0')
+
+    def test_exit_checkpoints_running_project(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:174: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad254ecf0>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_exit_checkpoints_running_0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad254eb30>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_____________________ test_exit_does_not_pause_mid_commit ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_exit_does_not_pause_mid_c0')
+
+    def test_exit_does_not_pause_mid_commit(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:195: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad254fa10>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_exit_does_not_pause_mid_c0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad254f850>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+__________________ test_exit_keeps_waiting_human_project_open __________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_exit_keeps_waiting_human_0')
+
+    def test_exit_keeps_waiting_human_project_open(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad24de270>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_exit_keeps_waiting_human_0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad24ddf30>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_________________ test_tick_warns_then_expires_and_checkpoints _________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_tick_warns_then_expires_a0')
+
+    def test_tick_warns_then_expires_and_checkpoints(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:238: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2787710>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_tick_warns_then_expires_a0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad27874d0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+____________ test_restart_keeps_active_session_and_reregisters_pin _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_restart_keeps_active_sess0')
+
+    def test_restart_keeps_active_session_and_reregisters_pin(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:271: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2787d10>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_restart_keeps_active_sess0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2787950>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_____________ test_restart_expires_session_that_elapsed_while_down _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_restart_expires_session_t0')
+
+    def test_restart_expires_session_that_elapsed_while_down(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:283: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad21ffb70>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_restart_expires_session_t0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad21ffa10>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+___________ test_route_inside_mode_keeps_session[gracias-basic_cli] ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s0')
+text = 'gracias', kind = 'basic_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad21e4260>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad21e4100>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_____ test_route_inside_mode_keeps_session[\xbfqu\xe9 hora es?-basic_cli] ______
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s1')
+text = '¿qué hora es?', kind = 'basic_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad20b8050>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s1/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad20b8a50>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_____________ test_route_inside_mode_keeps_session[hola-basic_cli] _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s2')
+text = 'hola', kind = 'basic_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad20b9270>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s2/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad20b80f0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_____ test_route_inside_mode_keeps_session[donde esta el README-basic_cli] _____
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s3')
+text = 'donde esta el README', kind = 'basic_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad24db020>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s3/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad24da690>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_______ test_route_inside_mode_keeps_session[typo en recieve-basic_cli] ________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s4')
+text = 'typo en recieve', kind = 'basic_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad256e950>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s4/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad256f2d0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_______________ test_route_inside_mode_keeps_session[-basic_cli] _______________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s5')
+text = '', kind = 'basic_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2258250>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s5/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2258150>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+______ test_route_inside_mode_keeps_session[refactor del store-code_cli] _______
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s6')
+text = 'refactor del store', kind = 'code_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad21d1940>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s6/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad21d1a20>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+_ test_route_inside_mode_keeps_session[bug en el lock que no se libera-code_cli] _
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s7')
+text = 'bug en el lock que no se libera', kind = 'code_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad21d2040>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s7/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad21d20b0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+___ test_route_inside_mode_keeps_session[feature nueva de reservas-code_cli] ___
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s8')
+text = 'feature nueva de reservas', kind = 'code_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2197890>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s8/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad21974d0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+___ test_route_inside_mode_keeps_session[agreg\xe1 logs al worker-code_cli] ____
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s9')
+text = 'agregá logs al worker', kind = 'code_cli'
+
+    @pytest.mark.parametrize(
+        ("text", "kind"),
+        [
+            ("gracias", "basic_cli"),
+            ("¿qué hora es?", "basic_cli"),
+            ("hola", "basic_cli"),
+            ("donde esta el README", "basic_cli"),
+            ("typo en recieve", "basic_cli"),
+            ("", "basic_cli"),
+            ("refactor del store", "code_cli"),
+            ("bug en el lock que no se libera", "code_cli"),
+            ("feature nueva de reservas", "code_cli"),
+            ("agregá logs al worker", "code_cli"),
+        ],
+    )
+    def test_route_inside_mode_keeps_session(tmp_path, text, kind):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:317: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad2197ef0>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_inside_mode_keeps_s9/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad2197b30>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+______________________ test_route_outside_mode_is_outside ______________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_outside_mode_is_out0')
+
+    def test_route_outside_mode_is_outside(tmp_path):
+>       env = make(tmp_path)
+              ^^^^^^^^^^^^^^
+
+tests/test_session_manager.py:326: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_session_manager.py:39: in make
+    ledger = ProjectLedger(db, clock)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.projects.ProjectLedger object at 0x7fdad21f5450>
+db_path = PosixPath('/tmp/pytest-of-box/pytest-38/test_route_outside_mode_is_out0/mode.sqlite')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7fdad21f60d0>
+
+    def __init__(self, db_path: Path | str, clock: Clock):
+>       raise NotImplementedError("ProjectLedger")
+E       NotImplementedError: ProjectLedger
+
+src/universal_bot/code_mode/projects.py:13: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_session_manager.py::test_manual_phrase_with_permission_activates_and_pins_exit - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_command_durations - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_command_until_exit_has_no_deadline - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_manual_phrase_without_permission_does_not_activate - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_second_activate_extends_the_same_session - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_child_thread_inherits_channel_until_it_has_its_own - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_exit_on_thread_does_not_stop_channel_session - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_who_can_exit[7-roles0-exited] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_who_can_exit[9-roles1-exited] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_who_can_exit[9-roles2-exited] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_who_can_exit[9-roles3-forbidden] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_who_can_exit[9-roles4-forbidden] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_exit_checkpoints_running_project - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_exit_does_not_pause_mid_commit - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_exit_keeps_waiting_human_project_open - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_tick_warns_then_expires_and_checkpoints - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_restart_keeps_active_session_and_reregisters_pin - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_restart_expires_session_that_elapsed_while_down - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[gracias-basic_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[\xbfqu\xe9 hora es?-basic_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[hola-basic_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[donde esta el README-basic_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[typo en recieve-basic_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[-basic_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[refactor del store-code_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[bug en el lock que no se libera-code_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[feature nueva de reservas-code_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_inside_mode_keeps_session[agreg\xe1 logs al worker-code_cli] - NotImplementedError: ProjectLedger
+FAILED tests/test_session_manager.py::test_route_outside_mode_is_outside - NotImplementedError: ProjectLedger
+29 failed in 0.28s
