@@ -184,6 +184,7 @@ def load_code_mode_config(path) -> CodeModeConfig:
         ),
         language_user=str(language.get("user", base.language_user)),
         language_stages=str(language.get("stages", base.language_stages)),
+        **_lab_fields(block.get("lab"), base),
     )
 
 
@@ -281,6 +282,36 @@ def _approvals(value: object, base: ApprovalPolicy) -> ApprovalPolicy:
         plan=str(value.get("plan", base.plan)),
         plan_requires_evidence=bool(value.get("plan_requires_evidence", base.plan_requires_evidence)),
     )
+
+
+def _lab_fields(value: object, base: CodeModeConfig) -> dict:
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        raise ConfigError("lab tiene que ser un mapa")
+    max_labs = value.get("max_labs") or {}
+    if not isinstance(max_labs, dict):
+        raise ConfigError("lab.max_labs tiene que ser un mapa")
+    timeout = base.lab_timeout_s
+    if "timeout_per_lab" in value:
+        delta = parse_duration(str(value["timeout_per_lab"]))
+        if delta is None:
+            raise ConfigError("timeout_per_lab tiene que ser una duración")
+        timeout = delta.total_seconds()
+    maverick = base.maverick_timeout_s
+    if "maverick_timeout_s" in value:
+        maverick = float(value["maverick_timeout_s"])
+    extra = value.get("env_extra", base.env_extra)
+    return {
+        "lab_max_t2": int(max_labs.get("T2", base.lab_max_t2)),
+        "lab_max_t3": int(max_labs.get("T3", base.lab_max_t3)),
+        "lab_max_replans": int(value.get("max_replans", base.lab_max_replans)),
+        "lab_timeout_s": float(timeout),
+        "maverick_timeout_s": float(maverick),
+        "lab_root": str(value.get("lab_root", base.lab_root)),
+        "routing_policy": str(value.get("routing_policy", base.routing_policy)),
+        "env_extra": _strings(extra, "env_extra") if not isinstance(extra, tuple) else tuple(extra),
+    }
 
 
 def _sandbox(value: object, base: SandboxPolicy) -> SandboxPolicy:
