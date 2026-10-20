@@ -114,3 +114,7 @@ def role_allowed(
     return False
 
 
+def load_code_mode_config(path) -> CodeModeConfig:
+    raise NotImplementedError("load_code_mode_config")
+
+

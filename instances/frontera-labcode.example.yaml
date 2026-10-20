@@ -1,0 +1,50 @@
+code_mode:
+  enabled: true
+  propose_tiers: [T2, T3]
+  default_mode: ask
+  sticky: true
+  default_duration: 4h
+  duration_options: [1h, 4h, until_exit]
+  warn_before: 10m
+  proposal_threshold: 0.8
+  who_can_exit: [activator, "@dev", "@admin"]
+  manual_trigger_phrases: ["pasemos a modo código", "modo programación", "activá modo código"]
+  manual_trigger_command: "/modo-codigo"
+  trivial_to_basic_cli: true
+  on_exit_running_job: checkpoint_pause
+  allow_channels: true
+  projects_category: "Proyectos"
+  projects_channel: "proyectos"
+  channel_prefix: "p-"
+  max_open_projects: 10
+  archive_after_days: 14
+  allowed_channels: [910001]
+  roles:
+    can_start_project: ["@dev", "@admin"]
+    can_start_thread: ["@everyone"]
+    can_activate: ["@dev", "@admin"]
+    can_ask_questions: ["requester", "@dev"]
+    can_brake: ["requester", "@admin"]
+    admin_review_channel: "admin-bot"
+  approvals:
+    production: "requester|dev"
+    production_t3: dev
+    dev_roles: ["@dev"]
+    plan: none
+    plan_requires_evidence: true
+  lab:
+    auto_approve: true
+    max_labs: { T2: 2, T3: 3 }
+    max_replans: 1
+    timeout_per_lab: 20m
+    timeout_total: 60m
+  sandbox:
+    policy: strict
+    runtime: worktree+venv
+    egress_allowlist: ["pypi.org", "files.pythonhosted.org", "github.com"]
+    prod_secrets: deny
+    writes: workspace_only
+  security_check: on
+  host_role: vps
+  reminders: { first_after: 4h, pause_after: 24h, cancel_paused_after: 7d }
+  language: { user: "es-AR-simple", stages: "es-AR-tecnico" }
