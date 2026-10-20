@@ -2,16 +2,33 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from pathlib import Path
+
+_NAME = "runtime.heartbeat"
+_FRESH_S = 20
+_STALE_S = 60
 
 
 def touch_heartbeat(spool: Path, clock) -> None:
-    raise NotImplementedError("touch_heartbeat")
+    (Path(spool) / _NAME).write_text(clock.now().isoformat(), encoding="utf-8")
 
 
 def heartbeat_fresh(spool: Path, clock) -> bool:
-    raise NotImplementedError("heartbeat_fresh")
+    age = _age(spool, clock)
+    return age is not None and age <= _FRESH_S
 
 
 def heartbeat_status(spool: Path, clock) -> str:
-    raise NotImplementedError("heartbeat_status")
+    age = _age(spool, clock)
+    if age is None or age > _STALE_S:
+        return "no disponible"
+    return "ok"
+
+
+def _age(spool: Path, clock) -> float | None:
+    path = Path(spool) / _NAME
+    if not path.is_file():
+        return None
+    stamped = datetime.fromisoformat(path.read_text(encoding="utf-8").strip())
+    return (clock.now() - stamped).total_seconds()
