@@ -1,0 +1,139 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+________ test_create_channel_in_the_runtime_moves_the_session_and_pins _________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_create_channel_in_the_runtime_moves_the_session_and_pins(tmp_path):
+>       spool, db = _drive(tmp_path, "create_channel")
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_runtime_buttons.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_runtime_buttons.py:33: in _drive
+    run_once(spool, db_path=db, clock=clock, lab_runner=FakeLabs(), config=_config(), sleeper=sleeper)
+src/universal_bot/labcode_runtime.py:45: in run_once
+    apply_clicks(app, root, clicks)
+src/universal_bot/code_mode/inbox_flow.py:57: in apply_clicks
+    _propose_click(app, root, click)
+src/universal_bot/code_mode/inbox_flow.py:69: in _propose_click
+    app.resume_proposal(load_inbox_job(job_dir), job_dir, click.opt, int(str(raw["user_id"])))
+src/universal_bot/code_mode/app.py:89: in resume_proposal
+    self._open_channel(job, job_dir, user_id, roles)
+src/universal_bot/code_mode/app.py:98: in _open_channel
+    channel_id = self.discord.create_channel(
+src/universal_bot/code_mode/file_outbox.py:121: in create_channel
+    parent_id=self._parent(parent_id),
+              ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f77268a5810>
+parent_id = 300
+
+    def _parent(self, parent_id: int | None) -> int | None:
+        chosen = self.admin_category_id if parent_id is None else parent_id
+        if chosen is None:
+            return None
+        if self.admin_category_id is None or chosen != self.admin_category_id:
+>           raise ValueError("parent_id solo puede ser la categoría ADMINISTRACIÓN")
+E           ValueError: parent_id solo puede ser la categoría ADMINISTRACIÓN
+
+src/universal_bot/code_mode/file_outbox.py:189: ValueError
+_________ test_create_thread_in_the_runtime_moves_the_session_and_pins _________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_create_thread_in_the_runtime_moves_the_session_and_pins(tmp_path):
+        spool, db = _drive(tmp_path, "create_thread")
+        ops = bodies(spool)
+        opened = [op for op in ops if op["op"] == "thread" and op.get("name") == SLUG]
+        assert len(opened) == 1 and opened[0]["channel_id"] == PROJECTS
+        active = _sessions(db)
+>       assert [(s["channel_id"], s["thread_id"]) for s in active] == [(PROJECTS, NEW_THREAD)]
+E       assert [] == [(400, 901)]
+E         
+E         Right contains one more item: (400, 901)
+E         Use -v to get more diff
+
+tests/test_runtime_buttons.py:67: AssertionError
+________________ test_here_in_the_runtime_pins_the_real_message ________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_here_in_the_runtime_pins_the_real_message(tmp_path):
+        spool, db = _drive(tmp_path, "here_1h")
+        ops = bodies(spool)
+>       assert _pins(ops) == [(CHANNEL, 900)]
+E       assert [] == [(100, 900)]
+E         
+E         Right contains one more item: (100, 900)
+E         Use -v to get more diff
+
+tests/test_runtime_buttons.py:74: AssertionError
+__________ test_bridge_that_never_answers_does_not_crash_the_runtime ___________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_bridge_that_never_answers_does_not_crash_the_runtime(tmp_path):
+>       spool, db = _drive(tmp_path, "create_channel", sleeper_for=_silent)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_runtime_buttons.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_runtime_buttons.py:33: in _drive
+    run_once(spool, db_path=db, clock=clock, lab_runner=FakeLabs(), config=_config(), sleeper=sleeper)
+src/universal_bot/labcode_runtime.py:45: in run_once
+    apply_clicks(app, root, clicks)
+src/universal_bot/code_mode/inbox_flow.py:57: in apply_clicks
+    _propose_click(app, root, click)
+src/universal_bot/code_mode/inbox_flow.py:69: in _propose_click
+    app.resume_proposal(load_inbox_job(job_dir), job_dir, click.opt, int(str(raw["user_id"])))
+src/universal_bot/code_mode/app.py:89: in resume_proposal
+    self._open_channel(job, job_dir, user_id, roles)
+src/universal_bot/code_mode/app.py:98: in _open_channel
+    channel_id = self.discord.create_channel(
+src/universal_bot/code_mode/file_outbox.py:121: in create_channel
+    parent_id=self._parent(parent_id),
+              ^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.file_outbox.FileOutboxDiscordPort object at 0x7f77266ca360>
+parent_id = 300
+
+    def _parent(self, parent_id: int | None) -> int | None:
+        chosen = self.admin_category_id if parent_id is None else parent_id
+        if chosen is None:
+            return None
+        if self.admin_category_id is None or chosen != self.admin_category_id:
+>           raise ValueError("parent_id solo puede ser la categoría ADMINISTRACIÓN")
+E           ValueError: parent_id solo puede ser la categoría ADMINISTRACIÓN
+
+src/universal_bot/code_mode/file_outbox.py:189: ValueError
+_________ test_heartbeat_thread_keeps_the_file_fresh_during_long_work __________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_heartbeat_thread_keeps_the_file_fresh_during_long_work(tmp_path):
+        spool = make_spool(tmp_path / "spool")
+>       beat = HeartbeatThread(spool, interval_s=0.05)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_runtime_buttons.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.heartbeat.HeartbeatThread object at 0x7f77266a5e80>
+args = (PosixPath('<ruta>'),)
+kwargs = {'interval_s': 0.05}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/heartbeat.py:39: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_runtime_buttons.py::test_create_channel_in_the_runtime_moves_the_session_and_pins
+FAILED tests/test_runtime_buttons.py::test_create_thread_in_the_runtime_moves_the_session_and_pins
+FAILED tests/test_runtime_buttons.py::test_here_in_the_runtime_pins_the_real_message
+FAILED tests/test_runtime_buttons.py::test_bridge_that_never_answers_does_not_crash_the_runtime
+FAILED tests/test_runtime_buttons.py::test_heartbeat_thread_keeps_the_file_fresh_during_long_work
+5 failed in 0.18s

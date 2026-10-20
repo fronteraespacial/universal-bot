@@ -22,7 +22,7 @@ from universal_bot.store import JobStore
 _PROCESSED = {"accepted", "done", "paused", "error", "running", "waiting_human", "skipped"}
 
 
-def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None, lab_runner=None, config=None) -> dict:
+def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None, lab_runner=None, config=None, sleeper=None) -> dict:
     root = Path(spool)
     for name in ("inbox", "outbox", "answers"):
         (root / name).mkdir(parents=True, exist_ok=True)

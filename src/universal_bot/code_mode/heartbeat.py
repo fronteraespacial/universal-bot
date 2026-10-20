@@ -32,3 +32,8 @@ def _age(spool: Path, clock) -> float | None:
         return None
     stamped = datetime.fromisoformat(path.read_text(encoding="utf-8").strip())
     return (clock.now() - stamped).total_seconds()
+
+
+class HeartbeatThread:
+    def __init__(self, *args, **kwargs):
+        raise NotImplementedError
