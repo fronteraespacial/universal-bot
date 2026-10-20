@@ -1,0 +1,801 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFF                                               [100%]
+=================================== FAILURES ===================================
+___________________ test_clean_sandbox_passes_without_asking ___________________
+
+    def test_clean_sandbox_passes_without_asking():
+>       decision = check(inspection())
+                         ^^^^^^^^^^^^
+
+tests/test_security_gate.py:46: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028f730e0>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_____________ test_prod_secret_fails_and_blocks_tests[PROD_SECRET] _____________
+
+name = 'PROD_SECRET'
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "PROD_SECRET",
+            "PROD_TOKEN",
+            "PROD_KEY",
+            "PROD_PASSWORD",
+            "PRODUCTION_SECRET",
+            "SECRET_PROD",
+            "TOKEN_PROD",
+            "API_PROD_SECRET",
+        ],
+    )
+    def test_prod_secret_fails_and_blocks_tests(name):
+>       decision = check(inspection(env=((name, "abc"),)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028fa60d0>
+args = ()
+kwargs = {'env': (('PROD_SECRET', 'abc'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_____________ test_prod_secret_fails_and_blocks_tests[PROD_TOKEN] ______________
+
+name = 'PROD_TOKEN'
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "PROD_SECRET",
+            "PROD_TOKEN",
+            "PROD_KEY",
+            "PROD_PASSWORD",
+            "PRODUCTION_SECRET",
+            "SECRET_PROD",
+            "TOKEN_PROD",
+            "API_PROD_SECRET",
+        ],
+    )
+    def test_prod_secret_fails_and_blocks_tests(name):
+>       decision = check(inspection(env=((name, "abc"),)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028fa6fd0>
+args = ()
+kwargs = {'env': (('PROD_TOKEN', 'abc'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+______________ test_prod_secret_fails_and_blocks_tests[PROD_KEY] _______________
+
+name = 'PROD_KEY'
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "PROD_SECRET",
+            "PROD_TOKEN",
+            "PROD_KEY",
+            "PROD_PASSWORD",
+            "PRODUCTION_SECRET",
+            "SECRET_PROD",
+            "TOKEN_PROD",
+            "API_PROD_SECRET",
+        ],
+    )
+    def test_prod_secret_fails_and_blocks_tests(name):
+>       decision = check(inspection(env=((name, "abc"),)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028d30510>
+args = ()
+kwargs = {'env': (('PROD_KEY', 'abc'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+____________ test_prod_secret_fails_and_blocks_tests[PROD_PASSWORD] ____________
+
+name = 'PROD_PASSWORD'
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "PROD_SECRET",
+            "PROD_TOKEN",
+            "PROD_KEY",
+            "PROD_PASSWORD",
+            "PRODUCTION_SECRET",
+            "SECRET_PROD",
+            "TOKEN_PROD",
+            "API_PROD_SECRET",
+        ],
+    )
+    def test_prod_secret_fails_and_blocks_tests(name):
+>       decision = check(inspection(env=((name, "abc"),)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028d31940>
+args = ()
+kwargs = {'env': (('PROD_PASSWORD', 'abc'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+__________ test_prod_secret_fails_and_blocks_tests[PRODUCTION_SECRET] __________
+
+name = 'PRODUCTION_SECRET'
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "PROD_SECRET",
+            "PROD_TOKEN",
+            "PROD_KEY",
+            "PROD_PASSWORD",
+            "PRODUCTION_SECRET",
+            "SECRET_PROD",
+            "TOKEN_PROD",
+            "API_PROD_SECRET",
+        ],
+    )
+    def test_prod_secret_fails_and_blocks_tests(name):
+>       decision = check(inspection(env=((name, "abc"),)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028d5e330>
+args = ()
+kwargs = {'env': (('PRODUCTION_SECRET', 'abc'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_____________ test_prod_secret_fails_and_blocks_tests[SECRET_PROD] _____________
+
+name = 'SECRET_PROD'
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "PROD_SECRET",
+            "PROD_TOKEN",
+            "PROD_KEY",
+            "PROD_PASSWORD",
+            "PRODUCTION_SECRET",
+            "SECRET_PROD",
+            "TOKEN_PROD",
+            "API_PROD_SECRET",
+        ],
+    )
+    def test_prod_secret_fails_and_blocks_tests(name):
+>       decision = check(inspection(env=((name, "abc"),)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028c918c0>
+args = ()
+kwargs = {'env': (('SECRET_PROD', 'abc'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_____________ test_prod_secret_fails_and_blocks_tests[TOKEN_PROD] ______________
+
+name = 'TOKEN_PROD'
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "PROD_SECRET",
+            "PROD_TOKEN",
+            "PROD_KEY",
+            "PROD_PASSWORD",
+            "PRODUCTION_SECRET",
+            "SECRET_PROD",
+            "TOKEN_PROD",
+            "API_PROD_SECRET",
+        ],
+    )
+    def test_prod_secret_fails_and_blocks_tests(name):
+>       decision = check(inspection(env=((name, "abc"),)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028c92250>
+args = ()
+kwargs = {'env': (('TOKEN_PROD', 'abc'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+___________ test_prod_secret_fails_and_blocks_tests[API_PROD_SECRET] ___________
+
+name = 'API_PROD_SECRET'
+
+    @pytest.mark.parametrize(
+        "name",
+        [
+            "PROD_SECRET",
+            "PROD_TOKEN",
+            "PROD_KEY",
+            "PROD_PASSWORD",
+            "PRODUCTION_SECRET",
+            "SECRET_PROD",
+            "TOKEN_PROD",
+            "API_PROD_SECRET",
+        ],
+    )
+    def test_prod_secret_fails_and_blocks_tests(name):
+>       decision = check(inspection(env=((name, "abc"),)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:71: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028c96450>
+args = ()
+kwargs = {'env': (('API_PROD_SECRET', 'abc'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+__________________________ test_benign_env_names_pass __________________________
+
+    def test_benign_env_names_pass():
+>       decision = check(inspection(env=(("PATH", "/usr/bin"), ("PROD_MODE", "1"), ("HOME", "/home/app"))))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:79: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028c96b50>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'), ('PROD_MODE', '1'), ('HOME', '/home/app')), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+______________________ test_host_outside_allowlist_fails _______________________
+
+    def test_host_outside_allowlist_fails():
+>       decision = check(inspection(hosts=("pypi.org", "evil.example")))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:85: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028cd17c0>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org', 'evil.example'), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_______________ test_write_outside_workspace_fails[/etc/passwd] ________________
+
+path = '/etc/passwd'
+
+    @pytest.mark.parametrize("path", ["/etc/passwd", "/work/app-evil/x"])
+    def test_write_outside_workspace_fails(path):
+>       decision = check(inspection(write_paths=(path,)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028d10050>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('pytest -q',), 'write_paths': ('/etc/passwd',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_____________ test_write_outside_workspace_fails[/work/app-evil/x] _____________
+
+path = '/work/app-evil/x'
+
+    @pytest.mark.parametrize("path", ["/etc/passwd", "/work/app-evil/x"])
+    def test_write_outside_workspace_fails(path):
+>       decision = check(inspection(write_paths=(path,)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:93: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028d4b770>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app-evil/x',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_________________ test_relative_write_inside_workspace_passes __________________
+
+    def test_relative_write_inside_workspace_passes():
+>       decision = check(inspection(write_paths=("/work/app/src/a.py", "rel.txt")))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028d4a7b0>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py', 'rel.txt'), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+___________________ test_destructive_command_fails[rm -rf /] ___________________
+
+command = 'rm -rf /'
+
+    @pytest.mark.parametrize(
+        "command",
+        [
+            "rm -rf /",
+            "git push --force",
+            "git push --force origin main",
+            "git push -f origin main",
+            "DROP TABLE users",
+            "drop table users",
+        ],
+    )
+    def test_destructive_command_fails(command):
+>       decision = check(inspection(commands=(command,)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028be53d0>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('rm -rf /',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_______________ test_destructive_command_fails[git push --force] _______________
+
+command = 'git push --force'
+
+    @pytest.mark.parametrize(
+        "command",
+        [
+            "rm -rf /",
+            "git push --force",
+            "git push --force origin main",
+            "git push -f origin main",
+            "DROP TABLE users",
+            "drop table users",
+        ],
+    )
+    def test_destructive_command_fails(command):
+>       decision = check(inspection(commands=(command,)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028f99e50>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('git push --force',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_________ test_destructive_command_fails[git push --force origin main] _________
+
+command = 'git push --force origin main'
+
+    @pytest.mark.parametrize(
+        "command",
+        [
+            "rm -rf /",
+            "git push --force",
+            "git push --force origin main",
+            "git push -f origin main",
+            "DROP TABLE users",
+            "drop table users",
+        ],
+    )
+    def test_destructive_command_fails(command):
+>       decision = check(inspection(commands=(command,)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028f9a810>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('git push --force origin main',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+___________ test_destructive_command_fails[git push -f origin main] ____________
+
+command = 'git push -f origin main'
+
+    @pytest.mark.parametrize(
+        "command",
+        [
+            "rm -rf /",
+            "git push --force",
+            "git push --force origin main",
+            "git push -f origin main",
+            "DROP TABLE users",
+            "drop table users",
+        ],
+    )
+    def test_destructive_command_fails(command):
+>       decision = check(inspection(commands=(command,)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028cc73e0>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('git push -f origin main',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_______________ test_destructive_command_fails[DROP TABLE users] _______________
+
+command = 'DROP TABLE users'
+
+    @pytest.mark.parametrize(
+        "command",
+        [
+            "rm -rf /",
+            "git push --force",
+            "git push --force origin main",
+            "git push -f origin main",
+            "DROP TABLE users",
+            "drop table users",
+        ],
+    )
+    def test_destructive_command_fails(command):
+>       decision = check(inspection(commands=(command,)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028cc78b0>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('DROP TABLE users',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_______________ test_destructive_command_fails[drop table users] _______________
+
+command = 'drop table users'
+
+    @pytest.mark.parametrize(
+        "command",
+        [
+            "rm -rf /",
+            "git push --force",
+            "git push --force origin main",
+            "git push -f origin main",
+            "DROP TABLE users",
+            "drop table users",
+        ],
+    )
+    def test_destructive_command_fails(command):
+>       decision = check(inspection(commands=(command,)))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028d2f250>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('drop table users',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+________________________ test_real_service_access_fails ________________________
+
+    def test_real_service_access_fails():
+>       decision = check(inspection(real_service=True))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028d2f110>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+________________ test_not_encapsulable_asks_without_a_violation ________________
+
+    def test_not_encapsulable_asks_without_a_violation():
+>       decision = check(inspection(encapsulable=False))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_security_gate.py:130: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028ed7b60>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_____________________ test_violations_keep_a_stable_order ______________________
+
+    def test_violations_keep_a_stable_order():
+        decision = check(
+>           inspection(
+                env=(("PROD_SECRET", "x"),),
+                hosts=("evil.example",),
+                write_paths=("/etc/passwd",),
+                commands=("rm -rf /",),
+                real_service=True,
+            )
+        )
+
+tests/test_security_gate.py:140: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028bd30d0>
+args = ()
+kwargs = {'env': (('PROD_SECRET', 'x'),), 'commands': ('rm -rf /',), 'write_paths': ('/etc/passwd',), 'hosts': ('evil.example',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+_________ test_security_check_off_on_a_shared_server_is_a_config_error _________
+
+    def test_security_check_off_on_a_shared_server_is_a_config_error():
+        with pytest.raises(ConfigError, match="servidor compartido"):
+>           validate_security_config("off", "vps")
+
+tests/test_security_gate.py:159: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+security_check = 'off', host_role = 'vps'
+
+    def validate_security_config(security_check: str, host_role: str) -> None:
+>       raise NotImplementedError("validate_security_config")
+E       NotImplementedError: validate_security_config
+
+src/universal_bot/code_mode/security_gate.py:18: NotImplementedError
+_________________ test_security_check_off_on_local_is_allowed __________________
+
+    def test_security_check_off_on_local_is_allowed():
+>       validate_security_config("off", "local")
+
+tests/test_security_gate.py:163: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+security_check = 'off', host_role = 'local'
+
+    def validate_security_config(security_check: str, host_role: str) -> None:
+>       raise NotImplementedError("validate_security_config")
+E       NotImplementedError: validate_security_config
+
+src/universal_bot/code_mode/security_gate.py:18: NotImplementedError
+____ test_evaluate_refuses_to_run_when_the_check_is_off_on_a_shared_server _____
+
+    def test_evaluate_refuses_to_run_when_the_check_is_off_on_a_shared_server():
+        with pytest.raises(ConfigError, match="servidor compartido"):
+>           check(inspection(), security_check="off", host_role="vps")
+                  ^^^^^^^^^^^^
+
+tests/test_security_gate.py:168: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_security_gate.py:29: in inspection
+    return SandboxInspection(**payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.security_gate.SandboxInspection object at 0x7fe028ce5d50>
+args = ()
+kwargs = {'env': (('PATH', '/usr/bin'),), 'commands': ('pytest -q',), 'write_paths': ('/work/app/src/a.py',), 'hosts': ('pypi.org',), ...}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError("SandboxInspection")
+E       NotImplementedError: SandboxInspection
+
+src/universal_bot/code_mode/security_gate.py:10: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_security_gate.py::test_clean_sandbox_passes_without_asking - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_prod_secret_fails_and_blocks_tests[PROD_SECRET] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_prod_secret_fails_and_blocks_tests[PROD_TOKEN] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_prod_secret_fails_and_blocks_tests[PROD_KEY] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_prod_secret_fails_and_blocks_tests[PROD_PASSWORD] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_prod_secret_fails_and_blocks_tests[PRODUCTION_SECRET] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_prod_secret_fails_and_blocks_tests[SECRET_PROD] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_prod_secret_fails_and_blocks_tests[TOKEN_PROD] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_prod_secret_fails_and_blocks_tests[API_PROD_SECRET] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_benign_env_names_pass - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_host_outside_allowlist_fails - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_write_outside_workspace_fails[/etc/passwd] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_write_outside_workspace_fails[/work/app-evil/x] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_relative_write_inside_workspace_passes - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_destructive_command_fails[rm -rf /] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_destructive_command_fails[git push --force] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_destructive_command_fails[git push --force origin main] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_destructive_command_fails[git push -f origin main] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_destructive_command_fails[DROP TABLE users] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_destructive_command_fails[drop table users] - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_real_service_access_fails - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_not_encapsulable_asks_without_a_violation - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_violations_keep_a_stable_order - NotImplementedError: SandboxInspection
+FAILED tests/test_security_gate.py::test_security_check_off_on_a_shared_server_is_a_config_error - NotImplementedError: validate_security_config
+FAILED tests/test_security_gate.py::test_security_check_off_on_local_is_allowed - NotImplementedError: validate_security_config
+FAILED tests/test_security_gate.py::test_evaluate_refuses_to_run_when_the_check_is_off_on_a_shared_server - NotImplementedError: SandboxInspection
+26 failed in 0.11s
