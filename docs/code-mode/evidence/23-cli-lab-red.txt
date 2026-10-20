@@ -1,0 +1,18 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+E   assert 2 == 0
+----------------------------- Captured stderr call -----------------------------
+usage: universal_bot.labcode_runtime [-h] --spool SPOOL [--once] [--db DB]
+                                     [--interval INTERVAL]
+universal_bot.labcode_runtime: error: unrecognized arguments: --lab-root /tmp/pytest-of-box/pytest-109/test_cli_flags_configure_the_l0/labs --routing-policy /tmp/pytest-of-box/pytest-109/test_cli_flags_configure_the_l0/routing.yaml --lab-timeout 90 --maverick-timeout 30 --max-labs 1
+/workspace/ub-codemode/tests/test_labcode_cli.py:52: assert 2 == 0
+E   AssertionError: assert None == PosixPath('/tmp/ub-labcode')
+     +  where None = <built-in method get of dict object at 0x7f9904fc5680>('lab_root')
+     +    where <built-in method get of dict object at 0x7f9904fc5680> = {}.get
+/workspace/ub-codemode/tests/test_labcode_cli.py:73: AssertionError: assert None == PosixPath('/tmp/ub-labcode')
+=========================== short test summary info ============================
+FAILED tests/test_labcode_cli.py::test_cli_flags_configure_the_lab - assert 2 == 0
+FAILED tests/test_labcode_cli.py::test_cli_lab_defaults_when_flags_are_absent - AssertionError: assert None == PosixPath('/tmp/ub-labcode')
+ +  where None = <built-in method get of dict object at 0x7f9904fc5680>('lab_root')
+ +    where <built-in method get of dict object at 0x7f9904fc5680> = {}.get
+2 failed in 0.07s
