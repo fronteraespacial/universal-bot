@@ -55,10 +55,31 @@ def apply_clicks(app, spool, clicks) -> None:
     for click in clicks:
         if click.kind == "propose":
             _propose_click(app, root, click)
+        elif click.kind == "main" and click.opt == "frenar":
+            orchestrator = getattr(app, "orchestrator", None)
+            if orchestrator is not None:
+                orchestrator.stop(click.id)
+        elif click.kind == "exit":
+            _exit_click(app, root, click)
         elif click.kind == "pq" and click.opt == "seguir":
             job_dir = _job_with_question(root, click.id)
             if job_dir is not None:
                 app.finish_untested(job_dir)
+
+
+def _exit_click(app, spool: Path, click) -> None:
+    from universal_bot.code_mode.models import Location
+
+    session = app.sessions.get(click.id)
+    if session is None:
+        return
+    raw = json.loads((spool / "answers" / f"exit__{click.id}.json").read_text(encoding="utf-8"))
+    user_id = int(str(raw["user_id"]))
+    location = Location(session.guild_id, session.channel_id, session.thread_id)
+    app.exit(location, user_id, author_roles(user_id, app.config))
+    orchestrator = getattr(app, "orchestrator", None)
+    if orchestrator is not None:
+        orchestrator.stop_location(session.channel_id, session.thread_id)
 
 
 def _propose_click(app, spool: Path, click) -> None:

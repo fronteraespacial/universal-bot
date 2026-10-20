@@ -79,6 +79,9 @@ class CodeModeConfig:
     guild_id: int | None = None
     projects_channel_id: int | None = None
     main_enabled: bool = False
+    main_cli: str = "grok"
+    main_model: str = "grok-4.7"
+    main_effort: str = "low"
     reminders_first_after: str = "4h"
     reminders_pause_after: str = "24h"
     reminders_cancel_paused_after: str = "7d"
@@ -155,8 +158,15 @@ def load_code_mode_config(path) -> CodeModeConfig:
     validate_security_config(security_check, host_role)
     reminders = block.get("reminders") or {}
     language = block.get("language") or {}
+    main = block.get("main") or {}
+    if not isinstance(main, dict):
+        raise ConfigError("main tiene que ser un mapa")
     return replace(
         base,
+        main_enabled=bool(main.get("enabled", base.main_enabled)),
+        main_cli=str(main.get("cli", base.main_cli)),
+        main_model=str(main.get("model", base.main_model)),
+        main_effort=str(main.get("effort", base.main_effort)),
         enabled=_flag(block, "enabled", base.enabled),
         propose_tiers=_tiers(block.get("propose_tiers", base.propose_tiers)),
         default_mode=str(block.get("default_mode", base.default_mode)),

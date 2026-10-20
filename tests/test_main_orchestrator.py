@@ -194,7 +194,7 @@ def test_stop_button_stops_the_worker(tmp_path):
     assert any(op.get("content") == "Frené el trabajo." for op in _ops(spool))
     write_job(spool, message_id="605", job_id="job-5", prompt="¿seguís?")
     _tick(spool, db, clock, orch)
-    assert len(brain.seen) == 1, "con el job frenado el mensaje ya no va al MAIN"
+    assert [key for key, _ in brain.seen] == ["job-1", "job-5"], "el job frenado no recibe más mensajes; uno nuevo abre otro job"
 
 
 def test_main_can_stop_by_itself(tmp_path):

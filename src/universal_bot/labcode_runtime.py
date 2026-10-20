@@ -30,6 +30,9 @@ def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None
     chosen = config or CodeModeConfig()
     port = _port(root, clock, chosen, sleeper)
     app = CodeModeApp(db_path, port, clock, chosen, lab_runner=lab_runner)
+    if orchestrator is not None:
+        orchestrator.bind(port, app)
+        app.orchestrator = orchestrator
     bridge = AskBridge(db_path, JobStore(db_path), port, clock, app.ledger, chosen)
     app.ask_bridge = bridge
     app.stages.flush_pending()
@@ -45,6 +48,8 @@ def run_once(spool: Path, *, db_path: Path, clock, on_job=None, role_lookup=None
     )
     apply_clicks(app, root, clicks)
     processed, skipped = _consume_inbox(root, clock, on_job, app)
+    if orchestrator is not None:
+        orchestrator.tick()
     return {"processed": processed, "skipped": skipped, "answers": len(clicks)}
 
 
@@ -144,6 +149,10 @@ def _consume_inbox(spool: Path, clock, on_job, app) -> tuple[int, int]:
         job = load_inbox_job(job_dir)
         if on_job is not None:
             on_job(job)
+        orchestrator = getattr(app, "orchestrator", None)
+        if orchestrator is not None and orchestrator.deliver(job, job_dir):
+            processed += 1
+            continue
         try:
             app.handle_job(job, job_dir)
         except Exception as exc:  # un job roto no tumba el runtime

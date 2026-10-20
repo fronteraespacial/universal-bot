@@ -207,6 +207,10 @@ class CodeModeApp:
             self._say(job, INSIDE)
             self.close_job(job, job_dir, status="done", active_step="charla", summary=INSIDE)
             return
+        orchestrator = getattr(self, "orchestrator", None)
+        if orchestrator is not None and self.config.main_enabled:
+            orchestrator.start(job, job_dir, strip_activation(job.prompt, self.config))
+            return
         self._run_code(job, job_dir)
 
     def _route_outside(self, job, job_dir):

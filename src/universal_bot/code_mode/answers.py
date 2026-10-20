@@ -70,9 +70,10 @@ def _apply(spool, raw, clock, ask_bridge, projects, approvals, role_lookup) -> A
     if kind == "stop":
         _apply_stop(spool, item_id, projects, clock)
         return AppliedClick(kind, item_id, opt)
-    if kind == "propose":
+    if kind in ("propose", "main", "exit"):
         return AppliedClick(kind, item_id, opt)
-    raise AnswerError(f"kind desconocido: {kind}")
+    # un click de un tipo desconocido se marca aplicado y se ignora: no puede tumbar el runtime
+    return AppliedClick("ignored", item_id, opt)
 
 
 def _apply_prod(raw, projects, approvals, role_lookup, clock) -> AppliedClick:
