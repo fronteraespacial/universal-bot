@@ -1,0 +1,823 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF                                  [100%]
+=================================== FAILURES ===================================
+__________________ test_allowed_transition[PROPOSED-DECLINED] __________________
+
+src = 'PROPOSED', dst = 'DECLINED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PROPOSED: 'PROPOSED'>
+target = <ProjectState.DECLINED: 'DECLINED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_______________ test_allowed_transition[PROPOSED-PENDING_ADMIN] ________________
+
+src = 'PROPOSED', dst = 'PENDING_ADMIN'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PROPOSED: 'PROPOSED'>
+target = <ProjectState.PENDING_ADMIN: 'PENDING_ADMIN'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+________________ test_allowed_transition[PROPOSED-PROVISIONING] ________________
+
+src = 'PROPOSED', dst = 'PROVISIONING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PROPOSED: 'PROPOSED'>
+target = <ProjectState.PROVISIONING: 'PROVISIONING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_____________ test_allowed_transition[PENDING_ADMIN-PROVISIONING] ______________
+
+src = 'PENDING_ADMIN', dst = 'PROVISIONING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PENDING_ADMIN: 'PENDING_ADMIN'>
+target = <ProjectState.PROVISIONING: 'PROVISIONING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_______________ test_allowed_transition[PENDING_ADMIN-DECLINED] ________________
+
+src = 'PENDING_ADMIN', dst = 'DECLINED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PENDING_ADMIN: 'PENDING_ADMIN'>
+target = <ProjectState.DECLINED: 'DECLINED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_____________ test_allowed_transition[PROVISIONING-SANDBOX_CHECK] ______________
+
+src = 'PROVISIONING', dst = 'SANDBOX_CHECK'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PROVISIONING: 'PROVISIONING'>
+target = <ProjectState.SANDBOX_CHECK: 'SANDBOX_CHECK'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+______________ test_allowed_transition[SANDBOX_CHECK-LAB_RUNNING] ______________
+
+src = 'SANDBOX_CHECK', dst = 'LAB_RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.SANDBOX_CHECK: 'SANDBOX_CHECK'>
+target = <ProjectState.LAB_RUNNING: 'LAB_RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_____________ test_allowed_transition[SANDBOX_CHECK-WAITING_HUMAN] _____________
+
+src = 'SANDBOX_CHECK', dst = 'WAITING_HUMAN'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.SANDBOX_CHECK: 'SANDBOX_CHECK'>
+target = <ProjectState.WAITING_HUMAN: 'WAITING_HUMAN'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+________________ test_allowed_transition[SANDBOX_CHECK-RUNNING] ________________
+
+src = 'SANDBOX_CHECK', dst = 'RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.SANDBOX_CHECK: 'SANDBOX_CHECK'>
+target = <ProjectState.RUNNING: 'RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+______________ test_allowed_transition[LAB_RUNNING-SANDBOX_CHECK] ______________
+
+src = 'LAB_RUNNING', dst = 'SANDBOX_CHECK'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.LAB_RUNNING: 'LAB_RUNNING'>
+target = <ProjectState.SANDBOX_CHECK: 'SANDBOX_CHECK'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_______________ test_allowed_transition[LAB_RUNNING-PLAN_READY] ________________
+
+src = 'LAB_RUNNING', dst = 'PLAN_READY'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.LAB_RUNNING: 'LAB_RUNNING'>
+target = <ProjectState.PLAN_READY: 'PLAN_READY'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_______________ test_allowed_transition[LAB_RUNNING-LAB_RUNNING] _______________
+
+src = 'LAB_RUNNING', dst = 'LAB_RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.LAB_RUNNING: 'LAB_RUNNING'>
+target = <ProjectState.LAB_RUNNING: 'LAB_RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+______________ test_allowed_transition[LAB_RUNNING-WAITING_HUMAN] ______________
+
+src = 'LAB_RUNNING', dst = 'WAITING_HUMAN'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.LAB_RUNNING: 'LAB_RUNNING'>
+target = <ProjectState.WAITING_HUMAN: 'WAITING_HUMAN'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_________________ test_allowed_transition[PLAN_READY-RUNNING] __________________
+
+src = 'PLAN_READY', dst = 'RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PLAN_READY: 'PLAN_READY'>
+target = <ProjectState.RUNNING: 'RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+________________ test_allowed_transition[RUNNING-SANDBOX_CHECK] ________________
+
+src = 'RUNNING', dst = 'SANDBOX_CHECK'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.RUNNING: 'RUNNING'>
+target = <ProjectState.SANDBOX_CHECK: 'SANDBOX_CHECK'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+________________ test_allowed_transition[RUNNING-WAITING_HUMAN] ________________
+
+src = 'RUNNING', dst = 'WAITING_HUMAN'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.RUNNING: 'RUNNING'>
+target = <ProjectState.WAITING_HUMAN: 'WAITING_HUMAN'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+__________________ test_allowed_transition[RUNNING-ESCALATED] __________________
+
+src = 'RUNNING', dst = 'ESCALATED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.RUNNING: 'RUNNING'>
+target = <ProjectState.ESCALATED: 'ESCALATED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+____________________ test_allowed_transition[RUNNING-DONE] _____________________
+
+src = 'RUNNING', dst = 'DONE'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.RUNNING: 'RUNNING'>
+target = <ProjectState.DONE: 'DONE'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+____________ test_allowed_transition[RUNNING-PENDING_PROD_APPROVAL] ____________
+
+src = 'RUNNING', dst = 'PENDING_PROD_APPROVAL'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.RUNNING: 'RUNNING'>
+target = <ProjectState.PENDING_PROD_APPROVAL: 'PENDING_PROD_APPROVAL'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+__________________ test_allowed_transition[RUNNING-CANCELLED] __________________
+
+src = 'RUNNING', dst = 'CANCELLED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.RUNNING: 'RUNNING'>
+target = <ProjectState.CANCELLED: 'CANCELLED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+________________ test_allowed_transition[WAITING_HUMAN-RUNNING] ________________
+
+src = 'WAITING_HUMAN', dst = 'RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.WAITING_HUMAN: 'WAITING_HUMAN'>
+target = <ProjectState.RUNNING: 'RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+________________ test_allowed_transition[WAITING_HUMAN-PAUSED] _________________
+
+src = 'WAITING_HUMAN', dst = 'PAUSED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.WAITING_HUMAN: 'WAITING_HUMAN'>
+target = <ProjectState.PAUSED: 'PAUSED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+___________________ test_allowed_transition[PAUSED-RUNNING] ____________________
+
+src = 'PAUSED', dst = 'RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PAUSED: 'PAUSED'>
+target = <ProjectState.RUNNING: 'RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+__________________ test_allowed_transition[PAUSED-CANCELLED] ___________________
+
+src = 'PAUSED', dst = 'CANCELLED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PAUSED: 'PAUSED'>
+target = <ProjectState.CANCELLED: 'CANCELLED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+__________________ test_allowed_transition[ESCALATED-RUNNING] __________________
+
+src = 'ESCALATED', dst = 'RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.ESCALATED: 'ESCALATED'>
+target = <ProjectState.RUNNING: 'RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+___________ test_allowed_transition[PENDING_PROD_APPROVAL-DEPLOYING] ___________
+
+src = 'PENDING_PROD_APPROVAL', dst = 'DEPLOYING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PENDING_PROD_APPROVAL: 'PENDING_PROD_APPROVAL'>
+target = <ProjectState.DEPLOYING: 'DEPLOYING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+____________ test_allowed_transition[PENDING_PROD_APPROVAL-RUNNING] ____________
+
+src = 'PENDING_PROD_APPROVAL', dst = 'RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PENDING_PROD_APPROVAL: 'PENDING_PROD_APPROVAL'>
+target = <ProjectState.RUNNING: 'RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+____________ test_allowed_transition[PENDING_PROD_APPROVAL-PAUSED] _____________
+
+src = 'PENDING_PROD_APPROVAL', dst = 'PAUSED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PENDING_PROD_APPROVAL: 'PENDING_PROD_APPROVAL'>
+target = <ProjectState.PAUSED: 'PAUSED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+___________________ test_allowed_transition[DEPLOYING-DONE] ____________________
+
+src = 'DEPLOYING', dst = 'DONE'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.DEPLOYING: 'DEPLOYING'>
+target = <ProjectState.DONE: 'DONE'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_________________ test_allowed_transition[DEPLOYING-ESCALATED] _________________
+
+src = 'DEPLOYING', dst = 'ESCALATED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.DEPLOYING: 'DEPLOYING'>
+target = <ProjectState.ESCALATED: 'ESCALATED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+____________________ test_allowed_transition[DONE-ARCHIVED] ____________________
+
+src = 'DONE', dst = 'ARCHIVED'
+
+    @pytest.mark.parametrize(("src", "dst"), _ALLOWED)
+    def test_allowed_transition(src, dst):
+>       assert transition(ProjectState(src), ProjectState(dst)) == ProjectState(dst)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_machine.py:56: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.DONE: 'DONE'>
+target = <ProjectState.ARCHIVED: 'ARCHIVED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+___________________ test_forbidden_transition[PROPOSED-DONE] ___________________
+
+src = 'PROPOSED', dst = 'DONE'
+
+    @pytest.mark.parametrize(("src", "dst"), _FORBIDDEN)
+    def test_forbidden_transition(src, dst):
+        with pytest.raises(IllegalTransition):
+>           transition(ProjectState(src), ProjectState(dst))
+
+tests/test_project_machine.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PROPOSED: 'PROPOSED'>
+target = <ProjectState.DONE: 'DONE'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+________________ test_forbidden_transition[PROPOSED-PLAN_READY] ________________
+
+src = 'PROPOSED', dst = 'PLAN_READY'
+
+    @pytest.mark.parametrize(("src", "dst"), _FORBIDDEN)
+    def test_forbidden_transition(src, dst):
+        with pytest.raises(IllegalTransition):
+>           transition(ProjectState(src), ProjectState(dst))
+
+tests/test_project_machine.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PROPOSED: 'PROPOSED'>
+target = <ProjectState.PLAN_READY: 'PLAN_READY'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+________________ test_forbidden_transition[RUNNING-PLAN_READY] _________________
+
+src = 'RUNNING', dst = 'PLAN_READY'
+
+    @pytest.mark.parametrize(("src", "dst"), _FORBIDDEN)
+    def test_forbidden_transition(src, dst):
+        with pytest.raises(IllegalTransition):
+>           transition(ProjectState(src), ProjectState(dst))
+
+tests/test_project_machine.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.RUNNING: 'RUNNING'>
+target = <ProjectState.PLAN_READY: 'PLAN_READY'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+__________________ test_forbidden_transition[PLAN_READY-DONE] __________________
+
+src = 'PLAN_READY', dst = 'DONE'
+
+    @pytest.mark.parametrize(("src", "dst"), _FORBIDDEN)
+    def test_forbidden_transition(src, dst):
+        with pytest.raises(IllegalTransition):
+>           transition(ProjectState(src), ProjectState(dst))
+
+tests/test_project_machine.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.PLAN_READY: 'PLAN_READY'>
+target = <ProjectState.DONE: 'DONE'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+___________________ test_forbidden_transition[DONE-RUNNING] ____________________
+
+src = 'DONE', dst = 'RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _FORBIDDEN)
+    def test_forbidden_transition(src, dst):
+        with pytest.raises(IllegalTransition):
+>           transition(ProjectState(src), ProjectState(dst))
+
+tests/test_project_machine.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.DONE: 'DONE'>
+target = <ProjectState.RUNNING: 'RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_________________ test_forbidden_transition[DECLINED-PROPOSED] _________________
+
+src = 'DECLINED', dst = 'PROPOSED'
+
+    @pytest.mark.parametrize(("src", "dst"), _FORBIDDEN)
+    def test_forbidden_transition(src, dst):
+        with pytest.raises(IllegalTransition):
+>           transition(ProjectState(src), ProjectState(dst))
+
+tests/test_project_machine.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.DECLINED: 'DECLINED'>
+target = <ProjectState.PROPOSED: 'PROPOSED'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_____________ test_forbidden_transition[SANDBOX_CHECK-PLAN_READY] ______________
+
+src = 'SANDBOX_CHECK', dst = 'PLAN_READY'
+
+    @pytest.mark.parametrize(("src", "dst"), _FORBIDDEN)
+    def test_forbidden_transition(src, dst):
+        with pytest.raises(IllegalTransition):
+>           transition(ProjectState(src), ProjectState(dst))
+
+tests/test_project_machine.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.SANDBOX_CHECK: 'SANDBOX_CHECK'>
+target = <ProjectState.PLAN_READY: 'PLAN_READY'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+_________________ test_forbidden_transition[DEPLOYING-RUNNING] _________________
+
+src = 'DEPLOYING', dst = 'RUNNING'
+
+    @pytest.mark.parametrize(("src", "dst"), _FORBIDDEN)
+    def test_forbidden_transition(src, dst):
+        with pytest.raises(IllegalTransition):
+>           transition(ProjectState(src), ProjectState(dst))
+
+tests/test_project_machine.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+current = <ProjectState.DEPLOYING: 'DEPLOYING'>
+target = <ProjectState.RUNNING: 'RUNNING'>
+
+    def transition(current: ProjectState, target: ProjectState) -> ProjectState:
+>       raise NotImplementedError("transition")
+E       NotImplementedError: transition
+
+src/universal_bot/code_mode/project_machine.py:13: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_project_machine.py::test_allowed_transition[PROPOSED-DECLINED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PROPOSED-PENDING_ADMIN] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PROPOSED-PROVISIONING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PENDING_ADMIN-PROVISIONING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PENDING_ADMIN-DECLINED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PROVISIONING-SANDBOX_CHECK] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[SANDBOX_CHECK-LAB_RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[SANDBOX_CHECK-WAITING_HUMAN] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[SANDBOX_CHECK-RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[LAB_RUNNING-SANDBOX_CHECK] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[LAB_RUNNING-PLAN_READY] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[LAB_RUNNING-LAB_RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[LAB_RUNNING-WAITING_HUMAN] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PLAN_READY-RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[RUNNING-SANDBOX_CHECK] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[RUNNING-WAITING_HUMAN] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[RUNNING-ESCALATED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[RUNNING-DONE] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[RUNNING-PENDING_PROD_APPROVAL] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[RUNNING-CANCELLED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[WAITING_HUMAN-RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[WAITING_HUMAN-PAUSED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PAUSED-RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PAUSED-CANCELLED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[ESCALATED-RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PENDING_PROD_APPROVAL-DEPLOYING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PENDING_PROD_APPROVAL-RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[PENDING_PROD_APPROVAL-PAUSED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[DEPLOYING-DONE] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[DEPLOYING-ESCALATED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_allowed_transition[DONE-ARCHIVED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_forbidden_transition[PROPOSED-DONE] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_forbidden_transition[PROPOSED-PLAN_READY] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_forbidden_transition[RUNNING-PLAN_READY] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_forbidden_transition[PLAN_READY-DONE] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_forbidden_transition[DONE-RUNNING] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_forbidden_transition[DECLINED-PROPOSED] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_forbidden_transition[SANDBOX_CHECK-PLAN_READY] - NotImplementedError: transition
+FAILED tests/test_project_machine.py::test_forbidden_transition[DEPLOYING-RUNNING] - NotImplementedError: transition
+39 failed in 0.10s
