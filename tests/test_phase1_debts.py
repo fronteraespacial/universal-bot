@@ -130,6 +130,23 @@ def test_stage_thread_survives_a_new_router(tmp_path):
     assert revived.discord.threads == []
 
 
+def test_run_once_expires_a_due_session(tmp_path):
+    spool = make_spool(tmp_path / "spool")
+    db = tmp_path / "mode.sqlite"
+    clock = FakeClock(T0)
+    ledger = ProjectLedger(db, clock)
+    item = ledger.create_project(id="P-due", guild_id=GUILD, requester_id=REQUESTER, state=ProjectState.RUNNING)
+    manager = SessionManager(db, clock, FakeDiscord(), CodeModeConfig(), ledger)
+    opened = manager.activate(Location(GUILD, CHANNEL), REQUESTER, ("@dev",), "1h", "button", project_id=item.id)
+    clock.advance(hours=1)
+    run_once(spool, db_path=db, clock=clock)
+    revived = SessionManager(db, clock, FakeDiscord(), CodeModeConfig(), ProjectLedger(db, clock))
+    assert revived.get(opened.session.id).status == "EXPIRED"
+    token = ProjectLedger(db, clock).last_checkpoint(item.id)
+    assert token is not None
+    assert token.resume_token.startswith("resume-")
+
+
 def test_expired_session_does_not_warn_again(tmp_path):
     clock = FakeClock(T0)
     db = tmp_path / "mode.sqlite"

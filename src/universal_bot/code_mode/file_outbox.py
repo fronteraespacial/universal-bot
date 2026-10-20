@@ -148,6 +148,8 @@ class FileOutboxDiscordPort:
         self._wait_result(payload["op_id"])
 
     def unpin(self, channel_id: int, message_id: int, *, thread_id: int | None = None) -> None:
+        if self.defer_results:
+            return
         del channel_id, message_id, thread_id
         raise UnsupportedBridgeOp("unpin no existe en el puente")
 
