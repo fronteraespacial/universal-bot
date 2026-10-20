@@ -7,8 +7,8 @@ Cómo: una sesión tmux propia (socket aparte) por MAIN. `prompt` escribe el tex
 vuelva al prompt y quede quieta `settle_s`; la respuesta es lo nuevo entre la línea tecleada y el prompt.
 `steer` escribe igual aunque haya un subagente corriendo. `cancel` manda Escape; `close` mata la sesión.
 
-Falta (ver IMPL-REPORT): calibrar contra la TUI real (marcador de prompt, spinner, pantalla alternativa, pie
-"N subagent(s)"), configurar Queued Messages = Send Immediately, y una corrida real con steer.
+Queued Messages: en vez de cambiar el settings.json global a `send-immediately` (lo comparten otros usos de agy), el
+steer con turno vivo usa alt+m, que manda el mensaje con el modo opuesto al configurado (`Queue` -> inmediato).
 """
 
 from __future__ import annotations
@@ -25,6 +25,7 @@ from universal_bot.code_mode.warm import TurnResult
 
 PROMPT_RE = re.compile(r"^\s*>\s?.*$")
 TRUST_TEXT = "Do you trust the contents of this project?"
+NOTICE_TEXT = "esc to dismiss"
 _CHROME = re.compile(r"^[\s─━┃│]*$")
 
 
@@ -73,6 +74,10 @@ class AgyTuiSession:
                 break
             time.sleep(self.poll_s)
         self._wait_ready(time.monotonic() + 10)
+        if any(NOTICE_TEXT in line for line in self._lines()):
+            # Aviso de Verbosity (u otro "esc to dismiss"): se cierra una vez para que no tape la caja.
+            self._tmux("send-keys", "-t", self.name, "Escape", check=False)
+            time.sleep(max(self.poll_s, 0.3))
         return self
 
     def alive(self) -> bool:
@@ -143,9 +148,15 @@ class AgyTuiSession:
         return "\n".join(body).strip()
 
     def steer(self, text: str) -> str:
+        """Con el MAIN libre, Enter. Con un turno vivo, alt+m: manda ya (Send Immediately) aunque la config global
+        siga en `Queue`, sin tocar el settings.json que comparten otros usos de agy."""
         if not self.alive():
             return "no_turn"
-        self._type(text)
+        if self._busy:
+            self._tmux("send-keys", "-t", self.name, "-l", text.replace("\n", " "))
+            self._tmux("send-keys", "-t", self.name, "M-m")
+        else:
+            self._type(text)
         return "live"
 
     def cancel(self) -> None:

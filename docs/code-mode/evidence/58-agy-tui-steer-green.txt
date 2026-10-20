@@ -1,0 +1,5 @@
+.......................                                                  [100%]
+23 passed in 8.17s
+
+Mutación: steer siempre con Enter (Queue): 1 failed, 6 passed in 9.46s
+Ajustes después del rojo: el fake decodifica UTF-8 incremental y hace eco del Enter; el test espera el aviso cerrado con _wait_for.

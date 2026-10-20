@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fake de la TUI real de agy en modo crudo (cbreak): aviso de Verbosity que se cierra con Esc, caja `>` entre
 separadores, Enter manda (en `Queue` se encola si hay un turno), alt+m manda ya (Send Immediately)."""
-import os, select, sys, termios, threading, time, tty
+import codecs, os, select, sys, termios, threading, time, tty
 
 LOG = os.environ.get("FAKE_AGY_LOG")
 BAR = "─" * 60
@@ -59,13 +59,16 @@ try:
     out("┃ Verbosity now defaults to medium\n┃ esc to dismiss\n")
     box()
     buf = ""
+    dec = codecs.getincrementaldecoder("utf-8")()
     while True:
-        ch = os.read(fd, 1).decode("utf-8", "ignore")
+        ch = dec.decode(os.read(fd, 1))
+        if not ch:
+            continue
         if ch == "\x1b":
             ready, _, _ = select.select([fd], [], [], 0.05)
             nxt = os.read(fd, 1).decode() if ready else ""
             if nxt == "m":
-                deliver(buf, True); buf = ""
+                out("\n"); deliver(buf, True); buf = ""
             else:
                 if state["notice"]:
                     state["notice"] = False; log("ESC"); out("(aviso cerrado)\n")
@@ -73,12 +76,11 @@ try:
             continue
         if ch in ("\r", "\n"):
             text, buf = buf, ""
+            out("\n")
             if text:
                 deliver(text, False)
             continue
         buf += ch
         out(ch)
-        if ch == " " and False:
-            pass
 finally:
     termios.tcsetattr(fd, termios.TCSADRAIN, old)

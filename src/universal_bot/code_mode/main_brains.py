@@ -490,6 +490,10 @@ def select_main_session(config, *, cwd, sidecar=None, key_file=None, quota=None,
             return grok_or_cursor_agent()
         if cli == "cursor-agent":
             return cursor_agent()
+        if cli == "agy":
+            from universal_bot.code_mode.agy_tui import AgyTuiSession, agy_tui_argv
+            model = config.main_model if str(config.main_model).startswith("gemini") else "gemini-3.8-flash-low"
+            return AgyTuiSession(agy_tui_argv(model), cwd=cwd / "agy")
         return make_session(cli, config.main_model, cwd=cwd, effort=config.main_effort)
 
     return factory

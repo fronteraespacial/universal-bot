@@ -82,7 +82,7 @@ def test_start_dismisses_the_verbosity_notice_and_mid_turn_steer_is_sent_immedia
     s = AgyTuiSession([sys.executable, str(RAW)], cwd=tmp_path, settle_s=0.4)
     s.start()
     try:
-        assert "aviso cerrado" in s.screen(), "el adaptador cierra el aviso de Verbosity"
+        assert _wait_for(s, "aviso cerrado"), "el adaptador cierra el aviso de Verbosity"
         import threading
         box = {}
         thread = threading.Thread(target=lambda: box.update(r=s.prompt("LONG contá", timeout_s=10)), daemon=True)
