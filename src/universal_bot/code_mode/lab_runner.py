@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime
 import json
 import os
+import shutil
 from pathlib import Path
 import re
 
@@ -13,7 +14,7 @@ import yaml
 
 from universal_bot.code_mode.job_runner import JobRunner
 from universal_bot.code_mode.models import LabEvidence
-from universal_bot.code_mode.sandbox import bwrap_command, cli_ro_binds
+from universal_bot.code_mode.sandbox import bwrap_command, cli_mounts
 from universal_bot.code_mode.security_gate import SandboxInspection, evaluate
 
 DEFAULT_ROUTING_POLICY = ""
@@ -119,6 +120,8 @@ class LabRunner:
         host_role: str = "vps",
         allowlist: tuple[str, ...] = ("pypi.org", "files.pythonhosted.org", "github.com"),
         allow_network: bool = False,
+        home: Path | str | None = None,
+        which=None,
     ):
         self.clock = clock
         self.lab_root = Path(lab_root)
@@ -131,6 +134,8 @@ class LabRunner:
         self.max_replans = max_replans
         self.env_extra = tuple(env_extra)
         self.environ = environ
+        self.home = Path(home) if home is not None else Path.home()
+        self.which = which if which is not None else shutil.which
         self.command_for = command_for
         self.security_check = security_check
         self.host_role = host_role
@@ -287,7 +292,12 @@ class LabRunner:
         else:
             inner = [route.cli, "--model", route.model, "--effort", route.effort, "--cwd", str(folder)]
         network = self.allow_network or route.cli in {"grok", "cursor-agent", "opencode"}
-        return bwrap_command(folder, inner, allow_network=network, ro_binds=cli_ro_binds(route.cli, Path.home()))
+        found = self.which(inner[0]) if inner else None
+        binary = Path(os.path.realpath(found)) if found else None
+        if binary is not None:
+            inner = [str(binary), *inner[1:]]
+        binds, layers = cli_mounts(route.cli, self.home, binary)
+        return bwrap_command(folder, inner, allow_network=network, ro_binds=binds, home=self.home, overlays=layers)
 
     def _source_env(self) -> dict:
         if self.environ is not None:
