@@ -48,11 +48,11 @@ def test_argv_per_cli():
 def test_declared_capabilities():
     assert CAPABILITIES["codex"].supports_live_steer is True
     assert CAPABILITIES["opencode"].supports_live_steer is True
-    assert CAPABILITIES["grok"].supports_live_steer is False
+    assert CAPABILITIES["grok"].supports_live_steer is True
     assert CAPABILITIES["agy"].supports_live_steer is False
     assert CAPABILITIES["codex"].steer_strategy == "live"
     assert CAPABILITIES["opencode"].steer_strategy == "live"
-    assert CAPABILITIES["grok"].steer_strategy == "cancel_reprompt"
+    assert CAPABILITIES["grok"].steer_strategy == "live"
     assert CAPABILITIES["agy"].steer_strategy == "interrupt_resume"
 
 
@@ -276,3 +276,21 @@ def test_opencode_reads_the_final_text_from_messages_when_deltas_have_another_sh
         assert result.first_token_ms is not None
     finally:
         session.close()
+
+
+def test_grok_without_interject_falls_back_to_cancel_and_reprompt(tmp_path):
+    session = session_for("grok", tmp_path, env={"FAKE_GROK_NO_INTERJECT": "1"})
+    session.start()
+    try:
+        thread, box = _prompt_in_thread(session, "LONG contá hasta 400")
+        assert session.steer(STEER) == "cancel_reprompt"
+        thread.join(15)
+        assert "STEERED" in box["result"].text
+        assert box["result"].steered == "cancel_reprompt"
+    finally:
+        session.close()
+
+
+def test_grok_main_session_enables_subagent_messages(tmp_path):
+    session = make_session("grok", "grok-4.7", cwd=tmp_path, command=fake_command("grok"))
+    assert session.extra_env.get("GROK_ACTIVE_AGENT_MESSAGES") == "1"

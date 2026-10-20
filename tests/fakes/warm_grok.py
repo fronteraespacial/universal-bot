@@ -2,7 +2,7 @@
 import json, os, sys, threading, time
 
 lock = threading.Lock()
-state = {"cancel": False}
+state = {"cancel": False, "interject": None}
 
 
 def out(msg):
@@ -22,6 +22,9 @@ def run(mid, sid, text):
             if state["cancel"]:
                 out({"id": mid, "result": {"stopReason": "cancelled"}})
                 return
+            if state["interject"]:
+                text = state["interject"]
+                break
             chunk(sid, f"{n} ")
             time.sleep(0.02)
     chunk(sid, "STEERED" if "CAMBIO DE INSTRUCCIÓN" in text else "OK")
@@ -39,8 +42,15 @@ for line in sys.stdin:
         if os.environ.get("FAKE_DIE_ON_TURN"):
             sys.exit(3)
         state["cancel"] = False
+        state["interject"] = None
         text = params["prompt"][0]["text"]
         threading.Thread(target=run, args=(mid, params["sessionId"], text), daemon=True).start()
+    elif method == "_x.ai/interject" and not os.environ.get("FAKE_GROK_NO_INTERJECT"):
+        if "sessionId" not in params or "text" not in params:
+            out({"id": mid, "error": {"code": -32602, "message": "missing field"}})
+            continue
+        state["interject"] = "CAMBIO DE INSTRUCCIÓN: " + params["text"]
+        out({"id": mid, "result": {"result": {"status": "queued"}}})
     elif method == "session/cancel":
         state["cancel"] = True
     elif mid is not None:
