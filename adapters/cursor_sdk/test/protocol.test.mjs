@@ -6,6 +6,8 @@ test("request mínimo aplica defaults", () => {
   assert.deepEqual(parseRequest('{"prompt":"hola"}', "/w"), {
     prompt: "hola", system: null, model: "composer-2.5", cwd: "/w", timeout_s: 120, stream: false,
     steer_file: null, cancel_file: null, tools: null,
+    mcp: false, mcp_servers: null, setting_sources: null, model_params: [{ id: "fast", value: "true" }], http1: false,
+    session_id: null, store: "ephemeral", store_dir: null, max_event_bytes: 65536, max_result_chars: 200000,
   });
 });
 

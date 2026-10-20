@@ -124,11 +124,6 @@ test("steer lee la bandeja y lo entrega al run", async () => {
   assert.deepEqual([steer.outcome, steer.text_len], ["complete_delivered", 10]);
 });
 
-test("mcp deshabilitado por defecto", async () => {
-  const r = await run({ prompt: "x" }, { env: { FAKE_SDK_SEEN_KEY_ECHO: "0" } });
-  assert.equal(r.code, 0);
-});
-
 for (const scenario of ["ok", "auth", "crash", "run_error"]) {
   test(`la key nunca aparece en stdout/stderr (${scenario}, con SDK que la imprime)`, async () => {
     const r = await run({ prompt: "x", stream: true }, { scenario, env: { FAKE_SDK_SEEN_KEY_ECHO: "1" } });
