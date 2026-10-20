@@ -1,0 +1,22 @@
+...F.                                                                    [100%]
+=================================== FAILURES ===================================
+______________________ test_close_kills_the_tmux_session _______________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_close_kills_the_tmux_session(tmp_path):
+        s = AgyTuiSession([sys.executable, str(FAKE)], cwd=tmp_path, settle_s=0.4)
+        s.start()
+        assert s.alive()
+        s.close()
+        assert not s.alive()
+>       assert not s.socket_path().exists(), "no deja el socket de tmux tirado"
+                   ^^^^^^^^^^^^^
+E       AttributeError: 'AgyTuiSession' object has no attribute 'socket_path'
+
+tests/test_agy_tui.py:62: AttributeError
+=========================== short test summary info ============================
+FAILED tests/test_agy_tui.py::test_close_kills_the_tmux_session - AttributeEr...
+1 failed, 4 passed in 5.09s
+
+Nota: antes de contestar el diálogo de confianza una sola vez, test_real_tui_layout_with_separators_footer_and_trust_dialog colgaba (el diálogo queda en el scrollback y se re-contestaba con Enter durante 30 s; corrida interrumpida a los 36 s).

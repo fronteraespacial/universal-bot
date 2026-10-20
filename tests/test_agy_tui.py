@@ -59,3 +59,15 @@ def test_close_kills_the_tmux_session(tmp_path):
     assert s.alive()
     s.close()
     assert not s.alive()
+    assert not s.socket_path().exists(), "no deja el socket de tmux tirado"
+
+
+def test_real_tui_layout_with_separators_footer_and_trust_dialog(tmp_path):
+    """La TUI real pide confiar en la carpeta y dibuja la caja `>` entre separadores, con un pie abajo."""
+    s = AgyTuiSession([sys.executable, str(FAKE), "--real-layout"], cwd=tmp_path, settle_s=0.4)
+    s.start()
+    try:
+        result = s.prompt("hola", timeout_s=10)
+        assert result.ok and result.text == "Respuesta a: hola"
+    finally:
+        s.close()

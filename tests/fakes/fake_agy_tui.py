@@ -13,9 +13,16 @@ def say(text):
         sys.stdout.flush()
 
 
+REAL = "--real-layout" in sys.argv
+BAR = "─" * 60
+
+
 def prompt():
     with lock:
-        sys.stdout.write("> ")
+        if REAL:
+            sys.stdout.write(f"{BAR}\n>\n{BAR}\n? for shortcuts                Gemini 3.8 Flash · low\n")
+        else:
+            sys.stdout.write("> ")
         sys.stdout.flush()
 
 
@@ -30,6 +37,9 @@ def subagent(task):
 
 
 say("Antigravity CLI (fake)")
+if REAL:
+    say("Do you trust the contents of this project?\n> Yes, I trust this folder\n  No, exit")
+    sys.stdin.readline()
 prompt()
 for line in sys.stdin:
     text = line.strip()
