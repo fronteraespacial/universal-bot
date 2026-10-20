@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+from universal_bot.code_mode.custom_id import parse_custom_id
 from universal_bot.code_mode.discord_port import Button, Overwrite
 
 
@@ -70,8 +71,7 @@ class FakeDiscord:
         thread_id: int | None = None,
     ) -> int:
         for button in buttons:
-            if not button.custom_id.startswith("ublab:"):
-                raise ValueError(f"custom_id sin prefijo ublab:: {button.custom_id}")
+            parse_custom_id(button.custom_id)
         message_id = self._next_id()
         self.messages.append(
             RecordedMessage(message_id, channel_id, thread_id, content, tuple(buttons), False)
@@ -112,6 +112,5 @@ class FakeDiscord:
         return self.named_channels.get(name)
 
     def register_persistent_view(self, custom_id: str) -> None:
-        if not custom_id.startswith("ublab:"):
-            raise ValueError(custom_id)
+        parse_custom_id(custom_id)
         self.views.append(custom_id)

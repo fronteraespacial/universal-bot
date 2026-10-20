@@ -9,6 +9,7 @@ import uuid
 
 from universal_bot.code_mode.clock import Clock
 from universal_bot.code_mode.config import CodeModeConfig, parse_duration
+from universal_bot.code_mode.custom_id import build_custom_id
 from universal_bot.code_mode.db import connect, dump_dt, load_dt
 from universal_bot.code_mode.discord_port import Button, DiscordPort
 from universal_bot.code_mode.models import BLOCKING_QUESTION_KINDS, PendingQuestion, ProjectState, QuestionKind
@@ -163,7 +164,7 @@ class AskBridge:
         return tuple(events)
 
     def _send_question(self, question_id, channel_id, thread_id, prompt, options) -> int:
-        buttons = tuple(Button(f"ublab:pq:{question_id}:{option}", option) for option in options)
+        buttons = tuple(Button(build_custom_id("pq", question_id, option), option) for option in options)
         return self.discord.send_buttons(channel_id, prompt, buttons, thread_id=thread_id)
 
     def _has_open_posted(self, project_id: str, stage_key: str) -> bool:

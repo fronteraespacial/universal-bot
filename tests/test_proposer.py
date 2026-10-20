@@ -72,9 +72,9 @@ def test_t2_proposal_lists_four_options_and_the_duration_selector(tmp_path):
     assert buttons(env.discord.messages[-1]) == (
         ("ublab:propose:req-1:create_channel", "Crear un canal para el proyecto"),
         ("ublab:propose:req-1:create_thread", "Crear un hilo de proyecto en #proyectos"),
-        ("ublab:propose:req-1:here:1h", "Programar acá mismo · 1 h"),
-        ("ublab:propose:req-1:here:4h", "Programar acá mismo · 4 h"),
-        ("ublab:propose:req-1:here:until_exit", "Programar acá mismo · hasta que salga"),
+        ("ublab:propose:req-1:here_1h", "Programar acá mismo · 1 h"),
+        ("ublab:propose:req-1:here_4h", "Programar acá mismo · 4 h"),
+        ("ublab:propose:req-1:here_until_exit", "Programar acá mismo · hasta que salga"),
         ("ublab:propose:req-1:decline", "No, resolvelo como siempre"),
     )
 
@@ -85,9 +85,9 @@ def test_allow_channels_false_hides_create_channel(tmp_path):
     assert proposal.options == ("create_thread", "here", "decline")
     assert buttons(env.discord.messages[-1]) == (
         ("ublab:propose:req-1:create_thread", "Crear un hilo de proyecto en #proyectos"),
-        ("ublab:propose:req-1:here:1h", "Programar acá mismo · 1 h"),
-        ("ublab:propose:req-1:here:4h", "Programar acá mismo · 4 h"),
-        ("ublab:propose:req-1:here:until_exit", "Programar acá mismo · hasta que salga"),
+        ("ublab:propose:req-1:here_1h", "Programar acá mismo · 1 h"),
+        ("ublab:propose:req-1:here_4h", "Programar acá mismo · 4 h"),
+        ("ublab:propose:req-1:here_until_exit", "Programar acá mismo · hasta que salga"),
         ("ublab:propose:req-1:decline", "No, resolvelo como siempre"),
     )
 

@@ -6,6 +6,7 @@ from dataclasses import dataclass, replace
 
 from universal_bot.code_mode.clock import Clock
 from universal_bot.code_mode.config import CodeModeConfig
+from universal_bot.code_mode.custom_id import build_custom_id
 from universal_bot.code_mode.discord_port import Button, DiscordPort
 from universal_bot.code_mode.models import CodeModeSession, Location
 from universal_bot.code_mode.session_manager import ActivateResult, SessionManager
@@ -136,14 +137,14 @@ def _buttons_for(proposal: Proposal) -> tuple[Button, ...]:
             for duration in proposal.duration_options:
                 buttons.append(
                     Button(
-                        f"ublab:propose:{proposal.request_id}:here:{duration}",
+                        build_custom_id("propose", proposal.request_id, f"here_{duration}"),
                         _DURATION_LABELS[duration],
                     )
                 )
             continue
         buttons.append(
             Button(
-                f"ublab:propose:{proposal.request_id}:{option}",
+                build_custom_id("propose", proposal.request_id, option),
                 _OPTION_LABELS[option],
             )
         )
