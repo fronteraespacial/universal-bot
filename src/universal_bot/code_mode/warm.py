@@ -489,10 +489,11 @@ class AgyStream(_JsonLines):
             turn = self._turn
             if turn is None:
                 return
-            status = (msg.get("result") or {}).get("status")
+            result = msg.get("result") or {}
+            status = result.get("status")
             if status == "SUCCESS":
                 turn.finish("completed")
-            elif status == "INTERRUPTED":
+            elif status == "INTERRUPTED" or (status == "ERROR" and result.get("error") == "interrupted"):
                 turn.finish("cancelled")
             else:
                 turn.finish("failed", str(status))
