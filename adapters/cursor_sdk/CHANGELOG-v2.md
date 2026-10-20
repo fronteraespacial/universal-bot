@@ -27,8 +27,9 @@ setting_sources, http1, steer_file, cancel_file`) y con su sonda de capacidades 
 ## Hallazgo para FE-BOT (tokens)
 `setting_sources: ["user", …]` + `mcp:true` carga **también** los servidores de `~/.cursor/mcp.json` (verificado: el server
 del mcp.json de usuario se lanzó) y las 19 skills de usuario. En este box eso suma `fe-bot-pack` otra vez, `playwright`
-y `box-desktop` (mouse/teclado) a la conversación. Recomendado: `setting_sources: ["project"]` (o `[]`) + `mcp_servers`
-explícito; si la conversación no edita archivos, `tools` con allowlist. Números en `docs/code-mode/evidence/sidecar-v2-bench.md`.
+y `box-desktop` (mouse/teclado) a la conversación. Medido: la capa `user` suma +5,6k tokens por llamada (+33 % vs cursor-agent, el mismo +35 % de FE-BOT);
+sin settings el SDK queda a la par de cursor-agent. Recomendado: `setting_sources: []` (o `["project"]`) + `mcp_servers`
+explícito + `tools` con allowlist + `--serve` con `session_id`: 48,1k → 26,2k (−46 %) y 20,0k en el turno siguiente. Números en `docs/code-mode/evidence/sidecar-v2-bench.md`.
 
 ## Migración
 1. Apuntar `SIDECAR_DIR` a la carpeta v2 (la v1 queda intacta para volver atrás).
