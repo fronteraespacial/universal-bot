@@ -37,7 +37,7 @@ def cursor_argv(labdir, model: str, prompt: str) -> list[str]:
         "-p",
         "--output-format",
         "text",
-        "-m",
+        "--model",
         model,
         "--force",
         "--trust",
