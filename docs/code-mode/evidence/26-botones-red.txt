@@ -1,0 +1,16 @@
+...FFF                                                                   [100%]
+=================================== FAILURES ===================================
+E   assert 0 == 1
+     +  where 0 = len([])
+<repo>/tests/test_proposal_ops.py:217: assert 0 == 1
+E   assert 0 == 1
+     +  where 0 = len([])
+<repo>/tests/test_proposal_ops.py:237: assert 0 == 1
+E   assert 0 == 1
+     +  where 0 = len([])
+<repo>/tests/test_proposal_ops.py:253: assert 0 == 1
+=========================== short test summary info ============================
+FAILED tests/test_proposal_ops.py::test_create_channel_moves_the_session_after_the_result
+FAILED tests/test_proposal_ops.py::test_create_thread_moves_the_session_to_the_projects_channel
+FAILED tests/test_proposal_ops.py::test_create_thread_uses_the_current_channel_when_projects_is_unset
+3 failed, 3 passed in 0.19s

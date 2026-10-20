@@ -1,0 +1,18 @@
+# Copiar a config/local.yaml (gitignoreado). Sin allowlist no se atiende nada.
+# Placeholders: <LABCODE_CHANNEL_ID> <ADMIN_CATEGORY_ID> <GUILD_ID>
+# <USER_JULIAN_ID> <USER_EMANUEL_ID> <PROJECTS_CHANNEL_ID>
+# Paths: <codemode-base> <repo> <spool> <tmp> <fe-bot> <home>
+code_mode:
+  allowed_channels: []
+  admin_category_id: null
+  guild_id: null
+  projects_channel_id: null
+  role_map: {}
+  lab:
+    routing_policy: ""
+    lab_root: ""
+cursor_sdk:
+  enabled: true
+  # launcher relativo al repo; default adapters/cursor_sdk/bin/cursor-sdk-sidecar
+  api_key_file: "<home>/.secrets/cursor_api_key_frontera"   # nunca la key en este archivo
+  node_bin: null    # null = el node que trae cursor-agent (>=22.13)

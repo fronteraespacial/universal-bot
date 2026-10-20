@@ -1,0 +1,26 @@
+.F...                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_channel_posts_jargon_only_in_the_stage_thread_and_nothing_in_the_channel _
+
+    def test_channel_posts_jargon_only_in_the_stage_thread_and_nothing_in_the_channel():
+        """Modo canal con hilo conocido: el detalle va al hilo y el canal no recibe un resumen duplicado por etapa."""
+        discord = FakeDiscord()
+        router = StageRouter(discord)
+        router.post(project(), "02-lab", "Miré el diff y corrí pytest")
+        router.post(project(), "03-plan", "Plan: dos pasos")
+        lab, plan = discord.threads
+        assert (lab.name, plan.name) == ("02-lab", "03-plan")
+>       assert [(m.thread_id, m.content) for m in discord.messages] == [
+            (lab.id, "Miré el diff y corrí pytest"),
+            (plan.id, "Plan: dos pasos"),
+        ]
+E       AssertionError: assert [(1, 'Miré el...: dos pasos')] == [(1, 'Miré el...: dos pasos')]
+E         
+E         At index 1 diff: (None, 'Miré el y corrí') != (4, 'Plan: dos pasos')
+E         Left contains 2 more items, first extra item: (4, 'Plan: dos pasos')
+E         Use -v to get more diff
+
+tests/test_stage_router.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_stage_router.py::test_channel_posts_jargon_only_in_the_stage_thread_and_nothing_in_the_channel
+1 failed, 4 passed in 0.05s

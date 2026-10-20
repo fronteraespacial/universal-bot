@@ -1,0 +1,2 @@
+cursor-agent composer-2.5: wall_ms=11797 out=OK
+cursor-agent composer-2.5-fast: wall_ms=11051 out=OK

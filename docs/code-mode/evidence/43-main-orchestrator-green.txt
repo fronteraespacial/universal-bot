@@ -1,0 +1,5 @@
+.............                                                            [100%]
+13 passed in 0.92s
+Ajuste: tras Frenar la sesión sigue activa; un mensaje nuevo abre otro job (job-5) en vez de ir al job frenado. Se corrigió esa aserción.
+Mutación: deliver() nunca entrega al MAIN -> 4 tests fallan.
+Incluye: clicks main/exit en el runtime (antes exit tiraba AnswerError) y kinds desconocidos ignorados.

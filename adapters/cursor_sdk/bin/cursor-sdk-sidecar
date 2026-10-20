@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Lanzador: elige Node >= 22.13 sin tocar el global y corre runner.mjs.
+# Orden: $CURSOR_SDK_NODE → el node más nuevo que trae cursor-agent (<home>/.local/share/cursor-agent/versions/*/node)
+# → node del PATH. El home sale de $HOME o, si no está, de la base de usuarios (getent).
+# `--exec-node <args>` corre ese Node con los args (lo usa `npm test`).
+# No hace exec: reenvía SIGTERM/SIGINT al runner y, si el runner muere por la señal sin escribir su línea final,
+# la escribe el lanzador (CANCELLED, exit 10).
+set -uo pipefail
+child=""
+final_line() { printf '%s\n' '{"type":"error","ok":false,"code":"CANCELLED","message":"señal antes de la línea final","fallback":false,"exit_code":10}'; }
+on_signal() {
+  if [ -z "$child" ]; then final_line; exit 10; fi
+  kill -s "$1" "$child" 2>/dev/null || true
+}
+trap 'on_signal TERM' TERM
+trap 'on_signal INT' INT
+HERE="$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)"
+home_dir() {
+  if [ -n "${HOME:-}" ] && [ -d "${HOME}" ]; then printf '%s' "$HOME"; return; fi
+  getent passwd "$(id -u)" 2>/dev/null | cut -d: -f6
+}
+pick_node() {
+  if [ -n "${CURSOR_SDK_NODE:-}" ]; then printf '%s' "$CURSOR_SDK_NODE"; return; fi
+  local home latest
+  home="$(home_dir)"
+  if [ -n "$home" ]; then
+    latest="$(ls -1d "$home"/.local/share/cursor-agent/versions/*/node 2>/dev/null | sort -V | tail -1 || true)"
+    if [ -n "$latest" ]; then readlink -f "$latest"; return; fi
+  fi
+  command -v node
+}
+NODE="$(pick_node)"
+if [ "${1:-}" = "--exec-node" ]; then
+  shift
+  trap - TERM INT
+  cd "$HERE" && exec "$NODE" "$@"
+fi
+"$NODE" --disable-warning=ExperimentalWarning "$HERE/runner.mjs" "$@" <&0 &
+child=$!
+while :; do
+  wait "$child"; rc=$?
+  kill -0 "$child" 2>/dev/null || break
+done
+if [ "$rc" -ge 128 ]; then final_line; exit 10; fi
+exit "$rc"

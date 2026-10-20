@@ -1,0 +1,10 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+E   NotImplementedError
+
+During handling of the above exception, another exception occurred:
+E   NotImplementedError
+<repo>/src/universal_bot/labcode_service.py:6: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_labcode_service.py::test_start_beats_and_stop_is_clean - No...
+1 failed in 0.04s

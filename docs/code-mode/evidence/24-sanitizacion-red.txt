@@ -1,0 +1,10 @@
+F......                                                                  [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert ['docs/code-m...kspace/', ...] == []
+      
+      Left contains 42 more items, first extra item: 'docs/code-mode/00-relevamiento.md: <repo>/'
+      Use -v to get more diff
+<repo>/tests/test_no_internal_data.py:68: AssertionError: assert ['docs/code-m...kspace/', ...] == []
+=========================== short test summary info ============================
+FAILED tests/test_no_internal_data.py::test_tracked_files_have_no_internal_data
+1 failed, 6 passed in 0.06s

@@ -1,0 +1,138 @@
+.F...FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.FFFFF                                [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert False is True
+     +  where False = is_manual_trigger('pasemos a modo código: ¿se puede transcribir rápido?', CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()))
+     +    where CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()) = CodeModeConfig()
+<repo>/tests/test_inbox_flow.py:146: AssertionError: assert False is True
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:7: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:11: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:11: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:11: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:11: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:11: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:15: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/inbox_flow.py:15: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/app.py:56: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/app.py:56: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/app.py:56: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/app.py:56: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/app.py:56: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/app.py:56: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/app.py:56: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/app.py:56: NotImplementedError
+E   AssertionError: assert 'done' == 'waiting_human'
+      
+      - waiting_human
+      + done
+<repo>/tests/test_inbox_flow.py:320: AssertionError: assert 'done' == 'waiting_human'
+E   assert False
+     +  where False = any(<generator object test_run_once_replies_outside_once.<locals>.<genexpr> at 0x7f2662d23850>)
+<repo>/tests/test_inbox_flow.py:388: assert False
+E   AssertionError: assert 'done' == 'waiting_human'
+      
+      - waiting_human
+      + done
+<repo>/tests/test_inbox_flow.py:405: AssertionError: assert 'done' == 'waiting_human'
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/answers.py:74: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/file_outbox.py:70: NotImplementedError
+E   AssertionError: assert 'detalle tecnico' == '[02-lab] detalle tecnico'
+      
+      - [02-lab] detalle tecnico
+      ? ---------
+      + detalle tecnico
+<repo>/tests/test_inbox_flow.py:517: AssertionError: assert 'detalle tecnico' == '[02-lab] detalle tecnico'
+=========================== short test summary info ============================
+FAILED tests/test_inbox_flow.py::test_manual_phrase_accepts_a_prefix[pasemos a modo c\xf3digo: \xbfse puede transcribir r\xe1pido?-True] - AssertionError: assert False is True
+ +  where False = is_manual_trigger('pasemos a modo código: ¿se puede transcribir rápido?', CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()))
+ +    where CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', durat...rick_timeout_s=300.0, lab_root='', routing_policy='<codemode-base>/catalog/routing-policy.yaml', env_extra=()) = CodeModeConfig()
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals0-0.91] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals1-0.9] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals2-0.92] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals3-0.85] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals4-0.95] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals5-0.55] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals6-0.5] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals7-0.5] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals8-0.2] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals9-0.1] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals10-0.1] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals11-0.0] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals12-0.4] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_confidence_is_exact_per_signal[signals13-0.0] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_propose_only_for_high_t2_t3[T2-0.8-0.8-True] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_propose_only_for_high_t2_t3[T2-0.79-0.8-False] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_propose_only_for_high_t2_t3[T3-0.8-0.8-True] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_propose_only_for_high_t2_t3[T1-1.0-0.8-False] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_propose_only_for_high_t2_t3[T0-0.9-0.8-False] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_default_roles_and_unknown_author - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_yaml_role_map_replaces_the_defaults - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_outside_without_a_session_gets_the_short_reply[hola] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_outside_without_a_session_gets_the_short_reply[bug en el lock que no se libera] - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_t2_below_the_threshold_stays_outside - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_t2_and_t3_propose_three_part_buttons - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_t3_also_proposes - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_manual_phrase_with_a_role_runs_one_lab_and_one_maverick - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_manual_phrase_without_a_role_does_not_enter - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_trivial_chat_inside_the_session_does_not_leave - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_security_fail_waits_and_resume_does_not_launch_again - AssertionError: assert 'done' == 'waiting_human'
+  
+  - waiting_human
+  + done
+FAILED tests/test_inbox_flow.py::test_run_once_replies_outside_once - assert False
+ +  where False = any(<generator object test_run_once_replies_outside_once.<locals>.<genexpr> at 0x7f2662d23850>)
+FAILED tests/test_inbox_flow.py::test_proposal_click_here_runs_the_lab - AssertionError: assert 'done' == 'waiting_human'
+  
+  - waiting_human
+  + done
+FAILED tests/test_inbox_flow.py::test_proposal_decline_goes_back_to_the_normal_bot - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_deferred_port_enqueues_without_waiting - NotImplementedError
+FAILED tests/test_inbox_flow.py::test_missing_thread_id_falls_back_to_the_channel_prefix - AssertionError: assert 'detalle tecnico' == '[02-lab] detalle tecnico'
+  
+  - [02-lab] detalle tecnico
+  ? ---------
+  + detalle tecnico
+36 failed, 5 passed in 0.17s

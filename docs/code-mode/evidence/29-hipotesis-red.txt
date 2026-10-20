@@ -1,0 +1,34 @@
+FFFFFFFFFF                                                               [100%]
+=================================== FAILURES ===================================
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/text_rules.py:35: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[pasemos a modo c\xf3digo: \xbfse puede?-\xbfse puede?]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[PAS\xc9MOS A MODO CODIGO, seguimos-seguimos]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[modo programaci\xf3n. el detalle-el detalle]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[activ\xe1 modo c\xf3digo \u2014 listo-listo]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[/modo-codigo prob\xe1 el parser-prob\xe1 el parser]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[/MODO-C\xd3DIGO: prob\xe1-prob\xe1]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[/modo-codigo 1h: hacer el cambio-hacer el cambio]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[hola-hola]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[no pasemos a modo c\xf3digo-no pasemos a modo c\xf3digo]
+FAILED tests/test_strip_activation.py::test_strip_activation_drops_only_the_leading_trigger[-]
+10 failed in 0.05s

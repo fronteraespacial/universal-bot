@@ -1,0 +1,105 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+_______________________ test_lab_is_required_before_plan _______________________
+
+    def test_lab_is_required_before_plan():
+        router = StageRouter(FakeDiscord())
+        item = project()
+        try:
+>           router.enter(item, "03-plan")
+
+tests/test_stage_router.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.stage_router.StageRouter object at 0x7f7fb0cb42f0>
+project = Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier='... 12, 0, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+stage_key = '03-plan', wave = None
+
+    def enter(self, project: Project, stage_key: str, *, wave: str | None = None):
+>       raise NotImplementedError("enter")
+E       NotImplementedError: enter
+
+src/universal_bot/code_mode/stage_router.py:18: NotImplementedError
+____ test_channel_posts_jargon_in_the_stage_thread_and_plain_in_the_channel ____
+
+    def test_channel_posts_jargon_in_the_stage_thread_and_plain_in_the_channel():
+        discord = FakeDiscord()
+        router = StageRouter(discord)
+>       router.post(project(), "02-lab", "Miré el diff y corrí pytest")
+
+tests/test_stage_router.py:62: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.stage_router.StageRouter object at 0x7f7fb0ed2ad0>
+project = Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier='... 12, 0, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+stage_key = '02-lab', technical = 'Miré el diff y corrí pytest', wave = None
+
+    def post(self, project: Project, stage_key: str, technical: str, *, wave: str | None = None):
+>       raise NotImplementedError("post")
+E       NotImplementedError: post
+
+src/universal_bot/code_mode/stage_router.py:21: NotImplementedError
+_________ test_thread_mode_prefixes_the_stage_and_skips_stage_threads __________
+
+    def test_thread_mode_prefixes_the_stage_and_skips_stage_threads():
+        discord = FakeDiscord()
+        router = StageRouter(discord)
+        item = project(mode=ProjectMode.THREAD, channel_id=700, root_thread_id=9)
+>       router.post(item, "02-lab", "vi el diff")
+
+tests/test_stage_router.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.stage_router.StageRouter object at 0x7f7fb0ed3390>
+project = Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier='... 12, 0, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+stage_key = '02-lab', technical = 'vi el diff', wave = None
+
+    def post(self, project: Project, stage_key: str, technical: str, *, wave: str | None = None):
+>       raise NotImplementedError("post")
+E       NotImplementedError: post
+
+src/universal_bot/code_mode/stage_router.py:21: NotImplementedError
+_________________ test_o2_reuses_impl_and_verification_threads _________________
+
+    def test_o2_reuses_impl_and_verification_threads():
+        discord = FakeDiscord()
+        router = StageRouter(discord)
+        item = project()
+        for stage_key in ("04-impl-api", "05-verificacion"):
+>           router.post(item, stage_key, "primer pase")
+
+tests/test_stage_router.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.stage_router.StageRouter object at 0x7f7fb0c32d70>
+project = Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier='... 12, 0, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+stage_key = '04-impl-api', technical = 'primer pase', wave = None
+
+    def post(self, project: Project, stage_key: str, technical: str, *, wave: str | None = None):
+>       raise NotImplementedError("post")
+E       NotImplementedError: post
+
+src/universal_bot/code_mode/stage_router.py:21: NotImplementedError
+______ test_plain_render_drops_blacklisted_words_and_technical_keeps_them ______
+
+    def test_plain_render_drops_blacklisted_words_and_technical_keeps_them():
+>       assert render_plain("Miré el diff del PR y corrí pytest") == "Miré el del y corrí"
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_stage_router.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'Miré el diff del PR y corrí pytest'
+
+    def render_plain(text: str) -> str:
+>       raise NotImplementedError("render_plain")
+E       NotImplementedError: render_plain
+
+src/universal_bot/code_mode/stage_router.py:25: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_stage_router.py::test_lab_is_required_before_plan - NotImplementedError: enter
+FAILED tests/test_stage_router.py::test_channel_posts_jargon_in_the_stage_thread_and_plain_in_the_channel - NotImplementedError: post
+FAILED tests/test_stage_router.py::test_thread_mode_prefixes_the_stage_and_skips_stage_threads - NotImplementedError: post
+FAILED tests/test_stage_router.py::test_o2_reuses_impl_and_verification_threads - NotImplementedError: post
+FAILED tests/test_stage_router.py::test_plain_render_drops_blacklisted_words_and_technical_keeps_them - NotImplementedError: render_plain
+5 failed in 0.06s

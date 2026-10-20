@@ -1,0 +1,678 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFF                                              [100%]
+=================================== FAILURES ===================================
+______________________________ test_argv_per_cli _______________________________
+
+    def test_argv_per_cli():
+>       assert warm_argv("codex", "gpt-6-luna", "low") == ["codex", "app-server"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:37: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('codex', 'gpt-6-luna', 'low'), kwargs = {}
+
+    def warm_argv(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:24: NotImplementedError
+__________________________ test_declared_capabilities __________________________
+
+    def test_declared_capabilities():
+>       assert CAPABILITIES["codex"].supports_live_steer is True
+               ^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'codex'
+
+tests/test_warm.py:49: KeyError
+________________ test_two_prompts_reuse_the_same_process[codex] ________________
+
+cli = 'codex'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_two_prompts_reuse_the_same_process(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('codex', 'gpt-6-luna')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+______________ test_two_prompts_reuse_the_same_process[opencode] _______________
+
+cli = 'opencode'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_two_prompts_reuse_the_same_process(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('opencode', 'opencode/nemotron-3.5-lightning-free')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+_________________ test_two_prompts_reuse_the_same_process[agy] _________________
+
+cli = 'agy'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_two_prompts_reuse_the_same_process(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('agy', 'gemini-3.8-flash-low')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+________________ test_two_prompts_reuse_the_same_process[grok] _________________
+
+cli = 'grok'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_two_prompts_reuse_the_same_process(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('grok', 'grok-4.7')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+___________________ test_steer_mid_turn_ends_steered[codex] ____________________
+
+cli = 'codex'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_steer_mid_turn_ends_steered(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('codex', 'gpt-6-luna')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+__________________ test_steer_mid_turn_ends_steered[opencode] __________________
+
+cli = 'opencode'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_steer_mid_turn_ends_steered(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('opencode', 'opencode/nemotron-3.5-lightning-free')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+____________________ test_steer_mid_turn_ends_steered[agy] _____________________
+
+cli = 'agy'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_steer_mid_turn_ends_steered(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('agy', 'gemini-3.8-flash-low')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+____________________ test_steer_mid_turn_ends_steered[grok] ____________________
+
+cli = 'grok'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_steer_mid_turn_ends_steered(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('grok', 'grok-4.7')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+_________________________ test_cancel_mid_turn[codex] __________________________
+
+cli = 'codex'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_cancel_mid_turn(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('codex', 'gpt-6-luna')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+________________________ test_cancel_mid_turn[opencode] ________________________
+
+cli = 'opencode'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_cancel_mid_turn(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('opencode', 'opencode/nemotron-3.5-lightning-free')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+__________________________ test_cancel_mid_turn[agy] ___________________________
+
+cli = 'agy'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_cancel_mid_turn(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('agy', 'gemini-3.8-flash-low')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+__________________________ test_cancel_mid_turn[grok] __________________________
+
+cli = 'grok'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_cancel_mid_turn(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('grok', 'grok-4.7')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+_________________ test_turn_timeout_cancels_and_reports[codex] _________________
+
+cli = 'codex'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_turn_timeout_cancels_and_reports(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('codex', 'gpt-6-luna')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+_______________ test_turn_timeout_cancels_and_reports[opencode] ________________
+
+cli = 'opencode'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_turn_timeout_cancels_and_reports(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('opencode', 'opencode/nemotron-3.5-lightning-free')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+__________________ test_turn_timeout_cancels_and_reports[agy] __________________
+
+cli = 'agy'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_turn_timeout_cancels_and_reports(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('agy', 'gemini-3.8-flash-low')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+_________________ test_turn_timeout_cancels_and_reports[grok] __________________
+
+cli = 'grok'
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.parametrize("cli", CLIS)
+    def test_turn_timeout_cancels_and_reports(cli, tmp_path):
+>       session = session_for(cli, tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:123: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('grok', 'grok-4.7')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+_____________________ test_steer_without_turn_is_rejected ______________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_steer_without_turn_is_rejected(tmp_path):
+>       session = session_for("codex", tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:133: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('codex', 'gpt-6-luna')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+_ test_agy_dying_on_sigint_restarts_once_and_resumes_with_the_new_instruction __
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_agy_dying_on_sigint_restarts_once_and_resumes_with_the_new_instruction(tmp_path):
+>       session = session_for("agy", tmp_path, env={"FAKE_AGY_DIE_ON_SIGINT": "1"})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('agy', 'gemini-3.8-flash-low')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': {'FAKE_AGY_DIE_ON_SIGINT': '1'}}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+______________________ test_opencode_password_never_leaks ______________________
+
+tmp_path = PosixPath('<ruta>')
+caplog = <_pytest.logging.LogCaptureFixture object at 0x7fd4ac41c590>
+
+    def test_opencode_password_never_leaks(tmp_path, caplog):
+        caplog.set_level(logging.DEBUG)
+>       session = session_for("opencode", tmp_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:158: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('opencode', 'opencode/nemotron-3.5-lightning-free')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': None}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+_____ test_opencode_falls_back_to_the_printed_password_without_logging_it ______
+
+tmp_path = PosixPath('<ruta>')
+caplog = <_pytest.logging.LogCaptureFixture object at 0x7fd4ac66a0d0>
+
+    def test_opencode_falls_back_to_the_printed_password_without_logging_it(tmp_path, caplog):
+        caplog.set_level(logging.DEBUG)
+>       session = session_for("opencode", tmp_path, env={"FAKE_IGNORE_ENV_PASSWORD": "1"})
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:173: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:33: in session_for
+    return make_session(cli, MODELS[cli], cwd=tmp_path, command=fake_command(cli), env=env)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = ('opencode', 'opencode/nemotron-3.5-lightning-free')
+kwargs = {'cwd': PosixPath('<ruta>'), 'command': ['<ruta>', '<ruta>'], 'env': {'FAKE_IGNORE_ENV_PASSWORD': '1'}}
+
+    def make_session(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:20: NotImplementedError
+______________ test_pool_keeps_one_hot_process_per_cli_and_model _______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_pool_keeps_one_hot_process_per_cli_and_model(tmp_path):
+>       pool = _pool(tmp_path)
+               ^^^^^^^^^^^^^^^
+
+tests/test_warm.py:199: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:195: in _pool
+    return WarmPool(factory, idle_timeout_s=idle, clock=clock or Clock())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.warm.WarmPool object at 0x7fd4ac41c440>
+args = (<function _pool.<locals>.factory at 0x7fd4ac70afc0>,)
+kwargs = {'idle_timeout_s': 60.0, 'clock': <test_warm.Clock object at 0x7fd4ac9470e0>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:16: NotImplementedError
+________________________ test_pool_closes_idle_sessions ________________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_pool_closes_idle_sessions(tmp_path):
+        clock = Clock()
+>       pool = _pool(tmp_path, clock=clock, idle=30)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:212: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:195: in _pool
+    return WarmPool(factory, idle_timeout_s=idle, clock=clock or Clock())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.warm.WarmPool object at 0x7fd4ac669450>
+args = (<function _pool.<locals>.factory at 0x7fd4ac70b600>,)
+kwargs = {'idle_timeout_s': 30, 'clock': <test_warm.Clock object at 0x7fd4ac66b110>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:16: NotImplementedError
+___________ test_pool_restarts_a_dead_process_once_and_then_reports ____________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_pool_restarts_a_dead_process_once_and_then_reports(tmp_path):
+>       pool = _pool(tmp_path)
+               ^^^^^^^^^^^^^^^
+
+tests/test_warm.py:226: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:195: in _pool
+    return WarmPool(factory, idle_timeout_s=idle, clock=clock or Clock())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.warm.WarmPool object at 0x7fd4ac66b250>
+args = (<function _pool.<locals>.factory at 0x7fd4ac420040>,)
+kwargs = {'idle_timeout_s': 60.0, 'clock': <test_warm.Clock object at 0x7fd4ac66a990>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:16: NotImplementedError
+_______________ test_pool_falls_back_to_one_shot_when_warm_fails _______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_pool_falls_back_to_one_shot_when_warm_fails(tmp_path):
+        calls = []
+    
+        def oneshot(cli, model, text):
+            calls.append((cli, model, text))
+            return "OK one-shot"
+    
+>       pool = _pool(tmp_path, env={"FAKE_DIE_ON_TURN": "1"})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_warm.py:250: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:195: in _pool
+    return WarmPool(factory, idle_timeout_s=idle, clock=clock or Clock())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.warm.WarmPool object at 0x7fd4ac7488a0>
+args = (<function _pool.<locals>.factory at 0x7fd4ac420540>,)
+kwargs = {'idle_timeout_s': 60.0, 'clock': <test_warm.Clock object at 0x7fd4ac748770>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:16: NotImplementedError
+_____________________ test_pool_warm_result_is_marked_warm _____________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_pool_warm_result_is_marked_warm(tmp_path):
+>       pool = _pool(tmp_path)
+               ^^^^^^^^^^^^^^^
+
+tests/test_warm.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_warm.py:195: in _pool
+    return WarmPool(factory, idle_timeout_s=idle, clock=clock or Clock())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.warm.WarmPool object at 0x7fd4ac748d60>
+args = (<function _pool.<locals>.factory at 0x7fd4ac420680>,)
+kwargs = {'idle_timeout_s': 60.0, 'clock': <test_warm.Clock object at 0x7fd4ac7489d0>}
+
+    def __init__(self, *args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/warm.py:16: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_warm.py::test_argv_per_cli - NotImplementedError
+FAILED tests/test_warm.py::test_declared_capabilities - KeyError: 'codex'
+FAILED tests/test_warm.py::test_two_prompts_reuse_the_same_process[codex] - N...
+FAILED tests/test_warm.py::test_two_prompts_reuse_the_same_process[opencode]
+FAILED tests/test_warm.py::test_two_prompts_reuse_the_same_process[agy] - Not...
+FAILED tests/test_warm.py::test_two_prompts_reuse_the_same_process[grok] - No...
+FAILED tests/test_warm.py::test_steer_mid_turn_ends_steered[codex] - NotImple...
+FAILED tests/test_warm.py::test_steer_mid_turn_ends_steered[opencode] - NotIm...
+FAILED tests/test_warm.py::test_steer_mid_turn_ends_steered[agy] - NotImpleme...
+FAILED tests/test_warm.py::test_steer_mid_turn_ends_steered[grok] - NotImplem...
+FAILED tests/test_warm.py::test_cancel_mid_turn[codex] - NotImplementedError
+FAILED tests/test_warm.py::test_cancel_mid_turn[opencode] - NotImplementedError
+FAILED tests/test_warm.py::test_cancel_mid_turn[agy] - NotImplementedError
+FAILED tests/test_warm.py::test_cancel_mid_turn[grok] - NotImplementedError
+FAILED tests/test_warm.py::test_turn_timeout_cancels_and_reports[codex] - Not...
+FAILED tests/test_warm.py::test_turn_timeout_cancels_and_reports[opencode] - ...
+FAILED tests/test_warm.py::test_turn_timeout_cancels_and_reports[agy] - NotIm...
+FAILED tests/test_warm.py::test_turn_timeout_cancels_and_reports[grok] - NotI...
+FAILED tests/test_warm.py::test_steer_without_turn_is_rejected - NotImplement...
+FAILED tests/test_warm.py::test_agy_dying_on_sigint_restarts_once_and_resumes_with_the_new_instruction
+FAILED tests/test_warm.py::test_opencode_password_never_leaks - NotImplemente...
+FAILED tests/test_warm.py::test_opencode_falls_back_to_the_printed_password_without_logging_it
+FAILED tests/test_warm.py::test_pool_keeps_one_hot_process_per_cli_and_model
+FAILED tests/test_warm.py::test_pool_closes_idle_sessions - NotImplementedError
+FAILED tests/test_warm.py::test_pool_restarts_a_dead_process_once_and_then_reports
+FAILED tests/test_warm.py::test_pool_falls_back_to_one_shot_when_warm_fails
+FAILED tests/test_warm.py::test_pool_warm_result_is_marked_warm - NotImplemen...
+27 failed in 0.17s

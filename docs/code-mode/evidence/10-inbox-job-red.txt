@@ -1,0 +1,190 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+___________ test_loads_job_and_uses_location_key_as_session_location ___________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_loads_job_and_uses_locati0')
+
+    def test_loads_job_and_uses_location_key_as_session_location(tmp_path):
+        job_dir = dump_job(tmp_path, sample(thread_id="99"))
+>       job = load_inbox_job(job_dir)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_inbox_job.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_loads_job_and_uses_locati0/lc_555')
+
+    def load_inbox_job(job_dir: Path) -> InboxJob:
+>       raise NotImplementedError("load_inbox_job")
+E       NotImplementedError: load_inbox_job
+
+src/universal_bot/code_mode/inbox_job.py:64: NotImplementedError
+________________________ test_accepts_numeric_json_ids _________________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_accepts_numeric_json_ids0')
+
+    def test_accepts_numeric_json_ids(tmp_path):
+        payload = sample(guild_id=10, channel_id=CHANNEL, message_id=555, parent_channel_id=CHANNEL)
+        payload["author"] = {"id": 7, "display_name": "Julian"}
+>       job = load_inbox_job(dump_job(tmp_path, payload))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_inbox_job.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_accepts_numeric_json_ids0/lc_555')
+
+    def load_inbox_job(job_dir: Path) -> InboxJob:
+>       raise NotImplementedError("load_inbox_job")
+E       NotImplementedError: load_inbox_job
+
+src/universal_bot/code_mode/inbox_job.py:64: NotImplementedError
+_____________________ test_missing_field_is_a_clear_error ______________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_missing_field_is_a_clear_0')
+
+    def test_missing_field_is_a_clear_error(tmp_path):
+        payload = sample()
+        del payload["job_id"]
+        with pytest.raises(InboxJobError, match="job_id"):
+>           load_inbox_job(dump_job(tmp_path, payload))
+
+tests/test_inbox_job.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_missing_field_is_a_clear_0/lc_555')
+
+    def load_inbox_job(job_dir: Path) -> InboxJob:
+>       raise NotImplementedError("load_inbox_job")
+E       NotImplementedError: load_inbox_job
+
+src/universal_bot/code_mode/inbox_job.py:64: NotImplementedError
+_____________________ test_wrong_button_prefix_is_rejected _____________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_wrong_button_prefix_is_re0')
+
+    def test_wrong_button_prefix_is_rejected(tmp_path):
+        with pytest.raises(InboxJobError, match="ublab:"):
+>           load_inbox_job(dump_job(tmp_path, sample(button_prefix="ub:")))
+
+tests/test_inbox_job.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_wrong_button_prefix_is_re0/lc_555')
+
+    def load_inbox_job(job_dir: Path) -> InboxJob:
+>       raise NotImplementedError("load_inbox_job")
+E       NotImplementedError: load_inbox_job
+
+src/universal_bot/code_mode/inbox_job.py:64: NotImplementedError
+__________________________ test_prompt_txt_must_match __________________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_prompt_txt_must_match0')
+
+    def test_prompt_txt_must_match(tmp_path):
+        with pytest.raises(InboxJobError, match="prompt"):
+>           load_inbox_job(dump_job(tmp_path, sample(), prompt_txt="otro"))
+
+tests/test_inbox_job.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_prompt_txt_must_match0/lc_555')
+
+    def load_inbox_job(job_dir: Path) -> InboxJob:
+>       raise NotImplementedError("load_inbox_job")
+E       NotImplementedError: load_inbox_job
+
+src/universal_bot/code_mode/inbox_job.py:64: NotImplementedError
+___________________ test_session_key_must_equal_location_key ___________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_session_key_must_equal_lo0')
+
+    def test_session_key_must_equal_location_key(tmp_path):
+        with pytest.raises(InboxJobError, match="session_key"):
+>           load_inbox_job(dump_job(tmp_path, sample(session_key="otra")))
+
+tests/test_inbox_job.py:101: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_session_key_must_equal_lo0/lc_555')
+
+    def load_inbox_job(job_dir: Path) -> InboxJob:
+>       raise NotImplementedError("load_inbox_job")
+E       NotImplementedError: load_inbox_job
+
+src/universal_bot/code_mode/inbox_job.py:64: NotImplementedError
+__________________ test_wrong_version_or_instance_is_rejected __________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_wrong_version_or_instance0')
+
+    def test_wrong_version_or_instance_is_rejected(tmp_path):
+        with pytest.raises(InboxJobError, match="version"):
+>           load_inbox_job(dump_job(tmp_path, sample(version=2)))
+
+tests/test_inbox_job.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_wrong_version_or_instance0/lc_555')
+
+    def load_inbox_job(job_dir: Path) -> InboxJob:
+>       raise NotImplementedError("load_inbox_job")
+E       NotImplementedError: load_inbox_job
+
+src/universal_bot/code_mode/inbox_job.py:64: NotImplementedError
+_______________________ test_non_numeric_id_is_rejected ________________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_non_numeric_id_is_rejecte0')
+
+    def test_non_numeric_id_is_rejected(tmp_path):
+        with pytest.raises(InboxJobError, match="channel_id"):
+>           load_inbox_job(dump_job(tmp_path, sample(channel_id="abc")))
+
+tests/test_inbox_job.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_non_numeric_id_is_rejecte0/lc_555')
+
+    def load_inbox_job(job_dir: Path) -> InboxJob:
+>       raise NotImplementedError("load_inbox_job")
+E       NotImplementedError: load_inbox_job
+
+src/universal_bot/code_mode/inbox_job.py:64: NotImplementedError
+_________________________ test_runtime_owns_state_json _________________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-56/test_runtime_owns_state_json0')
+
+    def test_runtime_owns_state_json(tmp_path):
+        job_dir = dump_job(tmp_path, sample())
+        state = JobState(
+            version=1,
+            status="accepted",
+            updated_ts=1000.5,
+            summary="en curso",
+            active_step="02-lab",
+            error=None,
+            op_ids=("20261020T120000-0001-send",),
+        )
+>       write_job_state(job_dir, state)
+
+tests/test_inbox_job.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+job_dir = PosixPath('<tmp>/pytest-of-box/pytest-56/test_runtime_owns_state_json0/lc_555')
+state = JobState(version=1, status='accepted', updated_ts=1000.5, summary='en curso', active_step='02-lab', error=None, op_ids=('20261020T120000-0001-send',))
+
+    def write_job_state(job_dir: Path, state: JobState) -> None:
+>       raise NotImplementedError("write_job_state")
+E       NotImplementedError: write_job_state
+
+src/universal_bot/code_mode/inbox_job.py:68: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_inbox_job.py::test_loads_job_and_uses_location_key_as_session_location - NotImplementedError: load_inbox_job
+FAILED tests/test_inbox_job.py::test_accepts_numeric_json_ids - NotImplementedError: load_inbox_job
+FAILED tests/test_inbox_job.py::test_missing_field_is_a_clear_error - NotImplementedError: load_inbox_job
+FAILED tests/test_inbox_job.py::test_wrong_button_prefix_is_rejected - NotImplementedError: load_inbox_job
+FAILED tests/test_inbox_job.py::test_prompt_txt_must_match - NotImplementedError: load_inbox_job
+FAILED tests/test_inbox_job.py::test_session_key_must_equal_location_key - NotImplementedError: load_inbox_job
+FAILED tests/test_inbox_job.py::test_wrong_version_or_instance_is_rejected - NotImplementedError: load_inbox_job
+FAILED tests/test_inbox_job.py::test_non_numeric_id_is_rejected - NotImplementedError: load_inbox_job
+FAILED tests/test_inbox_job.py::test_runtime_owns_state_json - NotImplementedError: write_job_state
+9 failed in 0.07s

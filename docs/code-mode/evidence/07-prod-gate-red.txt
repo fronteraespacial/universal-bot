@@ -1,0 +1,475 @@
+FFFFFFFFFFFFFFFFFF                                                       [100%]
+=================================== FAILURES ===================================
+________ test_production_kind_without_approval_does_not_execute[deploy] ________
+
+kind = 'deploy'
+
+    @pytest.mark.parametrize(
+        "kind",
+        ["deploy", "merge_prod_branch", "env_change", "discord_irreversible", "server_irreversible"],
+    )
+    def test_production_kind_without_approval_does_not_execute(kind):
+>       gated, gated_action = request_production(project(), action(kind), T0)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...producción', approved_by=None, approved_at=None), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def request_production(*args, **kwargs):
+>       raise NotImplementedError("request_production")
+E       NotImplementedError: request_production
+
+src/universal_bot/code_mode/prod_gate.py:11: NotImplementedError
+__ test_production_kind_without_approval_does_not_execute[merge_prod_branch] ___
+
+kind = 'merge_prod_branch'
+
+    @pytest.mark.parametrize(
+        "kind",
+        ["deploy", "merge_prod_branch", "env_change", "discord_irreversible", "server_irreversible"],
+    )
+    def test_production_kind_without_approval_does_not_execute(kind):
+>       gated, gated_action = request_production(project(), action(kind), T0)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...producción', approved_by=None, approved_at=None), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def request_production(*args, **kwargs):
+>       raise NotImplementedError("request_production")
+E       NotImplementedError: request_production
+
+src/universal_bot/code_mode/prod_gate.py:11: NotImplementedError
+______ test_production_kind_without_approval_does_not_execute[env_change] ______
+
+kind = 'env_change'
+
+    @pytest.mark.parametrize(
+        "kind",
+        ["deploy", "merge_prod_branch", "env_change", "discord_irreversible", "server_irreversible"],
+    )
+    def test_production_kind_without_approval_does_not_execute(kind):
+>       gated, gated_action = request_production(project(), action(kind), T0)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...producción', approved_by=None, approved_at=None), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def request_production(*args, **kwargs):
+>       raise NotImplementedError("request_production")
+E       NotImplementedError: request_production
+
+src/universal_bot/code_mode/prod_gate.py:11: NotImplementedError
+_ test_production_kind_without_approval_does_not_execute[discord_irreversible] _
+
+kind = 'discord_irreversible'
+
+    @pytest.mark.parametrize(
+        "kind",
+        ["deploy", "merge_prod_branch", "env_change", "discord_irreversible", "server_irreversible"],
+    )
+    def test_production_kind_without_approval_does_not_execute(kind):
+>       gated, gated_action = request_production(project(), action(kind), T0)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...producción', approved_by=None, approved_at=None), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def request_production(*args, **kwargs):
+>       raise NotImplementedError("request_production")
+E       NotImplementedError: request_production
+
+src/universal_bot/code_mode/prod_gate.py:11: NotImplementedError
+_ test_production_kind_without_approval_does_not_execute[server_irreversible] __
+
+kind = 'server_irreversible'
+
+    @pytest.mark.parametrize(
+        "kind",
+        ["deploy", "merge_prod_branch", "env_change", "discord_irreversible", "server_irreversible"],
+    )
+    def test_production_kind_without_approval_does_not_execute(kind):
+>       gated, gated_action = request_production(project(), action(kind), T0)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...producción', approved_by=None, approved_at=None), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def request_production(*args, **kwargs):
+>       raise NotImplementedError("request_production")
+E       NotImplementedError: request_production
+
+src/universal_bot/code_mode/prod_gate.py:11: NotImplementedError
+_____________ test_who_can_approve_on_t2[requester-7-roles0-True] ______________
+
+mode = 'requester', user_id = 7, roles = (), accepted = True
+
+    @pytest.mark.parametrize(
+        ("mode", "user_id", "roles", "accepted"),
+        [
+            ("requester", REQUESTER, (), True),
+            ("requester", DEV, ("@dev",), False),
+            ("dev", REQUESTER, (), False),
+            ("dev", DEV, ("@dev",), True),
+            ("requester|dev", REQUESTER, (), True),
+            ("requester|dev", DEV, ("@dev",), True),
+            ("requester|dev", OTHER, (), False),
+        ],
+    )
+    def test_who_can_approve_on_t2(mode, user_id, roles, accepted):
+        item = project(tier="T2", state=ProjectState.PENDING_PROD_APPROVAL)
+        approvals = ApprovalPolicy(production=mode)
+>       assert can_approve(item, user_id, roles, approvals) is accepted
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...ovalPolicy(production='requester', production_t3='dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+kwargs = {}
+
+    def can_approve(*args, **kwargs):
+>       raise NotImplementedError("can_approve")
+E       NotImplementedError: can_approve
+
+src/universal_bot/code_mode/prod_gate.py:19: NotImplementedError
+_____________ test_who_can_approve_on_t2[requester-8-roles1-False] _____________
+
+mode = 'requester', user_id = 8, roles = ('@dev',), accepted = False
+
+    @pytest.mark.parametrize(
+        ("mode", "user_id", "roles", "accepted"),
+        [
+            ("requester", REQUESTER, (), True),
+            ("requester", DEV, ("@dev",), False),
+            ("dev", REQUESTER, (), False),
+            ("dev", DEV, ("@dev",), True),
+            ("requester|dev", REQUESTER, (), True),
+            ("requester|dev", DEV, ("@dev",), True),
+            ("requester|dev", OTHER, (), False),
+        ],
+    )
+    def test_who_can_approve_on_t2(mode, user_id, roles, accepted):
+        item = project(tier="T2", state=ProjectState.PENDING_PROD_APPROVAL)
+        approvals = ApprovalPolicy(production=mode)
+>       assert can_approve(item, user_id, roles, approvals) is accepted
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...ovalPolicy(production='requester', production_t3='dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+kwargs = {}
+
+    def can_approve(*args, **kwargs):
+>       raise NotImplementedError("can_approve")
+E       NotImplementedError: can_approve
+
+src/universal_bot/code_mode/prod_gate.py:19: NotImplementedError
+________________ test_who_can_approve_on_t2[dev-7-roles2-False] ________________
+
+mode = 'dev', user_id = 7, roles = (), accepted = False
+
+    @pytest.mark.parametrize(
+        ("mode", "user_id", "roles", "accepted"),
+        [
+            ("requester", REQUESTER, (), True),
+            ("requester", DEV, ("@dev",), False),
+            ("dev", REQUESTER, (), False),
+            ("dev", DEV, ("@dev",), True),
+            ("requester|dev", REQUESTER, (), True),
+            ("requester|dev", DEV, ("@dev",), True),
+            ("requester|dev", OTHER, (), False),
+        ],
+    )
+    def test_who_can_approve_on_t2(mode, user_id, roles, accepted):
+        item = project(tier="T2", state=ProjectState.PENDING_PROD_APPROVAL)
+        approvals = ApprovalPolicy(production=mode)
+>       assert can_approve(item, user_id, roles, approvals) is accepted
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=..., ApprovalPolicy(production='dev', production_t3='dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+kwargs = {}
+
+    def can_approve(*args, **kwargs):
+>       raise NotImplementedError("can_approve")
+E       NotImplementedError: can_approve
+
+src/universal_bot/code_mode/prod_gate.py:19: NotImplementedError
+________________ test_who_can_approve_on_t2[dev-8-roles3-True] _________________
+
+mode = 'dev', user_id = 8, roles = ('@dev',), accepted = True
+
+    @pytest.mark.parametrize(
+        ("mode", "user_id", "roles", "accepted"),
+        [
+            ("requester", REQUESTER, (), True),
+            ("requester", DEV, ("@dev",), False),
+            ("dev", REQUESTER, (), False),
+            ("dev", DEV, ("@dev",), True),
+            ("requester|dev", REQUESTER, (), True),
+            ("requester|dev", DEV, ("@dev",), True),
+            ("requester|dev", OTHER, (), False),
+        ],
+    )
+    def test_who_can_approve_on_t2(mode, user_id, roles, accepted):
+        item = project(tier="T2", state=ProjectState.PENDING_PROD_APPROVAL)
+        approvals = ApprovalPolicy(production=mode)
+>       assert can_approve(item, user_id, roles, approvals) is accepted
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=..., ApprovalPolicy(production='dev', production_t3='dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+kwargs = {}
+
+    def can_approve(*args, **kwargs):
+>       raise NotImplementedError("can_approve")
+E       NotImplementedError: can_approve
+
+src/universal_bot/code_mode/prod_gate.py:19: NotImplementedError
+___________ test_who_can_approve_on_t2[requester|dev-7-roles4-True] ____________
+
+mode = 'requester|dev', user_id = 7, roles = (), accepted = True
+
+    @pytest.mark.parametrize(
+        ("mode", "user_id", "roles", "accepted"),
+        [
+            ("requester", REQUESTER, (), True),
+            ("requester", DEV, ("@dev",), False),
+            ("dev", REQUESTER, (), False),
+            ("dev", DEV, ("@dev",), True),
+            ("requester|dev", REQUESTER, (), True),
+            ("requester|dev", DEV, ("@dev",), True),
+            ("requester|dev", OTHER, (), False),
+        ],
+    )
+    def test_who_can_approve_on_t2(mode, user_id, roles, accepted):
+        item = project(tier="T2", state=ProjectState.PENDING_PROD_APPROVAL)
+        approvals = ApprovalPolicy(production=mode)
+>       assert can_approve(item, user_id, roles, approvals) is accepted
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...Policy(production='requester|dev', production_t3='dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+kwargs = {}
+
+    def can_approve(*args, **kwargs):
+>       raise NotImplementedError("can_approve")
+E       NotImplementedError: can_approve
+
+src/universal_bot/code_mode/prod_gate.py:19: NotImplementedError
+___________ test_who_can_approve_on_t2[requester|dev-8-roles5-True] ____________
+
+mode = 'requester|dev', user_id = 8, roles = ('@dev',), accepted = True
+
+    @pytest.mark.parametrize(
+        ("mode", "user_id", "roles", "accepted"),
+        [
+            ("requester", REQUESTER, (), True),
+            ("requester", DEV, ("@dev",), False),
+            ("dev", REQUESTER, (), False),
+            ("dev", DEV, ("@dev",), True),
+            ("requester|dev", REQUESTER, (), True),
+            ("requester|dev", DEV, ("@dev",), True),
+            ("requester|dev", OTHER, (), False),
+        ],
+    )
+    def test_who_can_approve_on_t2(mode, user_id, roles, accepted):
+        item = project(tier="T2", state=ProjectState.PENDING_PROD_APPROVAL)
+        approvals = ApprovalPolicy(production=mode)
+>       assert can_approve(item, user_id, roles, approvals) is accepted
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...Policy(production='requester|dev', production_t3='dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+kwargs = {}
+
+    def can_approve(*args, **kwargs):
+>       raise NotImplementedError("can_approve")
+E       NotImplementedError: can_approve
+
+src/universal_bot/code_mode/prod_gate.py:19: NotImplementedError
+___________ test_who_can_approve_on_t2[requester|dev-9-roles6-False] ___________
+
+mode = 'requester|dev', user_id = 9, roles = (), accepted = False
+
+    @pytest.mark.parametrize(
+        ("mode", "user_id", "roles", "accepted"),
+        [
+            ("requester", REQUESTER, (), True),
+            ("requester", DEV, ("@dev",), False),
+            ("dev", REQUESTER, (), False),
+            ("dev", DEV, ("@dev",), True),
+            ("requester|dev", REQUESTER, (), True),
+            ("requester|dev", DEV, ("@dev",), True),
+            ("requester|dev", OTHER, (), False),
+        ],
+    )
+    def test_who_can_approve_on_t2(mode, user_id, roles, accepted):
+        item = project(tier="T2", state=ProjectState.PENDING_PROD_APPROVAL)
+        approvals = ApprovalPolicy(production=mode)
+>       assert can_approve(item, user_id, roles, approvals) is accepted
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...Policy(production='requester|dev', production_t3='dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+kwargs = {}
+
+    def can_approve(*args, **kwargs):
+>       raise NotImplementedError("can_approve")
+E       NotImplementedError: can_approve
+
+src/universal_bot/code_mode/prod_gate.py:19: NotImplementedError
+_______________ test_t3_rejects_the_requester_without_a_dev_role _______________
+
+    def test_t3_rejects_the_requester_without_a_dev_role():
+        item = project(tier="T3", state=ProjectState.PENDING_PROD_APPROVAL)
+>       decision = approve(item, action(), REQUESTER, (), ApprovalPolicy(production="requester|dev"), T0)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:87: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...ev',), plan='none', plan_requires_evidence=True), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def approve(*args, **kwargs):
+>       raise NotImplementedError("approve")
+E       NotImplementedError: approve
+
+src/universal_bot/code_mode/prod_gate.py:23: NotImplementedError
+__________________ test_t3_dev_moves_the_project_to_deploying __________________
+
+    def test_t3_dev_moves_the_project_to_deploying():
+        item = project(tier="T3", state=ProjectState.PENDING_PROD_APPROVAL)
+>       decision = approve(item, action(), DEV, ("@dev",), ApprovalPolicy(), T0)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...ev',), plan='none', plan_requires_evidence=True), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def approve(*args, **kwargs):
+>       raise NotImplementedError("approve")
+E       NotImplementedError: approve
+
+src/universal_bot/code_mode/prod_gate.py:23: NotImplementedError
+_______________ test_reject_returns_to_running_for_a_corrective ________________
+
+    def test_reject_returns_to_running_for_a_corrective():
+>       updated = reject_production(project(state=ProjectState.PENDING_PROD_APPROVAL), T0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:106: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...6, 10, 20, 12, 0, tzinfo=datetime.timezone.utc)), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def reject_production(*args, **kwargs):
+>       raise NotImplementedError("reject_production")
+E       NotImplementedError: reject_production
+
+src/universal_bot/code_mode/prod_gate.py:27: NotImplementedError
+________________ test_project_without_production_finishes_done _________________
+
+    def test_project_without_production_finishes_done():
+>       updated = complete_without_production(project(state=ProjectState.RUNNING, requires_production=False), T0)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_prod_gate.py:112: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...6, 10, 20, 12, 0, tzinfo=datetime.timezone.utc)), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def complete_without_production(*args, **kwargs):
+>       raise NotImplementedError("complete_without_production")
+E       NotImplementedError: complete_without_production
+
+src/universal_bot/code_mode/prod_gate.py:31: NotImplementedError
+________________ test_required_production_cannot_skip_the_gate _________________
+
+    def test_required_production_cannot_skip_the_gate():
+        with pytest.raises(NeedsProductionApproval):
+>           complete_without_production(project(requires_production=True), T0)
+
+tests/test_prod_gate.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...6, 10, 20, 12, 0, tzinfo=datetime.timezone.utc)), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def complete_without_production(*args, **kwargs):
+>       raise NotImplementedError("complete_without_production")
+E       NotImplementedError: complete_without_production
+
+src/universal_bot/code_mode/prod_gate.py:31: NotImplementedError
+______________ test_unplanned_irreversible_action_is_intercepted _______________
+
+    def test_unplanned_irreversible_action_is_intercepted():
+>       gated, gated_action = intercept_irreversible(
+            project(state=ProjectState.RUNNING, requires_production=False),
+            action("discord_irreversible"),
+            T0,
+        )
+
+tests/test_prod_gate.py:122: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (Project(id='P-1', guild_id=1, requester_id=7, origin_message_id=1, slug='reservas-api', title_plain='Reservas', tier=...producción', approved_by=None, approved_at=None), datetime.datetime(2026, 10, 20, 12, 0, tzinfo=datetime.timezone.utc))
+kwargs = {}
+
+    def intercept_irreversible(*args, **kwargs):
+>       raise NotImplementedError("intercept_irreversible")
+E       NotImplementedError: intercept_irreversible
+
+src/universal_bot/code_mode/prod_gate.py:35: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_prod_gate.py::test_production_kind_without_approval_does_not_execute[deploy] - NotImplementedError: request_production
+FAILED tests/test_prod_gate.py::test_production_kind_without_approval_does_not_execute[merge_prod_branch] - NotImplementedError: request_production
+FAILED tests/test_prod_gate.py::test_production_kind_without_approval_does_not_execute[env_change] - NotImplementedError: request_production
+FAILED tests/test_prod_gate.py::test_production_kind_without_approval_does_not_execute[discord_irreversible] - NotImplementedError: request_production
+FAILED tests/test_prod_gate.py::test_production_kind_without_approval_does_not_execute[server_irreversible] - NotImplementedError: request_production
+FAILED tests/test_prod_gate.py::test_who_can_approve_on_t2[requester-7-roles0-True] - NotImplementedError: can_approve
+FAILED tests/test_prod_gate.py::test_who_can_approve_on_t2[requester-8-roles1-False] - NotImplementedError: can_approve
+FAILED tests/test_prod_gate.py::test_who_can_approve_on_t2[dev-7-roles2-False] - NotImplementedError: can_approve
+FAILED tests/test_prod_gate.py::test_who_can_approve_on_t2[dev-8-roles3-True] - NotImplementedError: can_approve
+FAILED tests/test_prod_gate.py::test_who_can_approve_on_t2[requester|dev-7-roles4-True] - NotImplementedError: can_approve
+FAILED tests/test_prod_gate.py::test_who_can_approve_on_t2[requester|dev-8-roles5-True] - NotImplementedError: can_approve
+FAILED tests/test_prod_gate.py::test_who_can_approve_on_t2[requester|dev-9-roles6-False] - NotImplementedError: can_approve
+FAILED tests/test_prod_gate.py::test_t3_rejects_the_requester_without_a_dev_role - NotImplementedError: approve
+FAILED tests/test_prod_gate.py::test_t3_dev_moves_the_project_to_deploying - NotImplementedError: approve
+FAILED tests/test_prod_gate.py::test_reject_returns_to_running_for_a_corrective - NotImplementedError: reject_production
+FAILED tests/test_prod_gate.py::test_project_without_production_finishes_done - NotImplementedError: complete_without_production
+FAILED tests/test_prod_gate.py::test_required_production_cannot_skip_the_gate - NotImplementedError: complete_without_production
+FAILED tests/test_prod_gate.py::test_unplanned_irreversible_action_is_intercepted - NotImplementedError: intercept_irreversible
+18 failed in 0.08s

@@ -1,0 +1,29 @@
+.F...........................F                                           [100%]
+=================================== FAILURES ===================================
+__________________________ test_declared_capabilities __________________________
+
+    def test_declared_capabilities():
+        assert CAPABILITIES["codex"].supports_live_steer is True
+        assert CAPABILITIES["opencode"].supports_live_steer is True
+>       assert CAPABILITIES["grok"].supports_live_steer is True
+E       AssertionError: assert False is True
+E        +  where False = Capabilities(supports_live_steer=False, steer_strategy='cancel_reprompt', invocation='grok agent stdio (ACP JSON-RPC)', cancel='session/cancel').supports_live_steer
+
+tests/test_warm.py:51: AssertionError
+_______________ test_grok_main_session_enables_subagent_messages _______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_grok_main_session_enables_subagent_messages(tmp_path):
+        session = make_session("grok", "grok-4.7", cwd=tmp_path, command=fake_command("grok"))
+>       assert session.extra_env.get("GROK_ACTIVE_AGENT_MESSAGES") == "1"
+E       AssertionError: assert None == '1'
+E        +  where None = <built-in method get of dict object at 0x7f79ee8f2580>('GROK_ACTIVE_AGENT_MESSAGES')
+E        +    where <built-in method get of dict object at 0x7f79ee8f2580> = {}.get
+E        +      where {} = <GrokAcp cli=grok model=grok-4.7 pid=None>.extra_env
+
+tests/test_warm.py:296: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_warm.py::test_declared_capabilities - AssertionError: asser...
+FAILED tests/test_warm.py::test_grok_main_session_enables_subagent_messages
+2 failed, 28 passed in 16.90s

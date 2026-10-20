@@ -1,0 +1,156 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+_____ test_role_without_permission_asks_admin_and_does_not_create_channel ______
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_role_without_permission_a0')
+
+    def test_role_without_permission_asks_admin_and_does_not_create_channel(tmp_path):
+        env = make(tmp_path)
+>       result = provision(env, roles=())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_provisioner.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_project_provisioner.py:41: in provision
+    return env.provisioner.provision(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.project_provisioner.ProjectProvisioner object at 0x7f26b00c1d30>
+kwargs = {'guild_id': 42, 'actor_id': 7, 'actor_roles': (), 'requester_id': 7, ...}
+
+    def provision(self, **kwargs):
+>       raise NotImplementedError("provision")
+E       NotImplementedError: provision
+
+src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
+________________ test_thread_without_permission_also_asks_admin ________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_thread_without_permission0')
+
+    def test_thread_without_permission_also_asks_admin(tmp_path):
+        env = make(tmp_path, CodeModeConfig(roles=RolePolicy(can_start_thread=("@dev",))))
+>       result = provision(env, mode=ProjectMode.THREAD, roles=())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_provisioner.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_project_provisioner.py:41: in provision
+    return env.provisioner.provision(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.project_provisioner.ProjectProvisioner object at 0x7f26b03139d0>
+kwargs = {'guild_id': 42, 'actor_id': 7, 'actor_roles': (), 'requester_id': 7, ...}
+
+    def provision(self, **kwargs):
+>       raise NotImplementedError("provision")
+E       NotImplementedError: provision
+
+src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
+____________________ test_full_channel_cap_offers_a_thread _____________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_full_channel_cap_offers_a0')
+
+    def test_full_channel_cap_offers_a_thread(tmp_path):
+        env = make(tmp_path, CodeModeConfig(max_open_projects=1))
+        env.ledger.create_project(
+            guild_id=GUILD,
+            requester_id=ACTOR,
+            mode=ProjectMode.CHANNEL,
+            state=ProjectState.RUNNING,
+            slug="otro",
+            title_plain="Otro",
+        )
+>       result = provision(env)
+                 ^^^^^^^^^^^^^^
+
+tests/test_project_provisioner.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_project_provisioner.py:41: in provision
+    return env.provisioner.provision(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.project_provisioner.ProjectProvisioner object at 0x7f26affd87d0>
+kwargs = {'guild_id': 42, 'actor_id': 7, 'actor_roles': ('@dev',), 'requester_id': 7, ...}
+
+    def provision(self, **kwargs):
+>       raise NotImplementedError("provision")
+E       NotImplementedError: provision
+
+src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
+_______________ test_missing_manage_channels_degrades_to_thread ________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_missing_manage_channels_d0')
+
+    def test_missing_manage_channels_degrades_to_thread(tmp_path):
+        env = make(tmp_path, manage_channels=False)
+>       result = provision(env)
+                 ^^^^^^^^^^^^^^
+
+tests/test_project_provisioner.py:98: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_project_provisioner.py:41: in provision
+    return env.provisioner.provision(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.project_provisioner.ProjectProvisioner object at 0x7f26aff38c30>
+kwargs = {'guild_id': 42, 'actor_id': 7, 'actor_roles': ('@dev',), 'requester_id': 7, ...}
+
+    def provision(self, **kwargs):
+>       raise NotImplementedError("provision")
+E       NotImplementedError: provision
+
+src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
+____________ test_channel_is_unique_and_opens_an_unbounded_session _____________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_channel_is_unique_and_ope0')
+
+    def test_channel_is_unique_and_opens_an_unbounded_session(tmp_path):
+        env = make(tmp_path)
+>       first = provision(env, title="Reservas API")
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_provisioner.py:116: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_project_provisioner.py:41: in provision
+    return env.provisioner.provision(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.project_provisioner.ProjectProvisioner object at 0x7f26aff396e0>
+kwargs = {'guild_id': 42, 'actor_id': 7, 'actor_roles': ('@dev',), 'requester_id': 7, ...}
+
+    def provision(self, **kwargs):
+>       raise NotImplementedError("provision")
+E       NotImplementedError: provision
+
+src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
+__________________ test_thread_mode_uses_the_projects_channel __________________
+
+tmp_path = PosixPath('<tmp>/pytest-of-box/pytest-44/test_thread_mode_uses_the_proj0')
+
+    def test_thread_mode_uses_the_projects_channel(tmp_path):
+        env = make(tmp_path)
+>       result = provision(env, mode=ProjectMode.THREAD, roles=())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_project_provisioner.py:144: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_project_provisioner.py:41: in provision
+    return env.provisioner.provision(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.project_provisioner.ProjectProvisioner object at 0x7f26affa0b90>
+kwargs = {'guild_id': 42, 'actor_id': 7, 'actor_roles': (), 'requester_id': 7, ...}
+
+    def provision(self, **kwargs):
+>       raise NotImplementedError("provision")
+E       NotImplementedError: provision
+
+src/universal_bot/code_mode/project_provisioner.py:29: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_project_provisioner.py::test_role_without_permission_asks_admin_and_does_not_create_channel - NotImplementedError: provision
+FAILED tests/test_project_provisioner.py::test_thread_without_permission_also_asks_admin - NotImplementedError: provision
+FAILED tests/test_project_provisioner.py::test_full_channel_cap_offers_a_thread - NotImplementedError: provision
+FAILED tests/test_project_provisioner.py::test_missing_manage_channels_degrades_to_thread - NotImplementedError: provision
+FAILED tests/test_project_provisioner.py::test_channel_is_unique_and_opens_an_unbounded_session - NotImplementedError: provision
+FAILED tests/test_project_provisioner.py::test_thread_mode_uses_the_projects_channel - NotImplementedError: provision
+6 failed in 0.11s

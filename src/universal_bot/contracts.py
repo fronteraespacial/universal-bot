@@ -16,6 +16,7 @@ class JobStatus(str, Enum):
     CANCELLED = "cancelled"
     TIMED_OUT = "timed_out"
     INTERRUPTED = "interrupted"
+    WAITING_HUMAN = "waiting_human"
 
     def is_terminal(self) -> bool:
         return self in {
@@ -24,6 +25,7 @@ class JobStatus(str, Enum):
             JobStatus.CANCELLED,
             JobStatus.TIMED_OUT,
             JobStatus.INTERRUPTED,
+            JobStatus.WAITING_HUMAN,
         }
 
 
@@ -123,3 +125,31 @@ class RoutingDecision:
     model: str
     reason: str
     allowed_fallback: bool = False
+
+
+class Tier(str, Enum):
+    T0 = "T0"
+    T1 = "T1"
+    T2 = "T2"
+    T3 = "T3"
+
+
+class WorkType(str, Enum):
+    GREENFIELD = "greenfield"
+    EVOLVING_PRODUCT = "evolving-product"
+    LEGACY_APP = "legacy-app"
+    OPS_DIAGNOSTIC = "ops-diagnostic"
+
+
+@dataclass(frozen=True)
+class TriageInput:
+    text: str
+    mentioned_paths: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class TriageDecision:
+    tier: Tier
+    worktype: WorkType
+    is_code: bool
+    signals: tuple[str, ...]

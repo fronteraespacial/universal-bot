@@ -1,0 +1,65 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_build_orchestrator_uses_a_warm_main_and_sandboxed_workers ________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_build_orchestrator_uses_a_warm_main_and_sandboxed_workers(tmp_path):
+        runner = LabRunner(clock=FakeClock(T0), lab_root=tmp_path / "labs", routing_policy=policy(tmp_path))
+        config = CodeModeConfig(main_enabled=True, main_cli="grok", main_model="grok-4.7")
+>       orch = build_orchestrator(FakeClock(T0), tmp_path / "mode.sqlite", config, runner, main_root=tmp_path / "main")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_wiring.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<universal_bot.code_mode.clock.FakeClock object at 0x7f5e66efd450>, PosixPath('<ruta> env_extra=(), role_map=()), <universal_bot.code_mode.lab_runner.LabRunner object at 0x7f5e66d09fd0>)
+kwargs = {'main_root': PosixPath('<ruta>')}
+
+    def build_orchestrator(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/labcode_runtime.py:214: NotImplementedError
+__________________ test_build_orchestrator_is_off_by_default ___________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_build_orchestrator_is_off_by_default(tmp_path):
+        runner = LabRunner(clock=FakeClock(T0), lab_root=tmp_path / "labs", routing_policy=policy(tmp_path))
+>       assert build_orchestrator(FakeClock(T0), tmp_path / "mode.sqlite", CodeModeConfig(), runner) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_wiring.py:28: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<universal_bot.code_mode.clock.FakeClock object at 0x7f5e66afd5b0>, PosixPath('<ruta> env_extra=(), role_map=()), <universal_bot.code_mode.lab_runner.LabRunner object at 0x7f5e66ca3250>)
+kwargs = {}
+
+    def build_orchestrator(*args, **kwargs):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/labcode_runtime.py:214: NotImplementedError
+____________________ test_main_loop_passes_the_orchestrator ____________________
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f5e66afe780>
+
+    def test_main_loop_passes_the_orchestrator(tmp_path, monkeypatch):
+        seen = {}
+        monkeypatch.setenv("UBLAB_CONFIG", "")
+        monkeypatch.setattr("universal_bot.labcode_runtime.build_orchestrator", lambda *a, **k: "ORCH")
+        monkeypatch.setattr("universal_bot.labcode_runtime.run_once", lambda *a, **k: seen.update(k))
+        main(["--spool", str(tmp_path / "spool"), "--once", "--db", str(tmp_path / "m.sqlite")])
+>       assert seen.get("orchestrator") == "ORCH"
+E       AssertionError: assert None == 'ORCH'
+E        +  where None = <built-in method get of dict object at 0x7f5e66b16200>('orchestrator')
+E        +    where <built-in method get of dict object at 0x7f5e66b16200> = {'db_path': PosixPath('<ruta>'), 'clock': <universal_b...out_s=900.0, maverick_timeout_s=300.0, lab_root='', routing_policy='', allow_network=False, env_extra=(), role_map=())}.get
+
+tests/test_main_wiring.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_main_wiring.py::test_build_orchestrator_uses_a_warm_main_and_sandboxed_workers
+FAILED tests/test_main_wiring.py::test_build_orchestrator_is_off_by_default
+FAILED tests/test_main_wiring.py::test_main_loop_passes_the_orchestrator - As...
+3 failed in 0.10s

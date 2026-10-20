@@ -1,0 +1,292 @@
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+_______ test_sidecar_turn_sends_steer_and_cancel_files_and_keeps_history _______
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7b3b8a9810>
+
+    def test_sidecar_turn_sends_steer_and_cancel_files_and_keeps_history(tmp_path, monkeypatch):
+>       session = _sidecar(tmp_path, monkeypatch)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:47: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:28: in _sidecar
+    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.main_brains.SidecarSession object at 0x7f7b3c432f90>
+a = (PosixPath('<ruta>'),)
+k = {'workdir': PosixPath('<ruta>'), 'model': 'composer-2.5', 'key_file': PosixPath('<ruta>')}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:6: NotImplementedError
+_________________ test_sidecar_steer_is_live_while_a_turn_runs _________________
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7b3b8a8fc0>
+
+    def test_sidecar_steer_is_live_while_a_turn_runs(tmp_path, monkeypatch):
+>       session = _sidecar(tmp_path, monkeypatch, mode="slow")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:28: in _sidecar
+    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.main_brains.SidecarSession object at 0x7f7b3b88e5d0>
+a = (PosixPath('<ruta>'),)
+k = {'workdir': PosixPath('<ruta>'), 'model': 'composer-2.5', 'key_file': PosixPath('<ruta>')}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:6: NotImplementedError
+___________________ test_sidecar_cancel_file_stops_the_turn ____________________
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7b3b645370>
+
+    def test_sidecar_cancel_file_stops_the_turn(tmp_path, monkeypatch):
+>       session = _sidecar(tmp_path, monkeypatch, mode="slow")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:28: in _sidecar
+    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.main_brains.SidecarSession object at 0x7f7b3b88e850>
+a = (PosixPath('<ruta>'),)
+k = {'workdir': PosixPath('<ruta>'), 'model': 'composer-2.5', 'key_file': PosixPath('<ruta>')}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:6: NotImplementedError
+_______________ test_sidecar_usage_limit_is_reported_as_fallback _______________
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7b3b85f790>
+
+    def test_sidecar_usage_limit_is_reported_as_fallback(tmp_path, monkeypatch):
+>       session = _sidecar(tmp_path, monkeypatch, mode="rate")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:86: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:28: in _sidecar
+    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.main_brains.SidecarSession object at 0x7f7b3b8a8fc0>
+a = (PosixPath('<ruta>'),)
+k = {'workdir': PosixPath('<ruta>'), 'model': 'composer-2.5', 'key_file': PosixPath('<ruta>')}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:6: NotImplementedError
+__________________ test_cursor_agent_main_relaunches_on_steer __________________
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7b3b904380>
+
+    def test_cursor_agent_main_relaunches_on_steer(tmp_path, monkeypatch):
+>       session = _agent(tmp_path, monkeypatch)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:99: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:95: in _agent
+    return RelaunchSession(lambda prompt: [sys.executable, str(AGENT), "--model", "grok-4.7-high-fast", prompt], cwd=tmp_path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.main_brains.RelaunchSession object at 0x7f7b3c433a10>
+a = (<function _agent.<locals>.<lambda> at 0x7f7b3b639760>,)
+k = {'cwd': PosixPath('<ruta>')}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:11: NotImplementedError
+__________________ test_fallback_session_switches_and_sticks ___________________
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7b3b60c650>
+
+    def test_fallback_session_switches_and_sticks(tmp_path, monkeypatch):
+>       primary = _sidecar(tmp_path, monkeypatch, mode="rate")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:117: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:28: in _sidecar
+    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.main_brains.SidecarSession object at 0x7f7b3b8aa9e0>
+a = (PosixPath('<ruta>'),)
+k = {'workdir': PosixPath('<ruta>'), 'model': 'composer-2.5', 'key_file': PosixPath('<ruta>')}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:6: NotImplementedError
+______________ test_fallback_session_does_not_fall_back_on_cancel ______________
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7b3b60ca50>
+
+    def test_fallback_session_does_not_fall_back_on_cancel(tmp_path, monkeypatch):
+>       primary = _sidecar(tmp_path, monkeypatch, mode="slow")
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:129: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:28: in _sidecar
+    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.main_brains.SidecarSession object at 0x7f7b3c3b1130>
+a = (PosixPath('<ruta>'),)
+k = {'workdir': PosixPath('<ruta>'), 'model': 'composer-2.5', 'key_file': PosixPath('<ruta>')}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:6: NotImplementedError
+____________ test_select_prefers_cursor_sdk_with_grok_warm_fallback ____________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_select_prefers_cursor_sdk_with_grok_warm_fallback(tmp_path):
+>       session = _select(tmp_path)()
+                  ^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:153: in _select
+    return select_main_session(config, cwd=tmp_path, sidecar=launcher, key_file=None, quota=Quota(quota))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', dura...ut_s=900.0, maverick_timeout_s=300.0, lab_root='', routing_policy='', allow_network=False, env_extra=(), role_map=()),)
+k = {'cwd': PosixPath('<ruta>'), 'sidecar': PosixPath('<ruta>'), 'key_file': None, 'quota': <test_main_brains.Quota object at 0x7f7b3c1616a0>}
+
+    def select_main_session(*a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:20: NotImplementedError
+____________ test_select_low_grok_quota_falls_back_to_cursor_agent _____________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_select_low_grok_quota_falls_back_to_cursor_agent(tmp_path):
+>       session = _select(tmp_path, quota=0.40)()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:153: in _select
+    return select_main_session(config, cwd=tmp_path, sidecar=launcher, key_file=None, quota=Quota(quota))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', dura...ut_s=900.0, maverick_timeout_s=300.0, lab_root='', routing_policy='', allow_network=False, env_extra=(), role_map=()),)
+k = {'cwd': PosixPath('<ruta>'), 'sidecar': PosixPath('<ruta>'), 'key_file': None, 'quota': <test_main_brains.Quota object at 0x7f7b3b88efd0>}
+
+    def select_main_session(*a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:20: NotImplementedError
+____________ test_select_without_sidecar_uses_grok_or_cursor_agent _____________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_select_without_sidecar_uses_grok_or_cursor_agent(tmp_path):
+>       assert isinstance(_select(tmp_path, launcher=tmp_path / "no-hay")(), GrokAcp)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_main_brains.py:172: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_main_brains.py:153: in _select
+    return select_main_session(config, cwd=tmp_path, sidecar=launcher, key_file=None, quota=Quota(quota))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+a = (CodeModeConfig(enabled=True, propose_tiers=('T2', 'T3'), default_mode='ask', sticky=True, default_duration='4h', dura...ut_s=900.0, maverick_timeout_s=300.0, lab_root='', routing_policy='', allow_network=False, env_extra=(), role_map=()),)
+k = {'cwd': PosixPath('<ruta>'), 'sidecar': PosixPath('<ruta>'), 'key_file': None, 'quota': <test_main_brains.Quota object at 0x7f7b3b88f250>}
+
+    def select_main_session(*a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:20: NotImplementedError
+_________________ test_warm_brain_steers_the_sidecar_main_live _________________
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7f7b3b6586e0>
+
+    def test_warm_brain_steers_the_sidecar_main_live(tmp_path, monkeypatch):
+        brain = WarmBrain(lambda: _sidecar(tmp_path, monkeypatch, mode="slow"), timeout_s=10)
+>       brain.submit("job-1", "arrancá")
+
+tests/test_main_brains.py:179: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/universal_bot/code_mode/orchestrator.py:210: in submit
+    self._launch(key, text)
+src/universal_bot/code_mode/orchestrator.py:216: in _launch
+    session = self.session_factory()
+              ^^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_brains.py:178: in <lambda>
+    brain = WarmBrain(lambda: _sidecar(tmp_path, monkeypatch, mode="slow"), timeout_s=10)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_main_brains.py:28: in _sidecar
+    return SidecarSession(SIDECAR, workdir=tmp_path / "main", model="composer-2.5", key_file=tmp_path / "key", **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <universal_bot.code_mode.main_brains.SidecarSession object at 0x7f7b3b905590>
+a = (PosixPath('<ruta>'),)
+k = {'workdir': PosixPath('<ruta>'), 'model': 'composer-2.5', 'key_file': PosixPath('<ruta>')}
+
+    def __init__(self, *a, **k):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/main_brains.py:6: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_main_brains.py::test_sidecar_turn_sends_steer_and_cancel_files_and_keeps_history
+FAILED tests/test_main_brains.py::test_sidecar_steer_is_live_while_a_turn_runs
+FAILED tests/test_main_brains.py::test_sidecar_cancel_file_stops_the_turn - N...
+FAILED tests/test_main_brains.py::test_sidecar_usage_limit_is_reported_as_fallback
+FAILED tests/test_main_brains.py::test_cursor_agent_main_relaunches_on_steer
+FAILED tests/test_main_brains.py::test_fallback_session_switches_and_sticks
+FAILED tests/test_main_brains.py::test_fallback_session_does_not_fall_back_on_cancel
+FAILED tests/test_main_brains.py::test_select_prefers_cursor_sdk_with_grok_warm_fallback
+FAILED tests/test_main_brains.py::test_select_low_grok_quota_falls_back_to_cursor_agent
+FAILED tests/test_main_brains.py::test_select_without_sidecar_uses_grok_or_cursor_agent
+FAILED tests/test_main_brains.py::test_warm_brain_steers_the_sidecar_main_live
+11 failed in 0.12s

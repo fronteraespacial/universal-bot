@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+______________ ERROR collecting tests/test_cursor_sdk_adapter.py _______________
+tests/test_cursor_sdk_adapter.py:172: in <module>
+    (outcome(True, text="OK"), "cursor-sdk", "OK", 0),
+     ^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_cursor_sdk_adapter.py:166: in outcome
+    return SdkOutcome(ok=ok, text=text, code=code, fallback=fallback, usage=None, run_id=None, duration_ms=None, events=())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/universal_bot/code_mode/cursor_sdk.py:27: in __init__
+    raise NotImplementedError
+E   NotImplementedError
+=========================== short test summary info ============================
+ERROR tests/test_cursor_sdk_adapter.py - NotImplementedError
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.12s

@@ -1,0 +1,10 @@
+{
+  "name": "cursor-sdk-sidecar",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Sidecar Node que expone @cursor/sdk por stdin JSON / stdout JSONL",
+  "engines": { "node": ">=22.13" },
+  "dependencies": { "@cursor/sdk": "1.0.40" },
+  "scripts": { "test": "bin/cursor-sdk-sidecar --exec-node --test --test-timeout=20000 test/*.test.mjs" }
+}

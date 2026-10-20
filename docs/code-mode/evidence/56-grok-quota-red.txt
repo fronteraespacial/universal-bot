@@ -1,0 +1,20 @@
+
+==================================== ERRORS ====================================
+__________________ ERROR collecting tests/test_grok_quota.py ___________________
+ImportError while importing test module '<ruta>'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.13/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_grok_quota.py:9: in <module>
+    from universal_bot.code_mode.grok_quota import parse_usage_screen, probe_grok_usage, write_quota_file
+E   ModuleNotFoundError: No module named 'universal_bot.code_mode.grok_quota'
+=========================== short test summary info ============================
+ERROR tests/test_grok_quota.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.17s
+FAILED tests/test_cli_adapters.py::test_quota_switches_to_cursor_at_forty_percent[reader4-expected4]
+FAILED tests/test_cli_adapters.py::test_file_reader_rejects_stale_data - Type...
+FAILED tests/test_main_brains.py::test_select_without_sidecar_uses_grok_or_cursor_agent
+3 failed, 25 passed in 1.27s

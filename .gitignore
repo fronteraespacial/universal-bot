@@ -12,6 +12,7 @@ instances/*/
 !instances/README.md
 config/instance.toml
 config/instance.local.toml
+config/local.yaml
 
 # Runtime
 __pycache__/
@@ -35,3 +36,9 @@ state/
 jobs/
 workspaces/
 locks/
+
+# Python local
+.venv/
+*.egg-info/
+__pycache__/
+.pytest_cache/

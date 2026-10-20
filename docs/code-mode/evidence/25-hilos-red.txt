@@ -1,0 +1,22 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert [{'version': ... False}, ...}] == []
+      
+      Left contains 2 more items, first extra item: {'version': 1, 'op_id': '20261020T183501-0002-send', 'op': 'send', 'allowed_mentions': {'parse': [], 'replied_user': False}, ...}
+      Use -v to get more diff
+<repo>/tests/test_stage_delivery.py:106: AssertionError: assert [{'version': ... False}, ...}] == []
+E   AssertionError: assert [{'version': ... False}, ...}] == []
+      
+      Left contains 2 more items, first extra item: {'version': 1, 'op_id': '20261020T183501-0002-send', 'op': 'send', 'allowed_mentions': {'parse': [], 'replied_user': False}, ...}
+      Use -v to get more diff
+<repo>/tests/test_stage_delivery.py:106: AssertionError: assert [{'version': ... False}, ...}] == []
+E   AssertionError: assert [{'version': ... False}, ...}] == []
+      
+      Left contains 2 more items, first extra item: {'version': 1, 'op_id': '20261020T183501-0002-send', 'op': 'send', 'allowed_mentions': {'parse': [], 'replied_user': False}, ...}
+      Use -v to get more diff
+<repo>/tests/test_stage_delivery.py:119: AssertionError: assert [{'version': ... False}, ...}] == []
+=========================== short test summary info ============================
+FAILED tests/test_stage_delivery.py::test_without_a_thread_result_the_channel_gets_zero_technical_sends[None]
+FAILED tests/test_stage_delivery.py::test_without_a_thread_result_the_channel_gets_zero_technical_sends[False]
+FAILED tests/test_stage_delivery.py::test_detail_goes_to_the_thread_when_the_result_arrives
+3 failed in 0.06s

@@ -1,0 +1,38 @@
+.....FF                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_start_dismisses_the_verbosity_notice_and_mid_turn_steer_is_sent_immediately _
+
+tmp_path = PosixPath('<ruta>')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x7fbedaedb850>
+
+    def test_start_dismisses_the_verbosity_notice_and_mid_turn_steer_is_sent_immediately(tmp_path, monkeypatch):
+        log = tmp_path / "keys.log"
+        monkeypatch.setenv("FAKE_AGY_LOG", str(log))
+        s = AgyTuiSession([sys.executable, str(RAW)], cwd=tmp_path, settle_s=0.4)
+        s.start()
+        try:
+>           assert "aviso cerrado" in s.screen(), "el adaptador cierra el aviso de Verbosity"
+E           AssertionError: el adaptador cierra el aviso de Verbosity
+E           assert 'aviso cerrado' in 'Antigravity CLI (fake raw)\n┃ Verbosity now defaults to medium\n┃ esc to dismiss\n───────────────────────────────────...lash · low\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n'
+E            +  where 'Antigravity CLI (fake raw)\n┃ Verbosity now defaults to medium\n┃ esc to dismiss\n───────────────────────────────────...lash · low\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n' = screen()
+E            +    where screen = <universal_bot.code_mode.agy_tui.AgyTuiSession object at 0x7fbedaea3100>.screen
+
+tests/test_agy_tui.py:85: AssertionError
+______________ test_select_main_session_wires_agy_through_the_tui ______________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_select_main_session_wires_agy_through_the_tui(tmp_path):
+        from universal_bot.code_mode.config import CodeModeConfig
+        from universal_bot.code_mode.main_brains import select_main_session
+        session = select_main_session(CodeModeConfig(main_enabled=True, main_cli="agy", main_model="gemini-3.8-flash-low"),
+                                      cwd=tmp_path, sidecar=None, key_file=None, quota=None)()
+>       assert isinstance(session, AgyTuiSession)
+E       assert False
+E        +  where False = isinstance(<AgyStream cli=agy model=gemini-3.8-flash-low pid=None>, AgyTuiSession)
+
+tests/test_agy_tui.py:106: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_agy_tui.py::test_start_dismisses_the_verbosity_notice_and_mid_turn_steer_is_sent_immediately
+FAILED tests/test_agy_tui.py::test_select_main_session_wires_agy_through_the_tui
+2 failed, 5 passed in 5.69s
