@@ -1,0 +1,33 @@
+F.....                                                                   [100%]
+=================================== FAILURES ===================================
+_____ test_string_thread_id_from_the_bridge_flushes_the_detail_once[501_0] _____
+
+tmp_path = PosixPath('<ruta>')
+raw_id = '501'
+
+    @pytest.mark.parametrize("raw_id", (str(THREAD_ID), THREAD_ID))
+    def test_string_thread_id_from_the_bridge_flushes_the_detail_once(tmp_path, raw_id):
+        spool = make_spool(tmp_path / "spool")
+        clock = FakeClock(T0)
+        db = tmp_path / "mode.sqlite"
+    
+        def sleeper(_seconds):
+            clock.advance(seconds=1)
+    
+        StageRouter(port(spool, clock, sleeper), db_path=db).post(project(), "02-lab", DETAIL)
+        thread = _thread_op(spool)
+        result = {"version": 1, "op_id": thread["op_id"], "ok": True, "ts": 1.0, "thread_id": raw_id}
+        (spool / "outbox" / f"{thread['op_id']}.result.json").write_text(json.dumps(result), encoding="utf-8")
+        StageRouter(port(spool, clock, sleeper), db_path=db).flush_pending()
+        StageRouter(port(spool, clock, sleeper), db_path=db).flush_pending()
+        delivered = [b for b in sends(spool) if b.get("content") == DETAIL]
+>       assert [b["channel_id"] for b in delivered] == [THREAD_ID]
+E       assert [] == [501]
+E         
+E         Right contains one more item: 501
+E         Use -v to get more diff
+
+tests/test_stage_delivery_bridge_ids.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_stage_delivery_bridge_ids.py::test_string_thread_id_from_the_bridge_flushes_the_detail_once[501_0]
+1 failed, 5 passed in 0.08s
