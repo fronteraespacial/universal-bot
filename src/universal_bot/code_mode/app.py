@@ -260,7 +260,12 @@ class CodeModeApp:
         return question is not None and question.answer == "seguir"
 
     def _say(self, job, content: str):
-        self.discord.send(job.channel_id, content, thread_id=job.thread_id)
+        self.discord.send(
+            job.channel_id,
+            content,
+            thread_id=job.thread_id,
+            reply_to=job.reply_to_message_id,
+        )
 
     def _fresh_op_ids(self) -> list[str]:
         ops = getattr(self.discord, "op_ids", None)
