@@ -648,11 +648,34 @@ class OpenCodeServe(_WarmBase):
         if turn is None:
             return
         if kind == "session.text.delta":
-            self._on_chunk(str(props.get("delta") or props.get("text") or ""))
+            piece = props.get("delta") or props.get("text")
+            if isinstance(piece, str):
+                self._on_chunk(piece)
+            else:
+                # forma desconocida: cuenta como primer token; el texto sale de los mensajes al final
+                if turn.first is None:
+                    turn.first = time.monotonic()
+                self.streamed_chars += 1
         elif kind == "session.execution.succeeded":
+            final = self._last_assistant_text()
+            if final is not None:
+                turn.chunks = [final]
             turn.finish("completed")
         elif kind == "session.execution.failed":
             turn.finish("cancelled" if turn.cancel_requested else "failed", None if turn.cancel_requested else "failed")
+
+    def _last_assistant_text(self) -> str | None:
+        """El texto final autoritativo: el mensaje assistant más nuevo (la API lista del más nuevo al más viejo)."""
+        try:
+            res = self._http("GET", f"/api/session/{self.session_id}/message", timeout=10)
+        except WarmError:
+            return None
+        for message in (res or {}).get("data") or []:
+            if message.get("type") != "assistant":
+                continue
+            parts = [c.get("text", "") for c in message.get("content") or [] if c.get("type") == "text"]
+            return "".join(parts)
+        return None
 
     def _send_prompt(self, turn, text):
         self._http("POST", f"/api/session/{self.session_id}/prompt", {"text": text})
