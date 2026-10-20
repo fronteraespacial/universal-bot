@@ -1,0 +1,4 @@
+Proponé alternativas. No decidas el camino.
+Contexto: pasemos a modo código: ¿se puede transcribir rápido videos en inglés de SpaceX?
+Terminá con una sola línea final:
+MAVERICK_RESULT: {"alternatives":[{"name":"...","idea":"...","pros":"...","cons":"...","cost":"...","verdict":"YIELD"}],"recommendation":"..."}

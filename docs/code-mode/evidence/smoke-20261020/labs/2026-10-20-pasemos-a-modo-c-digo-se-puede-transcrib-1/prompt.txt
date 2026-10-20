@@ -1,0 +1,4 @@
+Probá esta hipótesis en este directorio y en ningún otro.
+Hipótesis: pasemos a modo código: ¿se puede transcribir rápido videos en inglés de SpaceX?
+Terminá con una sola línea final, sin texto después:
+LAB_RESULT: {"hypothesis":"...","commands":["..."],"result":"...","artifacts":["..."],"verdict":"APPROVE|REVISE|REJECT|YIELD|INCONCLUSIVE","evidence_class":"running|paper"}
