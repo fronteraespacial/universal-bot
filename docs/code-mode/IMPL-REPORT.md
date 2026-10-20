@@ -195,13 +195,13 @@ Los feat de 27 y 29 quedaron después del de 30. El código ya estaba verde; los
 
 - Filesystem de solo lectura: `/usr`, `/bin`, `/lib`, `/lib64` y `/etc` entero (no un recorte de certs).
 - Escritura solo en el labdir (`--bind`). `/tmp` es tmpfs y va antes del bind, porque el lab suele vivir bajo `/tmp`.
-- `HOME` es el labdir. `--unshare-all`, `--die-with-parent`, `--chdir` al labdir.
+- `HOME` es un tmpfs (`--tmpfs $HOME`): el home real queda tapado. `--unshare-all`, `--die-with-parent`, `--chdir` al labdir.
 - Sin red por default. Un `python -c` adentro no lee un archivo fuera del labdir y no abre un socket.
 
 No aísla esto:
 
 - No hay allowlist de hosts. `--share-net` comparte toda la red o no comparte ninguna.
-- grok, cursor-agent y opencode reciben `--share-net` siempre, más binds de solo lectura del binario y del directorio de credenciales si existen (`~/.grok`, o `~/.cursor` y `~/.config/cursor`). Esas credenciales se leen desde el sandbox. El resto del home no se monta.
+- grok, cursor-agent y opencode reciben `--share-net` siempre. La config del CLI entra como overlay efímero copy-on-write (`--overlay-src X --tmp-overlay X`): `~/.grok`; `~/.cursor` y `~/.config/cursor` (más `~/.local/share/cursor-agent` de solo lectura); `~/.local/share/opencode` y `~/.config/opencode` (más `~/.opencode` de solo lectura). Lo que el CLI escribe ahí se descarta al salir, pero las credenciales se leen desde el sandbox. El binario entra por su realpath. El resto del home no se monta.
 - `lab.allow_network` o `--lab-allow-network` prenden `--share-net` también para el comando genérico.
 
 ### Servicio
@@ -232,3 +232,55 @@ La cuota de producción lee un JSON (`grok_remaining`) con `FileQuotaReader`. No
 6. El aviso de «no tenés permiso» sigue siendo efímero. El puente no tiene esa op.
 7. El pin necesita el id que devuelve el puente. Sin result no se encola.
 8. No se tocó `<fe-bot>`, no hay token y esta sesión no arrancó el runtime contra el spool real.
+
+## Fase 3b: warm, MAIN orquestador y humos
+
+| Unidad | test | feat | Evidencia |
+| --- | --- | --- | --- |
+| 34 lab sin evidencia válida pregunta; job roto no tumba el runtime | `05bf0f2` | `ca7f83b` | `34-*` |
+| 35 HOME tmpfs y overlays por CLI | `fc2a748` | `f4076e7` | `35-*` |
+| 36 modo warm de 4 CLIs con pool | `49f298c` | `e2941f4` | `36-*` |
+| 37 ids string del puente real | `9b2578b` | `0389c47` | `37-*` |
+| 38 botones reales en el runtime diferido, heartbeat en hilo | `817cecb` | `98c79ec` | `38-*` |
+| 39 opencode toma el texto final de los mensajes | `76a3a5c` | `84cf8dc` | `39-*` |
+| 40/41 agy ERROR/interrupted y carrera de resume | `0de1a9f` | `acd3d53`, `fcd93a0` | `40-*`, `41-*` |
+| 42 grok steer en vivo por `_x.ai/interject` | `cd4f5c8` | `e4211c0` | `42-*` |
+| 43 MAIN orquestador | `03b1fb3` | `38bd5f6` | `43-*` |
+| 44 runtime arma MAIN y workers | `980d9c0` | `e34a7ff`, `3249a2a` | `44-*` |
+
+### Modo warm
+
+`code_mode/warm.py` tiene una interfaz común (`start`, `prompt`, `steer`, `cancel`, `close`) y capacidades declaradas (`supports_live_steer`). `WarmPool` mantiene un proceso por (cli, modelo), con idle timeout, como máximo un reinicio (después avisa `restart_exhausted`) y fallback a one-shot.
+
+| CLI | Proceso | Steer | Arranque | OK 1 | OK 2 |
+| --- | --- | --- | --- | --- | --- |
+| codex (gpt-6-luna) | `codex app-server` | en vivo (`turn/steer`) | 0.81 s | 4.23 s | 2.00 s |
+| opencode (nemotron free) | `opencode serve` | en vivo (delivery steer) | 1.26 s | 2.10 s | 0.77 s |
+| agy (gemini-3.8-flash low) | stream-json | SIGINT + resume | — | 2.81 s | 1.27–1.52 s |
+| grok (grok-4.7 low) | `grok agent stdio` (ACP) | en vivo (`_x.ai/interject`) | 0.18 s | 2.00 s | 1.89 s |
+
+Pendientes del warm:
+
+- agy: el steer real falló porque el proceso muere tras el SIGINT. Con stream-json el MAIN no queda libre. Para hacer steer a través del MAIN hace falta manejar la TUI por PTY/tmux (o evaluar `agy remote-control serve`). No está implementado.
+- opencode: el texto final real no se volvió a verificar después del fix.
+
+### MAIN orquestador
+
+Con `main.enabled`, un mensaje en una sesión con job activo no crea otro job: va al MAIN de esa sesión. El MAIN es un cerebro warm (por default grok-4.7 low) con un prompt de orquestador. Delega siempre, contesta corto y termina con `ACCION: {tipo: ninguna|steer|relanzar|frenar}`.
+
+- El worker es un proceso aparte. En el runtime es el lab dentro del sandbox. Su steer es matar y relanzar con las instrucciones acumuladas.
+- Ante una corrección urgente o un pedido de frenar, el MAIN corta (`relanzar`/`frenar`) en vez de esperar, porque un steer a un subagente recién entra entre pasos.
+- La respuesta va con `reply_to` al mensaje del usuario.
+- Botón «Frenar» (`ublab:main:<job>:frenar`). «Salir» frena el job y cierra la sesión.
+- El estado vive en SQLite (`main_jobs`). Después de un crash el job se relanza una vez y, si no se puede, se avisa.
+
+Humo (`evidence/smoke-20261020/main-run*.txt`): runtime real, puente simulado, MAIN grok real y worker largo simulado. Se probaron estado, cambio de orden con relanzamiento, resultado final y Frenar (respuesta 0.1 s después del click). Hubo 0 duplicados y el outbox quedó vacío. La latencia del MAIN fue de 2 a 10 s.
+
+### Qué falta para prender el toggle (además de lo de arriba)
+
+1. El MAIN publica en el canal o hilo de la sesión, pero no pasa por el pipeline de hilos de etapa (lab/plan). El resultado del worker lo resume el MAIN.
+2. El cerebro del MAIN con cursor-sdk (`run.steer`) no está cableado. Hoy usa sesiones warm de `warm.py`. Si grok cae a 40 % o menos, hay que configurar `main.cli: cursor-agent`, que no tiene warm (habría que usar cursor-sdk).
+3. agy por TUI para hacer steer a través del MAIN.
+4. En modo canal con hilo conocido, el resumen plano también va al canal principal (el diseño actual de los tests lo pide así).
+5. `pinned_message_id` es un placeholder local: el puente no tiene unpin.
+6. Prueba en Discord real: la coordinan con Julian.
