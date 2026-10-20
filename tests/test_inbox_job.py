@@ -44,7 +44,7 @@ def sample(**overrides) -> dict:
 
 def dump_job(root: Path, payload: dict, *, prompt_txt: str | None = None) -> Path:
     job_dir = root / f"lc_{payload.get('message_id', 'x')}"
-    job_dir.mkdir()
+    job_dir.mkdir(parents=True)
     (job_dir / "job.json").write_text(json.dumps(payload), encoding="utf-8")
     if prompt_txt is not None:
         (job_dir / "prompt.txt").write_text(prompt_txt, encoding="utf-8")
