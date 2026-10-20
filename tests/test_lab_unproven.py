@@ -66,6 +66,6 @@ def test_one_broken_job_is_marked_error_and_the_next_one_runs(tmp_path, monkeypa
     broken = json.loads((first / "state.json").read_text(encoding="utf-8"))
     assert broken["status"] == "error"
     assert broken["error"] == "RuntimeError"
-    assert json.loads((second / "state.json").read_text(encoding="utf-8"))["status"] == "done"
+    assert json.loads((second / "state.json").read_text(encoding="utf-8"))["status"] == "skipped"
     again = run_once(spool, db_path=tmp_path / "mode.sqlite", clock=FakeClock(T0))
     assert again["processed"] == 0

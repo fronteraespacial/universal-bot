@@ -217,6 +217,11 @@ class CodeModeApp:
         if not outcome.launched or outcome.evidence is None:
             self._wait_sandbox(job, job_dir, project, outcome.untested_reason or "sin probar")
             return
+        evidence = outcome.evidence
+        if evidence.evidence_class != "running" or evidence.verdict != "APPROVE":
+            reason = f"sin probar: el lab terminó {evidence.verdict} ({evidence.evidence_class})"
+            self._wait_sandbox(job, job_dir, project, reason)
+            return
         project = self._move(project, ProjectState.LAB_RUNNING)
         consult = self.lab_runner.consult_maverick(
             project_id=project.id,

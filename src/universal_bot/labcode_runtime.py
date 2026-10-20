@@ -127,7 +127,12 @@ def _consume_inbox(spool: Path, clock, on_job, app) -> tuple[int, int]:
         job = load_inbox_job(job_dir)
         if on_job is not None:
             on_job(job)
-        app.handle_job(job, job_dir)
+        try:
+            app.handle_job(job, job_dir)
+        except Exception as exc:  # un job roto no tumba el runtime
+            _mark_error(job_dir, job, clock, state, exc)
+            processed += 1
+            continue
         if not _read_state(job_dir).get("status"):
             _mark_done(job_dir, job, clock, state)
         processed += 1
@@ -139,6 +144,23 @@ def _read_state(job_dir: Path) -> dict:
     if not path.is_file():
         return {}
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _mark_error(job_dir: Path, job, clock, state: dict, exc: Exception) -> None:
+    state.update(
+        {
+            "version": 1,
+            "status": "error",
+            "updated_ts": clock.now().timestamp(),
+            "summary": "falló el procesamiento del pedido",
+            "active_step": state.get("active_step"),
+            "error": type(exc).__name__,
+            "op_ids": list(state.get("op_ids") or []),
+            "location_key": job.location_key,
+            "session_key": job.session_key,
+        }
+    )
+    (job_dir / "state.json").write_text(json.dumps(state), encoding="utf-8")
 
 
 def _mark_done(job_dir: Path, job, clock, state: dict) -> None:
