@@ -1,0 +1,33 @@
+FFFFFF                                                                   [100%]
+=================================== FAILURES ===================================
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/sandbox.py:6: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/sandbox.py:6: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/sandbox.py:6: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/sandbox.py:6: NotImplementedError
+E   AssertionError: assert None is True
+     +  where None = <built-in method get of dict object at 0x7ff0c2b88900>('allow_network')
+     +    where <built-in method get of dict object at 0x7ff0c2b88900> = {}.get
+----------------------------- Captured stderr call -----------------------------
+usage: universal_bot.labcode_runtime [-h] --spool SPOOL [--once] [--db DB]
+                                     [--interval INTERVAL]
+                                     [--lab-root LAB_ROOT]
+                                     [--routing-policy ROUTING_POLICY]
+                                     [--lab-timeout LAB_TIMEOUT]
+                                     [--maverick-timeout MAVERICK_TIMEOUT]
+                                     [--max-labs MAX_LABS]
+universal_bot.labcode_runtime: error: unrecognized arguments: --lab-allow-network
+<repo>/tests/test_sandbox.py:71: AssertionError: assert None is True
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/sandbox.py:6: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_sandbox.py::test_bwrap_args_match_the_table[False-ro_binds0]
+FAILED tests/test_sandbox.py::test_bwrap_args_match_the_table[True-ro_binds1]
+FAILED tests/test_sandbox.py::test_bwrap_args_match_the_table[True-ro_binds2]
+FAILED tests/test_sandbox.py::test_bwrap_args_match_the_table[True-ro_binds3]
+FAILED tests/test_sandbox.py::test_lab_allow_network_flag_reaches_the_runner
+FAILED tests/test_sandbox.py::test_real_bwrap_hides_outside_files_and_blocks_sockets
+6 failed in 0.08s
