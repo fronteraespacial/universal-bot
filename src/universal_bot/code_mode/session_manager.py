@@ -74,8 +74,9 @@ class SessionManager:
         duration: str,
         activation: str,
         project_id: str | None = None,
+        bypass_role_check: bool = False,
     ) -> ActivateResult:
-        if not role_allowed(self.config.roles.can_activate, actor_roles):
+        if not bypass_role_check and not role_allowed(self.config.roles.can_activate, actor_roles):
             self.discord.reply_ephemeral(actor_id, ACTIVATE_FORBIDDEN)
             return ActivateResult(False, "forbidden", None)
         now = self.clock.now()
