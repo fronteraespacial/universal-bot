@@ -82,8 +82,8 @@ class StageRouter:
             result = _result_file(Path(spool), row["op_id"])
             if result is None or result.get("ok") is not True:
                 continue
-            thread_id = result.get("thread_id")
-            if isinstance(thread_id, bool) or not isinstance(thread_id, int):
+            thread_id = _bridge_id(result.get("thread_id"))
+            if thread_id is None:
                 continue
             self.discord.send(row["channel_id"], row["technical"], thread_id=thread_id)
             self._stages[(row["project_id"], row["stage_key"])] = StageView(
@@ -185,6 +185,17 @@ def _result_file(spool: Path, op_id: str | None) -> dict | None:
     if not path.is_file():
         return None
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _bridge_id(value) -> int | None:
+    """El puente escribe los ids como strings de dígitos; también se aceptan ints."""
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, int):
+        return value
+    if isinstance(value, str) and value.isdigit():
+        return int(value)
+    return None
 
 
 def render_plain(text: str) -> str:
