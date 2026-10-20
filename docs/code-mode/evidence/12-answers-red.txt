@@ -1,0 +1,116 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+____________ test_pq_click_answers_once_and_ignores_a_later_rewrite ____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_pq_click_answers_once_and0')
+
+    def test_pq_click_answers_once_and_ignores_a_later_rewrite(tmp_path):
+        clock, ledger, bridge = env(tmp_path)
+        question = bridge.ask(
+            project_id="P-1",
+            stage_key="02-lab",
+            kind="advisor_card",
+            prompt_plain="¿Seguimos?",
+            options=("seguir", "frenar"),
+            allowed_approvers=(APPROVER,),
+            job_id=None,
+            resume_token="resume-1",
+            channel_id=100,
+            thread_id=None,
+        )
+        root = spool_of(tmp_path / "spool")
+        write_answer(root, "pq", question.id, "seguir", APPROVER)
+>       first = consume_answers(root, clock=clock, ask_bridge=bridge, projects=ledger)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_answers.py:67: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spool = PosixPath('/tmp/pytest-of-box/pytest-66/test_pq_click_answers_once_and0/spool')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f01d66852b0>
+ask_bridge = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f01d6685940>
+projects = <universal_bot.code_mode.projects.ProjectLedger object at 0x7f01d6685550>
+approvals = None, role_lookup = None
+
+    def consume_answers(spool: Path, *, clock, ask_bridge=None, projects=None, approvals=None, role_lookup=None) -> tuple:
+>       raise NotImplementedError("consume_answers")
+E       NotImplementedError: consume_answers
+
+src/universal_bot/code_mode/answers.py:9: NotImplementedError
+________________________ test_prod_click_uses_the_gate _________________________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_prod_click_uses_the_gate0')
+
+    def test_prod_click_uses_the_gate(tmp_path):
+        clock, ledger, bridge = env(tmp_path)
+        project = ledger.create_project(
+            id="P-9",
+            guild_id=1,
+            requester_id=REQUESTER,
+            state=ProjectState.PENDING_PROD_APPROVAL,
+            tier="T3",
+            requires_production=True,
+        )
+        root = spool_of(tmp_path / "spool")
+        write_answer(root, "prod", project.id, "approve", REQUESTER)
+>       consume_answers(
+            root,
+            clock=clock,
+            ask_bridge=bridge,
+            projects=ledger,
+            approvals=ApprovalPolicy(),
+            role_lookup=lambda user: () if user == REQUESTER else ("@dev",),
+        )
+
+tests/test_answers.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spool = PosixPath('/tmp/pytest-of-box/pytest-66/test_prod_click_uses_the_gate0/spool')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f01d65e7250>
+ask_bridge = <universal_bot.code_mode.ask_bridge.AskBridge object at 0x7f01d65e7750>
+projects = <universal_bot.code_mode.projects.ProjectLedger object at 0x7f01d65e7390>
+approvals = ApprovalPolicy(production='requester|dev', production_t3='dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True)
+role_lookup = <function test_prod_click_uses_the_gate.<locals>.<lambda> at 0x7f01d6505f80>
+
+    def consume_answers(spool: Path, *, clock, ask_bridge=None, projects=None, approvals=None, role_lookup=None) -> tuple:
+>       raise NotImplementedError("consume_answers")
+E       NotImplementedError: consume_answers
+
+src/universal_bot/code_mode/answers.py:9: NotImplementedError
+_____________ test_stop_pauses_the_job_and_checkpoints_the_project _____________
+
+tmp_path = PosixPath('/tmp/pytest-of-box/pytest-66/test_stop_pauses_the_job_and_c0')
+
+    def test_stop_pauses_the_job_and_checkpoints_the_project(tmp_path):
+        clock, ledger, _bridge = env(tmp_path)
+        project = ledger.create_project(id="P-stop", guild_id=1, requester_id=REQUESTER, state=ProjectState.RUNNING)
+        root = spool_of(tmp_path / "spool")
+        job_dir = root / "inbox" / "lc_555"
+        job_dir.mkdir()
+        (job_dir / "job.json").write_text(json.dumps({"job_id": "job-1"}), encoding="utf-8")
+        (job_dir / "state.json").write_text(
+            json.dumps({"version": 1, "status": "running", "project_id": project.id, "op_ids": ["op-1"]}),
+            encoding="utf-8",
+        )
+        write_answer(root, "stop", "job-1", "ahora", REQUESTER)
+>       consume_answers(root, clock=clock, projects=ledger)
+
+tests/test_answers.py:139: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+spool = PosixPath('/tmp/pytest-of-box/pytest-66/test_stop_pauses_the_job_and_c0/spool')
+clock = <universal_bot.code_mode.clock.FakeClock object at 0x7f01d65e7b10>
+ask_bridge = None
+projects = <universal_bot.code_mode.projects.ProjectLedger object at 0x7f01d65502d0>
+approvals = None, role_lookup = None
+
+    def consume_answers(spool: Path, *, clock, ask_bridge=None, projects=None, approvals=None, role_lookup=None) -> tuple:
+>       raise NotImplementedError("consume_answers")
+E       NotImplementedError: consume_answers
+
+src/universal_bot/code_mode/answers.py:9: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_answers.py::test_pq_click_answers_once_and_ignores_a_later_rewrite - NotImplementedError: consume_answers
+FAILED tests/test_answers.py::test_prod_click_uses_the_gate - NotImplementedError: consume_answers
+FAILED tests/test_answers.py::test_stop_pauses_the_job_and_checkpoints_the_project - NotImplementedError: consume_answers
+3 failed in 0.08s
