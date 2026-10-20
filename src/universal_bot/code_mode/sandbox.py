@@ -38,3 +38,7 @@ def cli_ro_binds(cli: str, home: Path, binary: Path | None = None) -> tuple[tupl
         if source.exists():
             found.append((str(source), str(source)))
     return tuple(found)
+
+
+def cli_mounts(cli: str, home: Path, binary: Path | None = None):
+    raise NotImplementedError

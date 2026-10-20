@@ -1,0 +1,207 @@
+FFFFFFFF                                                                 [100%]
+=================================== FAILURES ===================================
+______________ test_home_is_a_tmpfs_with_overlays_and_exact_args _______________
+
+    def test_home_is_a_tmpfs_with_overlays_and_exact_args():
+>       command = bwrap_command(
+            "/lab", ["tool", "x"], allow_network=True, ro_binds=(("/h/.app", "/h/.app"),), home="/h", overlays=("/h/.tool",)
+        )
+E       TypeError: bwrap_command() got an unexpected keyword argument 'home'
+
+tests/test_sandbox_home.py:24: TypeError
+_________________ test_cli_mounts_per_cli[grok-ro0-overlays0] __________________
+
+tmp_path = PosixPath('<ruta>')
+cli = 'grok', ro = (), overlays = ('.grok',)
+
+    @pytest.mark.parametrize(
+        ("cli", "ro", "overlays"),
+        (
+            ("grok", (), (".grok",)),
+            ("cursor-agent", (".local/share/cursor-agent",), (".cursor", ".config/cursor")),
+            ("opencode", (".opencode",), (".local/share/opencode", ".config/opencode")),
+            ("otro", (), ()),
+        ),
+    )
+    def test_cli_mounts_per_cli(tmp_path, cli, ro, overlays):
+        home = _home(tmp_path)
+>       binds, layers = cli_mounts(cli, home)
+                        ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sandbox_home.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cli = 'grok'
+home = PosixPath('<ruta>')
+binary = None
+
+    def cli_mounts(cli: str, home: Path, binary: Path | None = None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/sandbox.py:44: NotImplementedError
+_____________ test_cli_mounts_per_cli[cursor-agent-ro1-overlays1] ______________
+
+tmp_path = PosixPath('<ruta>')
+cli = 'cursor-agent', ro = ('.local/share/cursor-agent',)
+overlays = ('.cursor', '.config/cursor')
+
+    @pytest.mark.parametrize(
+        ("cli", "ro", "overlays"),
+        (
+            ("grok", (), (".grok",)),
+            ("cursor-agent", (".local/share/cursor-agent",), (".cursor", ".config/cursor")),
+            ("opencode", (".opencode",), (".local/share/opencode", ".config/opencode")),
+            ("otro", (), ()),
+        ),
+    )
+    def test_cli_mounts_per_cli(tmp_path, cli, ro, overlays):
+        home = _home(tmp_path)
+>       binds, layers = cli_mounts(cli, home)
+                        ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sandbox_home.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cli = 'cursor-agent'
+home = PosixPath('<ruta>')
+binary = None
+
+    def cli_mounts(cli: str, home: Path, binary: Path | None = None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/sandbox.py:44: NotImplementedError
+_______________ test_cli_mounts_per_cli[opencode-ro2-overlays2] ________________
+
+tmp_path = PosixPath('<ruta>')
+cli = 'opencode', ro = ('.opencode',)
+overlays = ('.local/share/opencode', '.config/opencode')
+
+    @pytest.mark.parametrize(
+        ("cli", "ro", "overlays"),
+        (
+            ("grok", (), (".grok",)),
+            ("cursor-agent", (".local/share/cursor-agent",), (".cursor", ".config/cursor")),
+            ("opencode", (".opencode",), (".local/share/opencode", ".config/opencode")),
+            ("otro", (), ()),
+        ),
+    )
+    def test_cli_mounts_per_cli(tmp_path, cli, ro, overlays):
+        home = _home(tmp_path)
+>       binds, layers = cli_mounts(cli, home)
+                        ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sandbox_home.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cli = 'opencode'
+home = PosixPath('<ruta>')
+binary = None
+
+    def cli_mounts(cli: str, home: Path, binary: Path | None = None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/sandbox.py:44: NotImplementedError
+_________________ test_cli_mounts_per_cli[otro-ro3-overlays3] __________________
+
+tmp_path = PosixPath('<ruta>')
+cli = 'otro', ro = (), overlays = ()
+
+    @pytest.mark.parametrize(
+        ("cli", "ro", "overlays"),
+        (
+            ("grok", (), (".grok",)),
+            ("cursor-agent", (".local/share/cursor-agent",), (".cursor", ".config/cursor")),
+            ("opencode", (".opencode",), (".local/share/opencode", ".config/opencode")),
+            ("otro", (), ()),
+        ),
+    )
+    def test_cli_mounts_per_cli(tmp_path, cli, ro, overlays):
+        home = _home(tmp_path)
+>       binds, layers = cli_mounts(cli, home)
+                        ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sandbox_home.py:55: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cli = 'otro'
+home = PosixPath('<ruta>')
+binary = None
+
+    def cli_mounts(cli: str, home: Path, binary: Path | None = None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/sandbox.py:44: NotImplementedError
+________________________ test_missing_dirs_are_skipped _________________________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_missing_dirs_are_skipped(tmp_path):
+>       assert cli_mounts("cursor-agent", tmp_path) == ((), ())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_sandbox_home.py:61: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cli = 'cursor-agent'
+home = PosixPath('<ruta>')
+binary = None
+
+    def cli_mounts(cli: str, home: Path, binary: Path | None = None):
+>       raise NotImplementedError
+E       NotImplementedError
+
+src/universal_bot/code_mode/sandbox.py:44: NotImplementedError
+___________ test_lab_runner_uses_the_masked_home_and_the_real_binary ___________
+
+tmp_path = PosixPath('<ruta>')
+
+    def test_lab_runner_uses_the_masked_home_and_the_real_binary(tmp_path):
+        home = _home(tmp_path)
+        binary = home / ".grok" / "downloads" / "grok-bin"
+        binary.parent.mkdir(parents=True)
+        binary.write_text("#!/bin/sh\n", encoding="utf-8")
+>       runner = LabRunner(clock=FakeClock(T0), lab_root=tmp_path / "labs", home=home, which=lambda name: str(binary))
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: LabRunner.__init__() got an unexpected keyword argument 'home'
+
+tests/test_sandbox_home.py:69: TypeError
+____________ test_real_bwrap_masks_home_and_discards_overlay_writes ____________
+
+tmp_path = PosixPath('<ruta>')
+
+    @pytest.mark.skipif(shutil.which("bwrap") is None, reason="sin bwrap")
+    def test_real_bwrap_masks_home_and_discards_overlay_writes(tmp_path):
+        home = tmp_path / "home"
+        (home / ".tool").mkdir(parents=True)
+        (home / ".tool" / "auth").write_text("tok", encoding="utf-8")
+        (home / ".secrets").mkdir()
+        (home / ".secrets" / "key").write_text("hidden", encoding="utf-8")
+        lab = tmp_path / "lab"
+        lab.mkdir()
+        script = (
+            "import os,sys\n"
+            "h=os.environ['HOME']\n"
+            "print(open(h+'/.tool/auth').read())\n"
+            "print(os.path.exists(h+'/.secrets/key'))\n"
+            "open(h+'/.tool/new','w').write('x')\n"
+            "print(os.path.exists(h+'/.tool/new'))\n"
+        )
+>       command = bwrap_command(str(lab), ["python3", "-c", script], home=str(home), overlays=(str(home / ".tool"),))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: bwrap_command() got an unexpected keyword argument 'home'
+
+tests/test_sandbox_home.py:98: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_sandbox_home.py::test_home_is_a_tmpfs_with_overlays_and_exact_args
+FAILED tests/test_sandbox_home.py::test_cli_mounts_per_cli[grok-ro0-overlays0]
+FAILED tests/test_sandbox_home.py::test_cli_mounts_per_cli[cursor-agent-ro1-overlays1]
+FAILED tests/test_sandbox_home.py::test_cli_mounts_per_cli[opencode-ro2-overlays2]
+FAILED tests/test_sandbox_home.py::test_cli_mounts_per_cli[otro-ro3-overlays3]
+FAILED tests/test_sandbox_home.py::test_missing_dirs_are_skipped - NotImpleme...
+FAILED tests/test_sandbox_home.py::test_lab_runner_uses_the_masked_home_and_the_real_binary
+FAILED tests/test_sandbox_home.py::test_real_bwrap_masks_home_and_discards_overlay_writes
+8 failed in 0.07s
