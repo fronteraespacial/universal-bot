@@ -170,7 +170,9 @@ def test_select_low_grok_quota_falls_back_to_cursor_agent(tmp_path):
 
 def test_select_without_sidecar_uses_grok_or_cursor_agent(tmp_path):
     assert isinstance(_select(tmp_path, launcher=tmp_path / "no-hay")(), GrokAcp)
-    assert isinstance(_select(tmp_path, cli="grok", quota=RuntimeError("sin dato"))(), GrokAcp)
+    assert isinstance(_select(tmp_path, cli="grok", quota=RuntimeError("sin dato"))(), RelaunchSession), "sin dato: cursor-agent"
+    no_reader = select_main_session(CodeModeConfig(main_enabled=True, main_cli="grok"), cwd=tmp_path, sidecar=None, key_file=None, quota=None)()
+    assert isinstance(no_reader, RelaunchSession), "sin lector de cuota: no se asume grok disponible"
     assert isinstance(_select(tmp_path, cli="cursor-agent")(), RelaunchSession)
 
 
