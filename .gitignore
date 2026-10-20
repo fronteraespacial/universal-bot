@@ -35,3 +35,9 @@ state/
 jobs/
 workspaces/
 locks/
+
+# Python local
+.venv/
+*.egg-info/
+__pycache__/
+.pytest_cache/
