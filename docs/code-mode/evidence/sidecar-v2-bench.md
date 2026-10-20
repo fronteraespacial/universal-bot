@@ -31,4 +31,4 @@ Referencia FE-BOT (con el MCP del pack, consigna real suya): SDK 27,9 s / 144,8k
 - **Propuesta**: `setting_sources: ["project"]` (o `[]`) + `mcp_servers` explícito; `tools` mínimo para la conversación; `--serve` con `session_id` para no pagar el arranque ni re-mandar contexto frío. `systemPrompt` propio reemplaza el del harness pero está detrás de un flag del servidor: no medido.
 - **Store**: con el store efímero no se creó `sdk-agent-store`; queda sólo `agent-transcripts/agent-*.jsonl` (≈KB) bajo `~/.cursor/projects/<slug>/`.
 
-Corridas reales gastadas: sidecar 15 (2 one-shot, 8+2 serve, una serie de serve cortada por el bug de stdout que se arregló, 1 "OK"), cursor-agent 1 OK + 1 colgado con HOME falso (sin login, cortado a 150 s, sin cuota).
+Corridas reales gastadas: sidecar ≈19 (2 one-shot, 8 serve, 2 sondas, 1 "OK", ≈6 en dos series de serve cortadas por el bug de stdout que se arregló), cursor-agent 1 OK + 1 colgado con HOME falso (sin login, cortado a 150 s, sin cuota).
