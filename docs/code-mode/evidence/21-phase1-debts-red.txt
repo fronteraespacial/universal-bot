@@ -1,0 +1,45 @@
+..FFF..FFFF.                                                             [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert False is True
+     +  where False = can_approve(Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)), 7, (), ApprovalPolicy(production='requester|dev', production_t3='requester', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+     +    where Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)) = project()
+/workspace/ub-codemode/tests/test_phase1_debts.py:76: AssertionError: assert False is True
+E   AssertionError: assert True is False
+     +  where True = can_approve(Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)), 8, ('@dev',), ApprovalPolicy(production='requester|dev', production_t3='requester', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+     +    where Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)) = project()
+/workspace/ub-codemode/tests/test_phase1_debts.py:76: AssertionError: assert True is False
+E   AssertionError: assert False is True
+     +  where False = can_approve(Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)), 7, (), ApprovalPolicy(production='requester|dev', production_t3='requester|dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+     +    where Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)) = project()
+/workspace/ub-codemode/tests/test_phase1_debts.py:76: AssertionError: assert False is True
+E   AssertionError: assert True is False
+     +  where True = can_approve(Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)), 8, ('@dev',), ApprovalPolicy(production='requester|dev', production_t3='otro', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+     +    where Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)) = project()
+/workspace/ub-codemode/tests/test_phase1_debts.py:76: AssertionError: assert True is False
+E   assert False
+     +  where False = any(<generator object test_run_once_sends_the_ask_reminder.<locals>.<genexpr> at 0x7f31958ccad0>)
+/workspace/ub-codemode/tests/test_phase1_debts.py:101: assert False
+E   assert False
+     +  where False = any(<generator object test_run_once_warns_before_the_session_expires.<locals>.<genexpr> at 0x7f31958cca00>)
+/workspace/ub-codemode/tests/test_phase1_debts.py:115: assert False
+E   NotImplementedError
+/workspace/ub-codemode/src/universal_bot/code_mode/stage_router.py:29: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_phase1_debts.py::test_t3_approval_uses_production_t3[requester-7-roles2-True] - AssertionError: assert False is True
+ +  where False = can_approve(Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)), 7, (), ApprovalPolicy(production='requester|dev', production_t3='requester', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+ +    where Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)) = project()
+FAILED tests/test_phase1_debts.py::test_t3_approval_uses_production_t3[requester-8-roles3-False] - AssertionError: assert True is False
+ +  where True = can_approve(Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)), 8, ('@dev',), ApprovalPolicy(production='requester|dev', production_t3='requester', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+ +    where Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)) = project()
+FAILED tests/test_phase1_debts.py::test_t3_approval_uses_production_t3[requester|dev-7-roles4-True] - AssertionError: assert False is True
+ +  where False = can_approve(Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)), 7, (), ApprovalPolicy(production='requester|dev', production_t3='requester|dev', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+ +    where Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)) = project()
+FAILED tests/test_phase1_debts.py::test_t3_approval_uses_production_t3[otro-8-roles7-False] - AssertionError: assert True is False
+ +  where True = can_approve(Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)), 8, ('@dev',), ApprovalPolicy(production='requester|dev', production_t3='otro', dev_roles=('@dev',), plan='none', plan_requires_evidence=True))
+ +    where Project(id='P-1', guild_id=42, requester_id=7, origin_message_id=1, slug='reservas', title_plain='Reservas', tier='T3'... 1, tzinfo=datetime.timezone.utc), updated_at=datetime.datetime(2026, 10, 20, 18, 35, 1, tzinfo=datetime.timezone.utc)) = project()
+FAILED tests/test_phase1_debts.py::test_run_once_sends_the_ask_reminder - assert False
+ +  where False = any(<generator object test_run_once_sends_the_ask_reminder.<locals>.<genexpr> at 0x7f31958ccad0>)
+FAILED tests/test_phase1_debts.py::test_run_once_warns_before_the_session_expires - assert False
+ +  where False = any(<generator object test_run_once_warns_before_the_session_expires.<locals>.<genexpr> at 0x7f31958cca00>)
+FAILED tests/test_phase1_debts.py::test_stage_thread_survives_a_new_router - NotImplementedError
+7 failed, 5 passed in 0.13s
