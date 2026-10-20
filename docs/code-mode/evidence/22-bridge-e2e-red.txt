@@ -1,0 +1,7 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+E   assert []
+/workspace/ub-codemode/tests/test_labcode_e2e_fixture.py:98: assert []
+=========================== short test summary info ============================
+FAILED tests/test_labcode_e2e_fixture.py::test_real_bridge_job_replies_once_and_stays_idempotent - assert []
+1 failed in 0.10s
