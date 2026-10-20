@@ -84,6 +84,7 @@ class CodeModeConfig:
     main_effort: str = "low"
     main_sdk_model: str = "composer-2.5"
     main_sdk_key_file: str = ""
+    main_sdk_serve: bool = True
     quota_file: str = ""
     reminders_first_after: str = "4h"
     reminders_pause_after: str = "24h"
@@ -172,6 +173,7 @@ def load_code_mode_config(path) -> CodeModeConfig:
         main_effort=str(main.get("effort", base.main_effort)),
         main_sdk_model=str(main.get("sdk_model", base.main_sdk_model)),
         main_sdk_key_file=str(main.get("sdk_key_file", base.main_sdk_key_file) or ""),
+        main_sdk_serve=bool(main.get("sdk_serve", base.main_sdk_serve)),
         quota_file=str(main.get("quota_file", base.quota_file) or ""),
         enabled=_flag(block, "enabled", base.enabled),
         propose_tiers=_tiers(block.get("propose_tiers", base.propose_tiers)),

@@ -156,7 +156,7 @@ def _select(tmp_path, cli="auto", quota=0.42, launcher=SIDECAR):
 def test_select_prefers_cursor_sdk_with_grok_warm_fallback(tmp_path):
     session = _select(tmp_path)()
     assert isinstance(session, FallbackSession)
-    assert isinstance(session.primary, SidecarSession)
+    assert isinstance(session.primary, (SidecarSession, ServeSidecarSession))
     assert isinstance(session.secondary, GrokAcp)
 
 

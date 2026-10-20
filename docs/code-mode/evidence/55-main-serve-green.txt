@@ -1,0 +1,7 @@
+................                                                         [100%]
+16 passed in 1.21s
+
+Mutaciones:
+- historia siempre en el prompt: 1 failed, 15 passed in 1.23s
+- sin setting_sources en el request: 1 failed, 15 passed in 1.17s
+Ajustes después del rojo: chmod +x del fake serve; test_select_prefers acepta ServeSidecarSession como primario.

@@ -2,6 +2,9 @@
 
 - SidecarSession: cursor-sdk vía el sidecar (adapters/cursor_sdk). Un run por turno; el steer en vivo va por
   `steer_file` y el corte por `cancel_file`. La historia de la charla viaja en el prompt.
+- ServeSidecarSession: cursor-sdk vía el sidecar en `--serve`: un proceso y un agente (`session_id`) por job. El
+  agente guarda la charla, así que el prompt va sin historia; steer/cancel por request. Config optimizada
+  (setting_sources [], sin MCP, allowlist de tools): ver evidence/sidecar-v2-bench.md.
 - RelaunchSession: CLI one-shot (cursor-agent). Steer = matar y relanzar con el mensaje nuevo sumado.
 - FallbackSession: primero el primario; si falla con fallback (límite, red, key), pasa al secundario y se queda ahí.
 - select_main_session: orden de Frontera: cursor-sdk -> grok warm (si la cuota de grok es > 40 %) -> cursor-agent
@@ -14,8 +17,10 @@ import json
 import os
 import signal
 import subprocess
+import queue
 import threading
 import time
+import uuid
 from pathlib import Path
 
 from universal_bot.code_mode.cursor_sdk import _outcome_from, _parse_lines, sidecar_argv, sidecar_env
@@ -133,6 +138,181 @@ class SidecarSession:
 
     def close(self) -> None:
         self.cancel()
+
+    @staticmethod
+    def _ms(started: float) -> int:
+        return int((time.monotonic() - started) * 1000)
+
+
+class ServeSidecarSession:
+    """MAIN cursor-sdk sobre un sidecar `--serve` de larga vida: se paga el arranque una vez por job."""
+
+    GRACE_S = 15.0
+
+    def __init__(self, launcher, *, workdir, model: str = "composer-2.5", key_file=None, node_bin=None,
+                 env: dict | None = None, tools=("read",), setting_sources=(), mcp_servers=None):
+        self.launcher = Path(launcher)
+        self.workdir = Path(workdir)
+        self.model = model
+        self.key_file = key_file
+        self.node_bin = node_bin
+        self.env = env
+        self.tools = list(tools)
+        self.setting_sources = list(setting_sources)
+        self.mcp_servers = mcp_servers
+        self.history = _History()
+        self.turns = 0
+        self.last_fallback = False
+        self.session_id = None
+        self._proc = None
+        self._fresh = True
+        self._current = None
+        self._steered: dict[str, bool] = {}
+        self._waiters: dict[str, queue.Queue] = {}
+        self._lock = threading.Lock()
+        self._write_lock = threading.Lock()
+
+    # --- proceso -------------------------------------------------------
+    def start(self):
+        self.workdir.mkdir(parents=True, exist_ok=True)
+        return self
+
+    def _ensure_process(self) -> bool:
+        if self._proc is not None and self._proc.poll() is None:
+            return True
+        env = dict(self.env) if self.env is not None else sidecar_env(dict(os.environ), node_bin=self.node_bin)
+        argv = [str(self.launcher), "--serve"] + sidecar_argv(self.launcher, self.key_file)[1:]
+        try:
+            self._proc = subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL,
+                                          text=True, cwd=self.workdir, env=env, start_new_session=True, bufsize=1)
+        except OSError:
+            self._proc = None
+            return False
+        # Proceso nuevo = agente nuevo: sesión nueva y la historia vuelve a viajar en el primer prompt.
+        self.session_id = f"main-{uuid.uuid4().hex[:12]}"
+        self._fresh = True
+        threading.Thread(target=self._reader, args=(self._proc,), daemon=True).start()
+        return True
+
+    def _reader(self, proc) -> None:
+        for raw in proc.stdout:
+            try:
+                line = json.loads(raw)
+            except ValueError:
+                continue
+            key = line.get("id")
+            with self._lock:
+                waiter = self._waiters.get(key)
+            if waiter is not None:
+                waiter.put(line)
+        with self._lock:
+            waiters = list(self._waiters.values())
+        for waiter in waiters:
+            waiter.put(None)
+
+    def _send(self, message: dict) -> bool:
+        try:
+            with self._write_lock:
+                self._proc.stdin.write(json.dumps(message, ensure_ascii=False) + "\n")
+                self._proc.stdin.flush()
+            return True
+        except (OSError, ValueError, AttributeError):
+            return False
+
+    def _kill_process(self) -> None:
+        if self._proc is not None:
+            _kill(self._proc)
+
+    # --- interfaz de sesión ---------------------------------------------
+    def alive(self) -> bool:
+        return True
+
+    def busy(self) -> bool:
+        return self._current is not None
+
+    def prompt(self, text: str, *, timeout_s: float = 120.0) -> TurnResult:
+        started = time.monotonic()
+        if not self._ensure_process():
+            self.last_fallback = True
+            return TurnResult(False, "failed", "", self._ms(started), None, mode="sidecar-serve", error="SDK_MISSING")
+        self.turns += 1
+        run_id = f"t{self.turns}"
+        prompt = self.history.prompt(text) if self._fresh else text
+        request = {"op": "run", "id": run_id, "session_id": self.session_id, "prompt": prompt, "model": self.model,
+                   "cwd": str(self.workdir), "timeout_s": timeout_s, "stream": False, "tools": self.tools,
+                   "setting_sources": self.setting_sources, "mcp": bool(self.mcp_servers)}
+        if self.mcp_servers:
+            request["mcp_servers"] = self.mcp_servers
+        waiter = queue.Queue()
+        with self._lock:
+            self._waiters[run_id] = waiter
+            self._current = run_id
+        steered = None
+        try:
+            if not self._send(request):
+                self.last_fallback = True
+                return TurnResult(False, "failed", "", self._ms(started), None, mode="sidecar-serve", error="SIDECAR_DIED")
+            deadline = started + timeout_s + self.GRACE_S
+            while True:
+                try:
+                    line = waiter.get(timeout=max(0.0, deadline - time.monotonic()))
+                except queue.Empty:
+                    self._send({"op": "cancel", "id": f"{run_id}-timeout", "target": run_id})
+                    self.last_fallback = True
+                    return TurnResult(False, "timeout", "", self._ms(started), None, steered=steered, mode="sidecar-serve", error="TIMEOUT")
+                if line is None:
+                    self.last_fallback = True
+                    return TurnResult(False, "failed", "", self._ms(started), None, steered=steered, mode="sidecar-serve", error="SIDECAR_DIED")
+                if line.get("type") in ("result", "error"):
+                    break
+        finally:
+            with self._lock:
+                self._waiters.pop(run_id, None)
+                self._current = None
+        with self._lock:
+            if self._steered.pop(run_id, False):
+                steered = "live"
+        if line.get("type") == "result" and line.get("ok"):
+            self.last_fallback = False
+            self._fresh = False
+            reply = line.get("text") or ""
+            self.history.add(text, reply)
+            return TurnResult(True, "completed", reply, self._ms(started), None, steered=steered,
+                              usage=line.get("usage") or {}, mode="sidecar-serve")
+        code = line.get("code")
+        self.last_fallback = bool(line.get("fallback")) and code != "CANCELLED"
+        status = "cancelled" if code == "CANCELLED" else ("timeout" if code == "TIMEOUT" else "failed")
+        return TurnResult(False, status, "", self._ms(started), None, steered=steered, mode="sidecar-serve", error=code)
+
+    def steer(self, text: str) -> str:
+        with self._lock:
+            target = self._current
+            if target is None:
+                return "no_turn"
+            self._steered[target] = True
+        self._send({"op": "steer", "id": f"{target}-s{uuid.uuid4().hex[:6]}", "target": target, "text": text})
+        return "live"
+
+    def cancel(self) -> None:
+        with self._lock:
+            target = self._current
+        if target is not None:
+            self._send({"op": "cancel", "id": f"{target}-c", "target": target})
+
+    def close(self) -> None:
+        proc = self._proc
+        if proc is None:
+            return
+        self._send({"op": "shutdown"})
+        try:
+            proc.stdin.close()
+        except OSError:
+            pass
+        try:
+            proc.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            _kill(proc)
+            proc.wait(timeout=5)
 
     @staticmethod
     def _ms(started: float) -> int:
@@ -297,7 +477,12 @@ def select_main_session(config, *, cwd, sidecar=None, key_file=None, quota=None,
     def factory():
         if cli in ("auto", "cursor-sdk"):
             if sidecar is not None and Path(sidecar).exists():
-                primary = SidecarSession(sidecar, workdir=cwd / "sdk", model=config.main_sdk_model, key_file=key_file, node_bin=node_bin)
+                if getattr(config, "main_sdk_serve", True):
+                    primary = ServeSidecarSession(sidecar, workdir=cwd / "sdk", model=config.main_sdk_model, key_file=key_file,
+                                                  node_bin=node_bin)
+                else:
+                    primary = SidecarSession(sidecar, workdir=cwd / "sdk", model=config.main_sdk_model, key_file=key_file,
+                                             node_bin=node_bin)
                 return FallbackSession(primary, grok_or_cursor_agent())
             return grok_or_cursor_agent()
         if cli == "grok":
