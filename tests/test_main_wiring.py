@@ -45,11 +45,11 @@ def _orch(tmp_path, **config):
 
 
 def test_default_main_is_cursor_sdk_with_fallback(tmp_path):
-    from universal_bot.code_mode.main_brains import FallbackSession, SidecarSession
+    from universal_bot.code_mode.main_brains import FallbackSession, ServeSidecarSession
     assert CodeModeConfig().main_cli == "auto"
     orch, _ = _orch(tmp_path)
     session = orch.brain.session_factory()
-    assert isinstance(session, FallbackSession) and isinstance(session.primary, SidecarSession)
+    assert isinstance(session, FallbackSession) and isinstance(session.primary, ServeSidecarSession)
 
 
 def test_quota_file_routes_main_and_lab_to_cursor_agent(tmp_path):
