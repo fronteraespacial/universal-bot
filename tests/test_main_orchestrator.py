@@ -43,6 +43,9 @@ class FakeBrain:
     def close(self):
         pass
 
+    def release(self, key):
+        self.released = getattr(self, "released", []) + [key]
+
 
 class FakeWorker:
     def __init__(self, job_id, prompt):
@@ -295,3 +298,56 @@ def test_warm_brain_steers_the_main_when_a_message_arrives_mid_turn(tmp_path):
         assert brain.steered == 1
     finally:
         brain.close()
+
+
+def test_exit_releases_the_main_session_of_finished_and_running_jobs(tmp_path):
+    """Al salir del modo código se cierra el cerebro del MAIN de esa sesión (con --serve es un proceso por job)."""
+    brain = FakeBrain(lambda text: "Terminé." if "terminó" in text else "Arranco.")
+    spool, db, clock, workers, brain, orch, first = _start(tmp_path, brain)
+    workers.made[0].status = "done"
+    _tick(spool, db, clock, orch)
+    _tick(spool, db, clock, orch)
+    assert orch.job("job-1")["status"] == "done"
+    exit_id = next(i for i in _custom_ids(_ops(spool)) if i.startswith("ublab:exit:"))
+    _, kind, ident, opt = exit_id.split(":")
+    _click(spool, kind, ident, opt)
+    _tick(spool, db, clock, orch)
+    assert getattr(brain, "released", []) == ["job-1"]
+
+
+def test_warm_brain_release_closes_only_that_session():
+    closed = []
+
+    class S:
+        def __init__(self):
+            self.n = len(closed)
+
+        def start(self):
+            return self
+
+        def prompt(self, text, *, timeout_s):
+            from universal_bot.code_mode.warm import TurnResult
+            return TurnResult(True, "completed", "ok", 1, None)
+
+        def steer(self, text):
+            return "no_turn"
+
+        def busy(self):
+            return False
+
+        def close(self):
+            closed.append(self)
+
+    brain = WarmBrain(S)
+    brain.submit("a", "hola")
+    brain.submit("b", "hola")
+    deadline = time.monotonic() + 5
+    while len(brain.drain()) < 1 and time.monotonic() < deadline:
+        time.sleep(0.02)
+    time.sleep(0.2)
+    brain.release("a")
+    assert len(closed) == 1
+    brain.release("a")
+    assert len(closed) == 1, "idempotente"
+    brain.close()
+    assert len(closed) == 2
