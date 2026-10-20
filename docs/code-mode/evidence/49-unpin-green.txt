@@ -1,0 +1,5 @@
+...............................................                          [100%]
+47 passed in 0.35s
+Ajuste: test_inbox_flow::test_deferred_port_enqueues_without_waiting exigía id local > 0 (el placeholder viejo, que chocaba entre ticks); ahora exige < 0.
+Mutación: unpin diferido sin emitir edit -> 3 tests fallan (rojo de 49).
+Degradación: el puente no tiene unpin y no se tocó. Al cerrar la sesión el mensaje fijado se edita a "Modo programación terminado." sin botones; el pin queda en Discord.

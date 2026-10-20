@@ -500,7 +500,7 @@ def test_deferred_port_enqueues_without_waiting(tmp_path):
     thread_id = port.create_thread(CHANNEL, "02-lab")
     port.pin(CHANNEL, message_id)
     assert calls == []
-    assert message_id > 0
+    assert message_id < 0, "id local negativo: nunca se confunde con uno real"
     assert thread_id is None
     ops = sorted((spool / "outbox").glob("*.json"))
     kinds = [json.loads(path.read_text(encoding="utf-8"))["op"] for path in ops]

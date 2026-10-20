@@ -34,6 +34,8 @@ class UnsupportedBridgeOp(RuntimeError):
     """Esa operación no existe en el puente."""
 
 
+UNPINNED_TEXT = "Modo programación terminado."
+
 class FileOutboxDiscordPort:
     def __init__(
         self,
@@ -57,8 +59,6 @@ class FileOutboxDiscordPort:
         self.admin_category_id = admin_category_id
         self.named_channels = dict(named_channels or {})
         self.op_ids: list[str] = []
-        self._local_ids = 0
-        self._local_ops: dict[int, str] = {}
         self.structural_timeout_s = structural_timeout_s
 
     def send(
@@ -81,9 +81,7 @@ class FileOutboxDiscordPort:
             embeds=_embeds(embeds),
         )
         if self.defer_results:
-            local = self._next_local_id()
-            self._local_ops[local] = payload["op_id"]
-            return local
+            return self._next_local_id(payload["op_id"])
         result = self._wait_result(payload["op_id"])
         return _result_id(result, "message_id")
 
@@ -157,7 +155,22 @@ class FileOutboxDiscordPort:
         self._wait_result(payload["op_id"])
 
     def unpin(self, channel_id: int, message_id: int, *, thread_id: int | None = None) -> None:
+        """El puente no tiene unpin: en modo diferido se edita el mensaje fijado (texto de cierre, sin botones)."""
         if self.defer_results:
+            target = self._target(channel_id, thread_id)
+            if message_id > 0:
+                self._emit_unpinned(target, message_id)
+                return
+            op_id = self._local_op(message_id)
+            if op_id is None:
+                return
+            result = self._read_result(op_id)
+            if result is not None:
+                self._finish_pending({"send_op_id": op_id, "channel_id": target, "action": "unpin"}, result)
+                return
+            pending = self._pending_pins()
+            pending.append({"send_op_id": op_id, "channel_id": target, "action": "unpin"})
+            self._save_pending_pins(pending)
             return
         del channel_id, message_id, thread_id
         raise UnsupportedBridgeOp("unpin no existe en el puente")
@@ -198,9 +211,11 @@ class FileOutboxDiscordPort:
     def _pin_deferred(self, channel_id: int, message_id: int, thread_id: int | None) -> None:
         """Sin esperar: si el mensaje todavía no tiene id real, el pin queda pendiente para el próximo tick."""
         target = self._target(channel_id, thread_id)
-        op_id = self._local_ops.get(message_id)
-        if op_id is None:
+        if message_id > 0:
             self._emit("pin", channel_id=target, message_id=_discord_id(message_id, "message_id"))
+            return None
+        op_id = self._local_op(message_id)
+        if op_id is None:
             return None
         pending = self._pending_pins()
         pending.append({"send_op_id": op_id, "channel_id": target})
@@ -216,16 +231,35 @@ class FileOutboxDiscordPort:
             if result is None:
                 keep.append(row)
                 continue
-            if result.get("ok") is not True:
-                continue
-            try:
-                real = _result_id(result, "message_id")
-            except BridgeDomainError:
-                continue
-            self._emit("pin", channel_id=row["channel_id"], message_id=real)
-            emitted += 1
+            emitted += self._finish_pending(row, result)
         self._save_pending_pins(keep)
         return emitted
+
+    def _finish_pending(self, row: dict, result: dict) -> int:
+        if result.get("ok") is not True:
+            return 0
+        try:
+            real = _result_id(result, "message_id")
+        except BridgeDomainError:
+            return 0
+        if row.get("action") == "unpin":
+            self._emit_unpinned(row["channel_id"], real)
+        else:
+            self._emit("pin", channel_id=row["channel_id"], message_id=real)
+        return 1
+
+    def _emit_unpinned(self, channel_id: int, message_id: int) -> None:
+        self._emit("edit", channel_id=channel_id, message_id=_discord_id(message_id, "message_id"),
+                   content=UNPINNED_TEXT, components=[])
+
+    def _local_messages(self) -> dict:
+        path = self.spool / "local_messages.json"
+        if not path.is_file():
+            return {"next": 0, "ops": {}}
+        return json.loads(path.read_text(encoding="utf-8"))
+
+    def _local_op(self, local_id: int) -> str | None:
+        return self._local_messages()["ops"].get(str(local_id))
 
     def _pending_pins(self) -> list[dict]:
         path = self.spool / "pending_pins.json"
@@ -242,9 +276,16 @@ class FileOutboxDiscordPort:
         tmp.write_text(json.dumps(rows), encoding="utf-8")
         tmp.replace(path)
 
-    def _next_local_id(self) -> int:
-        self._local_ids += 1
-        return self._local_ids
+    def _next_local_id(self, op_id: str) -> int:
+        """Id local negativo y persistente (spool/local_messages.json): nunca se confunde con un id real."""
+        data = self._local_messages()
+        data["next"] = int(data["next"]) + 1
+        local = -data["next"]
+        data["ops"][str(local)] = op_id
+        tmp = self.spool / ".local_messages.tmp"
+        tmp.write_text(json.dumps(data), encoding="utf-8")
+        tmp.replace(self.spool / "local_messages.json")
+        return local
 
     def _parent(self, parent_id: int | None) -> int | None:
         chosen = self.admin_category_id if parent_id is None else parent_id
@@ -414,4 +455,3 @@ def _result_id(result: dict, key: str) -> int:
         return int(value)
     raise BridgeDomainError(f"el resultado no trae {key}")
 
-UNPINNED_TEXT = None
