@@ -1,0 +1,14 @@
+0.0 send None 'Modo programación activo.' ['ublab:exit:CMS-c7b476ede3e6:salir']
+0.0 send None 'Lo estoy haciendo en segundo plano. Escribime acá cuando quieras: te cuento cómo va, cambio lo que haga falta o lo freno.' ['ublab:main:lc_1563200000000000001:frenar']
+1.4 pin None '' []
+4.4 send <id> 'Arranqué con la transcripción de los últimos 10 videos de SpaceX. Escribime cuando quieras mientras tanto.' []
+16.5 send <id> 'Voy por el segundo de los diez videos y sigue andando bien.' []
+42.6 send <id> 'Ya van cinco, así que le digo que pare y te deje solo los primeros tres.' []
+59.7 send <id> 'Voy por el segundo de los tres videos y ya casi termino.' []
+62.7 send <id> 'Listo: transcribí los 3 videos.' []
+eventos: [[0.0, "user", "pasemos a modo código: transcribí los últimos 10 videos de SpaceX"], [14.5, "user", "¿cómo vas?"], [32.5, "user", "cambio: hacé solo 3 videos, no 10"], [55.7, "user", "¿en qué estás ahora?"], [70.7, "click", "ublab:main:lc_1563200000000000001:frenar"]]
+main_jobs: [{'job_id': 'lc_1563200000000000001', 'status': 'done', 'instructions': '["Cambio de pedido: el usuario quiere solo 3 videos, no 10. Pará ya. No proceses más. Entregá únicamente los primeros 3 videos ya transcriptos."]', 'restarts': 0}]
+left: []
+workers/lc_1563200000000000001/worker-1.log | worker: arranco, objetivo 10 videos / procesé 1 de 10 videos / procesé 2 de 10 videos / procesé 3 de 10 videos / procesé 4 de 10 videos / procesé 5 de 10 videos / procesé 6 de 10 videos / procesé 7 de 10 videos
+workers/lc_1563200000000000001/worker-2.log | worker: arranco, objetivo 3 videos / procesé 1 de 3 videos / procesé 2 de 3 videos / procesé 3 de 3 videos / listo: 3 videos transcriptos
+duplicados: 0

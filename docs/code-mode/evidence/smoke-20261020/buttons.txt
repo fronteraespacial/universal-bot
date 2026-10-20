@@ -1,0 +1,38 @@
+######## create_channel
+botones: ['ublab:propose:lc_1563100000000000101:create_channel', 'ublab:propose:lc_1563100000000000101:create_thread', 'ublab:propose:lc_1563100000000000101:here_1h', 'ublab:propose:lc_1563100000000000101:here_4h', 'ublab:propose:lc_1563100000000000101:here_until_exit', 'ublab:propose:lc_1563100000000000101:decline']
+send {'channel_id': 9100} '¿Pasamos a modo programación?' ['ublab:propose:lc_1563100000000000101:create_channel', 'ublab:propose:lc_1563100000000000101:create_thread', 'ublab:propose:lc_1563100000000000101:here_1h', 'ublab:propose:lc_1563100000000000101:here_4h', 'ublab:propose:lc_1563100000000000101:here_until_exit', 'ublab:p
+create_channel {'name': 'p-refactor-del-store', 'parent_id': <id>} '' []
+send {'channel_id': <id>} 'Modo programación activo.' ['ublab:exit:CMS-3593e4513c75:salir']
+thread {'channel_id': <id>, 'name': '02-lab'} '' []
+thread {'channel_id': <id>, 'name': '03-plan'} '' []
+send {'channel_id': <id>} 'Se puede hacer. Lo probé en un directorio aparte y anduvo. El detalle ' []
+send {'channel_id': <id>} 'Resultado: ok' []
+send {'channel_id': <id>} 'CONSULT: propone, no decide.\nRecomendación: seguir' []
+pin {'channel_id': <id>, 'message_id': <id>} '' []
+sessions: [{'id': 'CMS-3593e4513c75', 'guild_id': <id>, 'channel_id': <id>, 'thread_id': None, 'thread_key': '', 'activated_by': <id>, 'activation': 'project_channel', 'since': '2026-10-20T21:32:42.440832+00:00', 'until': None, 'warn_at': None, 'project_id': None, 'pinned_message_id': 1
+left: []
+######## create_thread
+botones: ['ublab:propose:lc_1563100000000000101:create_channel', 'ublab:propose:lc_1563100000000000101:create_thread', 'ublab:propose:lc_1563100000000000101:here_1h', 'ublab:propose:lc_1563100000000000101:here_4h', 'ublab:propose:lc_1563100000000000101:here_until_exit', 'ublab:propose:lc_1563100000000000101:decline']
+send {'channel_id': 9100} '¿Pasamos a modo programación?' ['ublab:propose:lc_1563100000000000101:create_channel', 'ublab:propose:lc_1563100000000000101:create_thread', 'ublab:propose:lc_1563100000000000101:here_1h', 'ublab:propose:lc_1563100000000000101:here_4h', 'ublab:propose:lc_1563100000000000101:here_until_exit', 'ublab:p
+thread {'channel_id': 9100, 'name': 'p-refactor-del-store'} '' []
+send {'channel_id': <id>} 'Modo programación activo.' ['ublab:exit:CMS-d35955df5299:salir']
+thread {'channel_id': 9100, 'name': '02-lab'} '' []
+thread {'channel_id': 9100, 'name': '03-plan'} '' []
+send {'channel_id': <id>} 'Se puede hacer. Lo probé en un directorio aparte y anduvo. El detalle ' []
+send {'channel_id': <id>} 'Resultado: ok' []
+send {'channel_id': <id>} 'CONSULT: propone, no decide.\nRecomendación: seguir' []
+pin {'channel_id': <id>, 'message_id': <id>} '' []
+sessions: [{'id': 'CMS-d35955df5299', 'guild_id': <id>, 'channel_id': 9100, 'thread_id': <id>, 'thread_key': '<id>', 'activated_by': <id>, 'activation': 'project_thread', 'since': '2026-10-20T21:32:56.605085+00:00', 'until': None, 'warn_at': None, 'project_id': None, 'pin
+left: []
+######## here_1h
+botones: ['ublab:propose:lc_1563100000000000101:create_channel', 'ublab:propose:lc_1563100000000000101:create_thread', 'ublab:propose:lc_1563100000000000101:here_1h', 'ublab:propose:lc_1563100000000000101:here_4h', 'ublab:propose:lc_1563100000000000101:here_until_exit', 'ublab:propose:lc_1563100000000000101:decline']
+send {'channel_id': 9100} '¿Pasamos a modo programación?' ['ublab:propose:lc_1563100000000000101:create_channel', 'ublab:propose:lc_1563100000000000101:create_thread', 'ublab:propose:lc_1563100000000000101:here_1h', 'ublab:propose:lc_1563100000000000101:here_4h', 'ublab:propose:lc_1563100000000000101:here_until_exit', 'ublab:p
+send {'channel_id': 9100} 'Modo programación activo.' ['ublab:exit:CMS-a63ef83ac5cc:salir']
+thread {'channel_id': 9100, 'name': '02-lab'} '' []
+thread {'channel_id': 9100, 'name': '03-plan'} '' []
+send {'channel_id': 9100} 'Se puede hacer. Lo probé en un directorio aparte y anduvo. El detalle ' []
+send {'channel_id': <id>} 'Resultado: ok' []
+send {'channel_id': <id>} 'CONSULT: propone, no decide.\nRecomendación: seguir' []
+pin {'channel_id': 9100, 'message_id': <id>} '' []
+sessions: [{'id': 'CMS-a63ef83ac5cc', 'guild_id': <id>, 'channel_id': 9100, 'thread_id': None, 'thread_key': '', 'activated_by': <id>, 'activation': 'proposal_here', 'since': '2026-10-20T21:33:10.278735+00:00', 'until': '2026-10-20T22:33:10.278735+00:00', 'warn_at': '2026-10-20T22:23:10.278735+00:00',
+left: []
