@@ -31,7 +31,8 @@ Reglas:
 - Si el usuario cambia lo que quiere, delegá el cambio al worker; si el cambio es grande, relanzalo.
 - Terminá SIEMPRE con una sola línea, sin nada después:
 ACCION: {"tipo": "ninguna|steer|relanzar|frenar", "texto": "instrucción para el worker si aplica"}
-Usá "steer" para corregir sin cortar, "relanzar" para cortar y arrancar de nuevo con la instrucción, "frenar" si el usuario pide parar."""
+Usá "steer" para corregir sin cortar, "relanzar" para cortar y arrancar de nuevo con la instrucción, "frenar" si el usuario pide parar.
+Si la corrección es urgente o el usuario pide parar, no esperes al worker: usá "relanzar" o "frenar", que lo cortan en el acto (un steer recién llega entre pasos del worker)."""
 
 START_TEMPLATE = "Nuevo pedido del usuario (ya lo delegué en un worker que está corriendo): {prompt}\nAvisale en una oración que arrancaste y que puede escribirte mientras tanto."
 DELIVER_TEMPLATE = (
