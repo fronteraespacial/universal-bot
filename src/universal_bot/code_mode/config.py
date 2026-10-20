@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import timedelta
+from pathlib import Path
 import re
+
+import yaml
 
 _DURATION = re.compile(r"^(\d+)([mhd])$")
 
@@ -114,7 +117,176 @@ def role_allowed(
     return False
 
 
+_TIERS = {"T0", "T1", "T2", "T3"}
+_PRODUCTION = {"requester", "dev", "requester|dev"}
+
+
 def load_code_mode_config(path) -> CodeModeConfig:
-    raise NotImplementedError("load_code_mode_config")
+    raw = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+    if raw is None:
+        raw = {}
+    if not isinstance(raw, dict):
+        raise ConfigError("el yaml tiene que ser un mapa")
+    block = raw.get("code_mode") if "code_mode" in raw else raw
+    if block is None:
+        block = {}
+    if not isinstance(block, dict):
+        raise ConfigError("code_mode tiene que ser un mapa")
+    base = CodeModeConfig()
+    threshold = _threshold(block.get("proposal_threshold", base.proposal_threshold))
+    approvals = _approvals(block.get("approvals"), base.approvals)
+    security_check = _on_off(block["security_check"]) if "security_check" in block else base.security_check
+    host_role = str(block.get("host_role", base.host_role))
+    validate_security_config(security_check, host_role)
+    reminders = block.get("reminders") or {}
+    language = block.get("language") or {}
+    return replace(
+        base,
+        enabled=_flag(block, "enabled", base.enabled),
+        propose_tiers=_tiers(block.get("propose_tiers", base.propose_tiers)),
+        default_mode=str(block.get("default_mode", base.default_mode)),
+        sticky=_flag(block, "sticky", base.sticky),
+        default_duration=str(block.get("default_duration", base.default_duration)),
+        duration_options=_strings(block.get("duration_options", base.duration_options), "duration_options"),
+        warn_before=str(block.get("warn_before", base.warn_before)),
+        proposal_threshold=threshold,
+        who_can_exit=_strings(block.get("who_can_exit", base.who_can_exit), "who_can_exit"),
+        manual_trigger_phrases=_strings(
+            block.get("manual_trigger_phrases", base.manual_trigger_phrases),
+            "manual_trigger_phrases",
+        ),
+        manual_trigger_command=str(block.get("manual_trigger_command", base.manual_trigger_command)),
+        trivial_to_basic_cli=_flag(block, "trivial_to_basic_cli", base.trivial_to_basic_cli),
+        allow_channels=_flag(block, "allow_channels", base.allow_channels),
+        projects_category=str(block.get("projects_category", base.projects_category)),
+        projects_channel=str(block.get("projects_channel", base.projects_channel)),
+        channel_prefix=str(block.get("channel_prefix", base.channel_prefix)),
+        max_open_projects=int(block.get("max_open_projects", base.max_open_projects)),
+        archive_after_days=int(block.get("archive_after_days", base.archive_after_days)),
+        roles=_roles(block.get("roles"), base.roles),
+        approvals=approvals,
+        sandbox=_sandbox(block.get("sandbox"), base.sandbox),
+        security_check=security_check,
+        host_role=host_role,
+        allowed_channels=_channels(block.get("allowed_channels", base.allowed_channels)),
+        reminders_first_after=str(reminders.get("first_after", base.reminders_first_after)),
+        reminders_pause_after=str(reminders.get("pause_after", base.reminders_pause_after)),
+        reminders_cancel_paused_after=str(
+            reminders.get("cancel_paused_after", base.reminders_cancel_paused_after)
+        ),
+        language_user=str(language.get("user", base.language_user)),
+        language_stages=str(language.get("stages", base.language_stages)),
+    )
+
+
+def validate_security_config(security_check: str, host_role: str) -> None:
+    if security_check == "off" and host_role != "local":
+        raise ConfigError("security_check off no se permite en un servidor compartido")
+
+
+def _on_off(value: object) -> str:
+    if isinstance(value, bool):
+        return "on" if value else "off"
+    text = str(value).strip().lower()
+    if text in {"on", "true", "yes", "1"}:
+        return "on"
+    if text in {"off", "false", "no", "0"}:
+        return "off"
+    raise ConfigError("security_check tiene que ser on u off")
+
+
+def _flag(block: dict, key: str, default: bool) -> bool:
+    if key not in block:
+        return default
+    value = block[key]
+    if not isinstance(value, bool):
+        raise ConfigError(f"{key} tiene que ser sí o no")
+    return value
+
+
+def _threshold(value: object) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or not 0 <= float(value) <= 1:
+        raise ConfigError("proposal_threshold tiene que estar entre 0 y 1")
+    return float(value)
+
+
+def _tiers(value: object) -> tuple[str, ...]:
+    items = _strings(value, "propose_tiers")
+    unknown = [item for item in items if item not in _TIERS]
+    if unknown:
+        raise ConfigError(f"propose_tiers desconocido: {unknown[0]}")
+    return items
+
+
+def _strings(value: object, field: str) -> tuple[str, ...]:
+    if isinstance(value, tuple):
+        return tuple(str(item) for item in value)
+    if not isinstance(value, list):
+        raise ConfigError(f"{field} tiene que ser una lista")
+    return tuple(str(item) for item in value)
+
+
+def _channels(value: object) -> tuple[int, ...]:
+    if isinstance(value, tuple):
+        items = list(value)
+    elif isinstance(value, list):
+        items = value
+    else:
+        raise ConfigError("allowed_channels tiene que ser una lista")
+    channels: list[int] = []
+    for item in items:
+        if isinstance(item, bool) or not isinstance(item, int):
+            raise ConfigError("allowed_channels tiene que ser numérico")
+        channels.append(item)
+    return tuple(channels)
+
+
+def _roles(value: object, base: RolePolicy) -> RolePolicy:
+    if value is None:
+        return base
+    if not isinstance(value, dict):
+        raise ConfigError("roles tiene que ser un mapa")
+    return replace(
+        base,
+        can_start_project=_strings(value.get("can_start_project", base.can_start_project), "can_start_project"),
+        can_start_thread=_strings(value.get("can_start_thread", base.can_start_thread), "can_start_thread"),
+        can_activate=_strings(value.get("can_activate", base.can_activate), "can_activate"),
+        can_ask_questions=_strings(value.get("can_ask_questions", base.can_ask_questions), "can_ask_questions"),
+        can_brake=_strings(value.get("can_brake", base.can_brake), "can_brake"),
+        admin_review_channel=str(value.get("admin_review_channel", base.admin_review_channel)),
+    )
+
+
+def _approvals(value: object, base: ApprovalPolicy) -> ApprovalPolicy:
+    if value is None:
+        return base
+    if not isinstance(value, dict):
+        raise ConfigError("approvals tiene que ser un mapa")
+    production = str(value.get("production", base.production))
+    if production not in _PRODUCTION:
+        raise ConfigError("approvals.production tiene que ser requester, dev o requester|dev")
+    return replace(
+        base,
+        production=production,
+        production_t3=str(value.get("production_t3", base.production_t3)),
+        dev_roles=_strings(value.get("dev_roles", base.dev_roles), "dev_roles"),
+        plan=str(value.get("plan", base.plan)),
+        plan_requires_evidence=bool(value.get("plan_requires_evidence", base.plan_requires_evidence)),
+    )
+
+
+def _sandbox(value: object, base: SandboxPolicy) -> SandboxPolicy:
+    if value is None:
+        return base
+    if not isinstance(value, dict):
+        raise ConfigError("sandbox tiene que ser un mapa")
+    return replace(
+        base,
+        policy=str(value.get("policy", base.policy)),
+        runtime=str(value.get("runtime", base.runtime)),
+        egress_allowlist=_strings(value.get("egress_allowlist", base.egress_allowlist), "egress_allowlist"),
+        prod_secrets=str(value.get("prod_secrets", base.prod_secrets)),
+        writes=str(value.get("writes", base.writes)),
+    )
 
 

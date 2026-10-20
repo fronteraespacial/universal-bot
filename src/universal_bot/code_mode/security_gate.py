@@ -7,7 +7,7 @@ from datetime import datetime
 from pathlib import PurePosixPath
 import re
 
-from universal_bot.code_mode.config import ConfigError
+from universal_bot.code_mode.config import validate_security_config
 from universal_bot.code_mode.models import SecurityCheckResult
 
 _PROD_SECRET = re.compile(
@@ -38,11 +38,6 @@ class SecurityDecision:
     result: SecurityCheckResult
     tests_allowed: bool
     ask: bool
-
-
-def validate_security_config(security_check: str, host_role: str) -> None:
-    if security_check == "off" and host_role != "local":
-        raise ConfigError("security_check off no se permite en un servidor compartido")
 
 
 def evaluate(
