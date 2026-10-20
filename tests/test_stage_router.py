@@ -56,17 +56,19 @@ def test_lab_is_required_before_plan():
     assert [thread.name for thread in router.discord.threads] == ["02-lab", "03-plan"]
 
 
-def test_channel_posts_jargon_in_the_stage_thread_and_plain_in_the_channel():
+def test_channel_posts_jargon_only_in_the_stage_thread_and_nothing_in_the_channel():
+    """Modo canal con hilo conocido: el detalle va al hilo y el canal no recibe un resumen duplicado por etapa."""
     discord = FakeDiscord()
     router = StageRouter(discord)
     router.post(project(), "02-lab", "Miré el diff y corrí pytest")
-    stage_thread = discord.threads[0]
-    assert stage_thread.name == "02-lab"
-    technical = next(message for message in discord.messages if message.thread_id == stage_thread.id)
-    plain = next(message for message in discord.messages if message.thread_id is None)
-    assert technical.content == "Miré el diff y corrí pytest"
-    assert plain.content == "Miré el y corrí"
-    assert plain.channel_id == 10
+    router.post(project(), "03-plan", "Plan: dos pasos")
+    lab, plan = discord.threads
+    assert (lab.name, plan.name) == ("02-lab", "03-plan")
+    assert [(m.thread_id, m.content) for m in discord.messages] == [
+        (lab.id, "Miré el diff y corrí pytest"),
+        (plan.id, "Plan: dos pasos"),
+    ]
+    assert [m for m in discord.messages if m.thread_id is None] == []
 
 
 def test_thread_mode_prefixes_the_stage_and_skips_stage_threads():
