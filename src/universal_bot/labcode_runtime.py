@@ -207,10 +207,6 @@ def _mark_done(job_dir: Path, job, clock, state: dict) -> None:
     (job_dir / "state.json").write_text(json.dumps(state), encoding="utf-8")
 
 
-if __name__ == "__main__":
-    raise SystemExit(main())
-
-
 def build_orchestrator(clock, db_path, config, runner, *, main_root=None):
     """MAIN warm (config.main_cli/main_model) y workers one-shot del lab dentro del sandbox. Apagado por defecto."""
     if not config.main_enabled or runner is None:
@@ -237,3 +233,8 @@ def build_orchestrator(clock, db_path, config, runner, *, main_root=None):
         return ProcessWorker(argv_for, prompt, cwd=folder, env=runner._worker_env())
 
     return Orchestrator(db_path, clock=clock, brain=WarmBrain(brain_session), worker_factory=worker_factory)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
+
