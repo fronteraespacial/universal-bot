@@ -1,0 +1,31 @@
+FFFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:6: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:11: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:16: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:21: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:21: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:21: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:21: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:21: NotImplementedError
+E   NotImplementedError
+<repo>/src/universal_bot/code_mode/cli_adapters.py:29: NotImplementedError
+=========================== short test summary info ============================
+FAILED tests/test_cli_adapters.py::test_grok_argv_is_the_contract - NotImplem...
+FAILED tests/test_cli_adapters.py::test_cursor_argv_puts_effort_in_the_model_slug
+FAILED tests/test_cli_adapters.py::test_opencode_argv_is_run_with_model_and_cwd_outside
+FAILED tests/test_cli_adapters.py::test_quota_switches_to_cursor_at_forty_percent[reader0-expected0]
+FAILED tests/test_cli_adapters.py::test_quota_switches_to_cursor_at_forty_percent[reader1-expected1]
+FAILED tests/test_cli_adapters.py::test_quota_switches_to_cursor_at_forty_percent[reader2-expected2]
+FAILED tests/test_cli_adapters.py::test_quota_switches_to_cursor_at_forty_percent[reader3-expected3]
+FAILED tests/test_cli_adapters.py::test_quota_switches_to_cursor_at_forty_percent[reader4-expected4]
+FAILED tests/test_cli_adapters.py::test_file_reader_uses_the_json_field - Not...
+9 failed in 0.05s
