@@ -33,7 +33,7 @@ FORBIDDEN = "No podés aprobar esto."
 
 
 class CodeModeApp:
-    def __init__(self, db_path, discord: DiscordPort, clock: Clock, config: CodeModeConfig):
+    def __init__(self, db_path, discord: DiscordPort, clock: Clock, config: CodeModeConfig, *, lab_runner=None):
         self.discord = discord
         self.clock = clock
         self.config = config
@@ -47,8 +47,13 @@ class CodeModeApp:
         self.provisioner = ProjectProvisioner(discord, self.sessions, self.ledger, config, clock)
         self.jobs_root = Path(db_path).parent / "jobs"
         self.jobs = JobRunner(self.jobs_root, clock)
+        self.lab_runner = lab_runner
+        self.ask_bridge = None
         self._requests: dict = {}
         self._actions: dict[str, ProductionAction] = {}
+
+    def handle_job(self, job, job_dir):
+        raise NotImplementedError
 
     def handle_text(self, location: Location, actor_id: int, roles: tuple[str, ...], text: str):
         return self.sessions.handle_text(location, actor_id, roles, text)

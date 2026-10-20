@@ -45,11 +45,13 @@ class FileOutboxDiscordPort:
         poll_interval_s: float = 0.25,
         admin_category_id: int | None = None,
         named_channels: dict[str, int] | None = None,
+        defer_results: bool = False,
     ):
         self.spool = Path(spool)
         self.clock = clock
         self.sleeper = sleeper
         self.timeout_s = timeout_s
+        self.defer_results = defer_results
         self.poll_interval_s = poll_interval_s
         self.admin_category_id = admin_category_id
         self.named_channels = dict(named_channels or {})
@@ -64,6 +66,8 @@ class FileOutboxDiscordPort:
         components=None,
         embeds=None,
     ) -> int:
+        if self.defer_results:
+            raise NotImplementedError
         target = self._target(channel_id, thread_id)
         payload = self._emit(
             "send",
@@ -118,6 +122,8 @@ class FileOutboxDiscordPort:
         return _result_id(result, "channel_id")
 
     def create_thread(self, channel_id: int, name: str, *, from_message_id: int | None = None) -> int:
+        if self.defer_results:
+            raise NotImplementedError
         if not isinstance(name, str) or not 1 <= len(name) <= 100:
             raise ValueError("name fuera de 1..100")
         payload = self._emit(
@@ -130,6 +136,8 @@ class FileOutboxDiscordPort:
         return _result_id(result, "thread_id")
 
     def pin(self, channel_id: int, message_id: int, *, thread_id: int | None = None) -> None:
+        if self.defer_results:
+            raise NotImplementedError
         payload = self._emit(
             "pin",
             channel_id=self._target(channel_id, thread_id),
