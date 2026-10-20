@@ -2,7 +2,8 @@
 
 Interfaz común: start / prompt / steer / cancel / close, más capacidades declaradas.
 - Codex y OpenCode tienen steer en vivo (la instrucción entra en el mismo turno).
-- Grok (ACP) no: steer = session/cancel + nuevo session/prompt con la instrucción.
+- Grok (ACP) sí, por la extensión `_x.ai/interject {sessionId, text}`; si el binario no la tiene,
+  steer = session/cancel + nuevo session/prompt con la instrucción.
 - AGY no: steer = SIGINT + reanudar con la instrucción (si el proceso muere, se reinicia una vez).
 `prompt` bloquea hasta el fin del turno; `steer` y `cancel` se llaman desde otro hilo.
 """
@@ -48,7 +49,7 @@ class Capabilities:
 CAPABILITIES = {
     "codex": Capabilities(True, "live", "codex app-server (JSON-RPC stdio)", "turn/interrupt"),
     "opencode": Capabilities(True, "live", "opencode serve (HTTP + SSE /api/*)", "POST /api/session/{id}/interrupt"),
-    "grok": Capabilities(False, "cancel_reprompt", "grok agent stdio (ACP JSON-RPC)", "session/cancel"),
+    "grok": Capabilities(True, "live", "grok agent stdio (ACP JSON-RPC, steer por _x.ai/interject)", "session/cancel"),
     "agy": Capabilities(False, "interrupt_resume", "agy --input-format stream-json", "SIGINT"),
 }
 
@@ -427,6 +428,11 @@ class CodexAppServer(_JsonLines):
 class GrokAcp(_JsonLines):
     cli = "grok"
 
+    def __init__(self, model, **kwargs):
+        super().__init__(model, **kwargs)
+        # El MAIN puede corregir a sus subagentes con send_subagent_message (apagado por defecto en grok).
+        self.extra_env.setdefault("GROK_ACTIVE_AGENT_MESSAGES", "1")
+
     def start(self):
         self._start_process()
         init = self._wait(self._request("initialize", {
@@ -467,9 +473,20 @@ class GrokAcp(_JsonLines):
             self._on_chunk(str(content.get("text") or ""))
 
     def _steer(self, turn, text):
+        turn.steered = "live"
+        res = self._wait(self._request("_x.ai/interject", {"sessionId": self.session_id, "text": text}, rpc=True), timeout=15)
+        if "error" not in res:
+            return "live"
+        # sin interject: cortar y volver a pedir con la instrucción nueva
+        turn.steered = None
         turn.steer_text = text
         self._cancel_turn(turn)
         return "cancel_reprompt"
+
+    def _follow_up(self, turn, text):
+        nxt = super()._follow_up(turn, text)
+        nxt.steered = "cancel_reprompt"
+        return nxt
 
     def _cancel_turn(self, turn):
         self._notify("session/cancel", {"sessionId": self.session_id}, rpc=True)
