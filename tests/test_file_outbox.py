@@ -134,7 +134,10 @@ def test_thread_target_and_buttons_and_sequence_never_reused(tmp_path):
     assert bodies[1]["allowed_mentions"] == MENTIONS
     restarted = port(spool)
     restarted.send(CHANNEL, "otra")
-    assert done_ops(spool)[2]["op_id"].endswith("-0003-send")
+    ids = [body["op_id"] for body in done_ops(spool)]
+    assert len(ids) == 3
+    assert len(set(ids)) == 3
+    assert any(item.endswith("-0003-send") for item in ids)
 
 
 def test_invalid_ops_are_rejected_before_writing(tmp_path):
