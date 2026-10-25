@@ -54,3 +54,13 @@ Primera prueba: verdict PASS, PR fronteraespacial/universal-bot#4. Lecciones:
 4. Matching de palabras por límite de palabra/token, nunca substring crudo (`pr` daba falsos positivos).
 5. El verifier corre la suite completa también en `main` para separar fallos preexistentes de los nuevos.
 6. Criterio de aceptación: "2+ commits (test rojo, feat verde), refactor opcional", para no contradecir el paso 5 de §3.
+
+## Alarmas de Augmented Coding (FAIL cerrado)
+
+Además de los gaps de arriba, estas tres señales son FAIL. Se listan todas, no solo la primera. El clasificador es `classify` en `src/universal_bot/code_mode/augmented_alarms.py`. No reemplaza el recorrido rojo/verde de esta página: lo aprieta.
+
+- **loops** — el mismo `approach` ya está en `prior_approaches` y no hay información nueva.
+- **scope creep** — un path tocado cae fuera del allow-list, o está nombrado en el fuera de alcance. Es el gap `scope-escape`.
+- **fake tests** — se editaron tests y no el código de producción, y el test no está demostrado mal. Mismo hueco que `test-weakened`.
+
+Sin historia, sin aceptación, sin fuera de alcance o sin evidencia de tests, el veredicto no es PASS (falla cerrado), aunque ninguna de las tres esté nombrada. Un doc de diseño no cuenta como evidencia.

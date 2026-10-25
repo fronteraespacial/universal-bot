@@ -146,6 +146,7 @@ Advisor card post-lab: con ≥2 `APPROVE` siempre se pregunta con recomendación
 - Verify FAIL transitorio (flake, red) → retry en verify. Reproducible con DoD claro → O2. Diseño, hipótesis o entorno → O3.
 - Mismo gap tras O2, dos enfoques distintos fallando, o evidencia contradictoria → congelar, pedir un verifier ciego que no vea la conclusión anterior, y como máximo dos pasadas finales con hipótesis distintas. Si fallan → paquete de decisión humana (`RESET_RUN` | `ESCALATE` | `ACCEPT_PARTIAL` | `ABORT`) y STOP.
 - Frenar también si: se acabó el tiempo límite de la delegación, el implementer devuelve `NEEDS-DIAGNOSIS`, o se repetiría una hipótesis ya refutada.
+- **Augmented Coding.** Una historia refinada (aceptación y fuera de alcance) antes del implementer. Slice vertical con tests, no un doc de diseño. Alarmas loops, scope creep y fake tests = FAIL del verifier (`augmented_alarms.classify`): se reportan todas y se frena. Aprieta el TDD de arriba y al orquestador; no los reemplaza. Detalle en `docs/code-mode/augmented-coding.md`.
 
 ## 8. Cierre con evidencia
 

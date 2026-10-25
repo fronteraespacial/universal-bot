@@ -1,21 +1,17 @@
 """Augmented Coding: el MAIN exige una historia refinada y las tres alarmas son FAIL."""
 
+from universal_bot.code_mode.augmented_alarms import (
+    FAKE_TESTS,
+    LOOPS,
+    SCOPE_CREEP,
+    ProgressSignal,
+    classify,
+)
 from universal_bot.code_mode.orchestrator import MAIN_SYSTEM_PROMPT
 
 
-def _alarms():
-    from universal_bot.code_mode import augmented_alarms
-
-    return augmented_alarms
-
-
 def test_alarm_names_match_the_three_sister_rules():
-    alarms = _alarms()
-    assert (alarms.LOOPS, alarms.SCOPE_CREEP, alarms.FAKE_TESTS) == (
-        "loops",
-        "scope_creep",
-        "fake_tests",
-    )
+    assert (LOOPS, SCOPE_CREEP, FAKE_TESTS) == ("loops", "scope_creep", "fake_tests")
 
 
 def test_main_prompt_has_augmented_coding_alarm_rules():
@@ -41,7 +37,7 @@ def test_main_prompt_has_augmented_coding_alarm_rules():
         assert piece in text, piece
 
 
-def signal(**overrides):
+def signal(**overrides) -> ProgressSignal:
     payload = {
         "story": "documentar Augmented Coding y frenar las tres alarmas",
         "acceptance": ("el MAIN pide aceptación y fuera de alcance",),
@@ -57,11 +53,11 @@ def signal(**overrides):
         "new_info": False,
     }
     payload.update(overrides)
-    return _alarms().ProgressSignal(**payload)
+    return ProgressSignal(**payload)
 
 
 def test_loops_fail():
-    verdict = _alarms().classify(signal(approach="retry-a", prior_approaches=("retry-a",)))
+    verdict = classify(signal(approach="retry-a", prior_approaches=("retry-a",)))
     assert verdict.ok is False
     assert verdict.alarms == ("loops",)
     assert "repeated_approach" in verdict.reasons
@@ -69,7 +65,7 @@ def test_loops_fail():
 
 def test_scope_creep_fails_when_a_path_leaves_the_allowlist():
     leaked = "src/universal_bot/code_mode_backup/x.py"
-    verdict = _alarms().classify(signal(changed_paths=(
+    verdict = classify(signal(changed_paths=(
         "src/universal_bot/code_mode/augmented_alarms.py",
         leaked,
     )))
@@ -80,7 +76,7 @@ def test_scope_creep_fails_when_a_path_leaves_the_allowlist():
 
 def test_scope_creep_fails_when_a_path_is_named_out_of_scope():
     parked = "src/universal_bot/code_mode/orchestrator.py"
-    verdict = _alarms().classify(signal(
+    verdict = classify(signal(
         out_of_scope=(parked,),
         changed_paths=(parked,),
         production_changed=(parked,),
@@ -92,7 +88,7 @@ def test_scope_creep_fails_when_a_path_is_named_out_of_scope():
 
 
 def test_fake_tests_fail_when_only_tests_change_to_go_green():
-    verdict = _alarms().classify(signal(
+    verdict = classify(signal(
         tests_changed=("tests/test_augmented_coding.py",),
         production_changed=(),
         changed_paths=("tests/test_augmented_coding.py",),
@@ -103,7 +99,7 @@ def test_fake_tests_fail_when_only_tests_change_to_go_green():
 
 
 def test_lists_every_alarm_together():
-    verdict = _alarms().classify(signal(
+    verdict = classify(signal(
         approach="retry-a",
         prior_approaches=("retry-a",),
         changed_paths=("README.md",),
@@ -115,20 +111,20 @@ def test_lists_every_alarm_together():
 
 
 def test_happy_path_passes_without_alarms():
-    verdict = _alarms().classify(signal())
+    verdict = classify(signal())
     assert verdict.ok is True
     assert verdict.alarms == ()
     assert verdict.reasons == ()
 
 
 def test_same_approach_with_new_info_is_not_a_loop():
-    verdict = _alarms().classify(signal(approach="retry-a", prior_approaches=("retry-a",), new_info=True))
+    verdict = classify(signal(approach="retry-a", prior_approaches=("retry-a",), new_info=True))
     assert verdict.ok is True
     assert verdict.alarms == ()
 
 
 def test_editing_a_proven_wrong_test_is_not_fake():
-    verdict = _alarms().classify(signal(
+    verdict = classify(signal(
         tests_changed=("tests/test_augmented_coding.py",),
         production_changed=(),
         tests_proven_wrong=True,
@@ -139,7 +135,7 @@ def test_editing_a_proven_wrong_test_is_not_fake():
 
 
 def test_empty_signal_fails_closed():
-    verdict = _alarms().classify(_alarms().ProgressSignal())
+    verdict = classify(ProgressSignal())
     assert verdict.ok is False
     assert verdict.alarms == ()
     assert set(verdict.reasons) == {
@@ -153,14 +149,14 @@ def test_empty_signal_fails_closed():
 
 
 def test_design_doc_evidence_fails_closed():
-    verdict = _alarms().classify(signal(evidence="doc"))
+    verdict = classify(signal(evidence="doc"))
     assert verdict.ok is False
     assert verdict.alarms == ()
     assert "missing_test_evidence" in verdict.reasons
 
 
 def test_missing_acceptance_fails_closed():
-    verdict = _alarms().classify(signal(acceptance=()))
+    verdict = classify(signal(acceptance=()))
     assert verdict.ok is False
     assert verdict.alarms == ()
     assert "missing_acceptance" in verdict.reasons
